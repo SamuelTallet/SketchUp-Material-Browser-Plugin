@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg72" width="213" height="246">
+  <defs id="defs52">
+    <linearGradient id="a" x1="-293.42" y1="260.82" x2="-249.96" y2="260.93" gradientTransform="rotate(-120 -101.213 63.762)" gradientUnits="userSpaceOnUse">
+      <stop offset=".02" stop-opacity="0" id="stop46"/>
+      <stop offset="1" stop-opacity=".14" id="stop48"/>
+    </linearGradient>
+    <linearGradient id="b" x1="-292.34" y1="247.8" x2="-249.02" y2="247.91" gradientTransform="rotate(-60 -164.186 -163.301)" xlink:href="#a"/>
+    <linearGradient xlink:href="#a" id="linearGradient78" gradientUnits="userSpaceOnUse" gradientTransform="rotate(-120 -101.213 63.762)" x1="-293.42" y1="260.82" x2="-249.96" y2="260.93"/>
+    <style id="style44">
+      .b{opacity:.1}.c{fill:#fff;opacity:.2}
+    </style>
+  </defs>
+  <path id="polygon56" transform="translate(-21.5 -5)" fill="#f38237" d="M128 5l106.5 61.49v98.5l-63.84-36.86v98.24L128 251l-42.67-24.63v-98.24L21.5 164.99v-98.5z"/>
+  <path class="b" id="polygon58" transform="translate(-21.5 -5)" d="M210.71 52.75L24.5 160.26l-3 4.73L213.3 54.25z"/>
+  <path class="b" id="polygon60" transform="translate(-21.5 -5)" d="M170.66 226.37v-98.24l-2.99-1.73-.01 98.7-42.26 24.4 2.6 1.5z"/>
+  <path class="b" id="polygon62" transform="translate(-21.5 -5)" d="M234.5 66.49l-3-1.73v98.5l3 1.73z"/>
+  <path class="c" id="polygon64" transform="translate(-21.5 -5)" d="M128 5l2.59 1.5L24.5 67.76v92.5l-3 4.73v-98.5z"/>
+  <path class="c" id="polygon66" transform="translate(-21.5 -5)" d="M88.33 126.4v101.7l-3-1.73v-98.24z"/>
+  <path id="polygon68" transform="translate(-21.5 -5)" fill="url(#linearGradient78)" d="M213.3 54.25l21.2 12.24v24.88L85.33 177.26v-49.13z"/>
+  <path id="polygon70" transform="translate(-21.5 -5)" fill="url(#b)" d="M170.66 128.13v49.4l-85.33-49.4L128 103.5z"/>
+</svg>

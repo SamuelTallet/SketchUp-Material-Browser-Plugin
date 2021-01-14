@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="<%= Sketchup.get_locale %>">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="x-copyright" content="© 2021 Samuel Tallet">
+    <meta name="x-license" content="GNU General Public License 3.0">
+
+	<title><%= NAME %></title>
+
+	<%= scripts['lib/list.js'] %>
+	<%= scripts['material-browser.js'] %>
+
+	<%= styles['material-browser.css'] %>
+
+</head>
+
+<body>
+
+    <div id="materials">
+
+        <div class="toolbar">
+            <input class="search" placeholder="<%= TRANSLATE['Search by name'] %>" />
+            <input type="checkbox" class="display-provider" /> <%= TRANSLATE['Display provider'] %>
+        </div>
+
+        <ul class="list">
+
+            <%
+            sketchup_logo_uri = Utils.path2uri(
+                File.join(HTMLDialogs::DIR, 'img', 'sketchup-logo.svg')
+            )
+
+            th_logo_uri = Utils.path2uri(
+                File.join(HTMLDialogs::DIR, 'img', 'texture-haven-logo.svg')
+            )
+
+            SESSION[:model_materials].each do |model_material|
+            %>
+            <li class="material">
+
+                <img
+                    class="model-material thumbnail"
+                    src="<%= model_material[:thumbnail_uri] %>"
+                    width="96"
+                    height="96"
+                    title="<%= model_material[:display_name] %> <%= TRANSLATE['in model'] %>"
+                    data-name="<%= model_material[:name] %>"
+                />
+
+                <span class="name"><%= model_material[:display_name] %></span>
+
+            </li>
+            <%
+            end
+            %>
+
+            <%
+            SESSION[:skm_files].each do |skm_file|
+            %>
+            <li class="material">
+
+                <a href="https://www.sketchup.com/">
+                    <img class="provider-logo" src="<%= sketchup_logo_uri %>" title="SketchUp" />
+                </a>
+
+                <img
+                    class="skm-file thumbnail"
+                    src="<%= skm_file[:thumbnail_uri] %>"
+                    width="96"
+                    height="96"
+                    title="<%= skm_file[:display_name] %>"
+                    data-path="<%= skm_file[:path] %>"
+                />
+
+                <span class="name"><%= skm_file[:display_name] %></span>
+
+            </li>
+            <%
+            end
+            %>
+
+            <%
+            SESSION[:th_materials].each do |th_material|
+            %>
+            <li class="material">
+
+                <a href="<%= TextureHaven::BASE_URL %>">
+                    <img class="provider-logo" src="<%= th_logo_uri %>" title="Texture Haven" />
+                </a>
+
+                <img
+                    class="th-material thumbnail"
+                    src="<%= th_material[:thumbnail_uri] %>"
+                    width="96"
+                    height="96"
+                    title="<%= th_material[:display_name] %>"
+                    data-texture-url="<%= th_material[:texture_url] %>"
+                    data-texture-size="<%= th_material[:texture_size] %>"
+                    data-display-name="<%= th_material[:display_name] %>"
+                />
+
+                <span class="name"><%= th_material[:display_name] %></span>
+
+            </li>
+            <%
+            end
+            %>
+
+        </ul>
+
+    </div>
+
+</body>
+
+</html>

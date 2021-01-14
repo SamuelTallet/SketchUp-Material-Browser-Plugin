@@ -1,0 +1,104 @@
+/**
+ * Material Browser (MBR) UI.
+ *
+ * Package: MBR extension for SketchUp
+ *
+ * Copyright: © 2021 Samuel Tallet
+ *
+ * Licence: GNU General Public License 3.0
+ */
+
+body {
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+
+}
+
+.toolbar {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    text-align: center;
+
+    background: white;
+
+    padding-bottom: 20px;
+
+    z-index: 1;
+
+}
+
+.toolbar .search {
+
+    padding: 5px;
+
+    border-style: solid;
+    border-color: rgb(221, 221, 221);
+    border-width: 1px;
+    border-radius: 5px;
+    
+}
+
+.toolbar .search:focus {
+    outline: none;
+}
+
+.toolbar .display-provider {
+
+    position: relative;
+    top: -0.5px;
+    left: 1px;
+
+    vertical-align: middle;
+
+}
+
+.toolbar .display-provider:focus {
+    outline: none;
+}
+
+.list {
+
+    list-style: none;
+
+    margin-top: 50px;
+    
+}
+
+.material {
+
+    position: relative;
+    display: inline-block;
+
+    margin-right: 5px;
+
+    cursor: pointer;
+
+}
+
+.material .provider-logo {
+
+    display: none;
+
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    width: 32px;
+    height: 32px;
+
+    opacity: 0.8;
+
+}
+
+.material .provider-logo.displayed {
+    display: block;
+}
+
+.material .name {
+    display: none;
+}
