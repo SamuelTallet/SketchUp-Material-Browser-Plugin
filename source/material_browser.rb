@@ -26,7 +26,7 @@ require 'extensions'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 
   # Load translation if it's available for current locale.
   TRANSLATE = LanguageHandler.new('mbr.strings')
@@ -37,6 +37,7 @@ module MaterialBrowser
 
   # Initialize session storage.
   SESSION = {
+    settings: nil,
     model_materials: [],
     skm_files: [],
     th_materials: [],

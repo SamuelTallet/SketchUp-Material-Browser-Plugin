@@ -56,7 +56,11 @@ module MaterialBrowser
 
     # When SketchUp closes:
     def onQuit()
+
       Cache.remove_material_thumbnails_dir
+
+      SESSION[:settings].write
+
     end
 
   end

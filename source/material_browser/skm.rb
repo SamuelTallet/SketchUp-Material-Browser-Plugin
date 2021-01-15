@@ -32,25 +32,25 @@ module MaterialBrowser
   # Manages SketchUp Material (SKM) files.
   module SKM
 
-    # Gets absolute path to stock materials directory.
+    # Gets absolute path to stock SKM directory.
     #
     # @raise [RuntimeError]
     #
     # @return [String]
-    def self.stock_materials_path
+    def self.stock_skm_path
 
       sketchup_year_version = Sketchup.version.to_i.to_s
 
       if Sketchup.platform == :platform_osx
 
-        stock_materials_path = File.join(
+        stock_skm_path = File.join(
           '/', 'Applications', 'SketchUp ' + '20' + sketchup_year_version,
           'SketchUp.app', 'Contents', 'Resources', 'Content', 'Materials'
         )
 
       elsif Sketchup.platform == :platform_win
 
-        stock_materials_path = File.join(
+        stock_skm_path = File.join(
           ENV['PROGRAMDATA'], 'SketchUp', 'SketchUp ' + '20' + sketchup_year_version,
           'SketchUp', 'Materials'
         )
@@ -61,25 +61,26 @@ module MaterialBrowser
 
     end
 
-    # Gets absolute path to custom materials directory.
+    # Gets absolute path to custom SKM directory.
+    # Not to be confused with custom SKM path set by user in Material Browser UI.
     #
     # @raise [RuntimeError]
     #
     # @return [String]
-    def self.custom_materials_path
+    def self.custom_skm_path
 
       sketchup_year_version = Sketchup.version.to_i.to_s
 
       if Sketchup.platform == :platform_osx
 
-        custom_materials_path = File.join(
+        custom_skm_path = File.join(
           ENV['HOME'], 'Library', 'Application Support',
           'SketchUp ' + '20' + sketchup_year_version, 'SketchUp', 'Materials'
         )
 
       elsif Sketchup.platform == :platform_win
 
-        custom_materials_path = File.join(
+        custom_skm_path = File.join(
           ENV['APPDATA'], 'SketchUp', 'SketchUp ' + '20' + sketchup_year_version,
           'SketchUp', 'Materials'
         )
@@ -98,18 +99,32 @@ module MaterialBrowser
 
       Cache.create_material_thumbnails_dir
 
-      stock_skm_glob_pattern = File.join(stock_materials_path, '**', '*.skm')
-      custom_skm_glob_pattern = File.join(custom_materials_path, '**', '*.skm')
+      stock_skm_glob_pattern = File.join(stock_skm_path, '**', '*.skm')
+      custom_skm_glob_pattern = File.join(custom_skm_path, '**', '*.skm')
 
+      skm_glob_patterns = [stock_skm_glob_pattern, custom_skm_glob_pattern]
+
+      user_custom_skm_path = SESSION[:settings].get_custom_skm_path
+
+      if Dir.exist?(user_custom_skm_path)
+
+        user_custom_skm_glob_pattern = File.join(user_custom_skm_path, '**', '*.skm')
+        skm_glob_patterns.push(user_custom_skm_glob_pattern)
+
+      end
+      
       # Fix SKM glob patterns only on Windows.
       if Sketchup.platform == :platform_win
-        stock_skm_glob_pattern.gsub!('\\', '/')
-        custom_skm_glob_pattern.gsub!('\\', '/')
+
+        skm_glob_patterns.each do |skm_glob_pattern|
+          skm_glob_pattern.gsub!('\\', '/')
+        end
+        
       end
       
       skm_file_count = 0
   
-      Dir.glob([stock_skm_glob_pattern, custom_skm_glob_pattern]).each do |skm_file_path|
+      Dir.glob(skm_glob_patterns).each do |skm_file_path|
   
         skm_file_count = skm_file_count + 1
   

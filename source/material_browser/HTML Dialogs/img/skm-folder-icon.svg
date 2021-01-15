@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" version="1.1" id="svg34">
+  <defs id="defs27">
+    <style id="style25">
+      .cls-1{fill:none;stroke:#333;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px}
+    </style>
+  </defs>
+  <g id="folder">
+    <path class="cls-1" d="M25 12V7H3v18h22l4-13h-4z" id="path29"/>
+    <path class="cls-1" d="M25 25H3l4-13h22l-4 13z" id="path31"/>
+  </g>
+  <text xml:space="preserve" style="line-height:1.25" x="6.94" y="21.403" id="text42" font-style="normal" font-weight="600" font-size="7.5" font-family="sans-serif" fill="#333" fill-opacity="1" stroke="none">
+    <tspan id="tspan40" x="6.94" y="21.403" font-size="7.5">SKM</tspan>
+  </text>
+</svg>

@@ -45,7 +45,7 @@ module MaterialBrowser
 
         next if th_material_thumbnail_basename == '.' or th_material_thumbnail_basename == '..'
         
-        th_material_metadata = th_material_thumbnail_basename.sub('.png', '').split('-')
+        th_material_metadata = th_material_thumbnail_basename.sub('.jpg', '').split('-')
         th_material_name = th_material_metadata[0]
         th_material_texture_size = th_material_metadata[1].to_f
 

@@ -41,13 +41,20 @@ module MaterialBrowser
 
       Sketchup.active_model.materials.each do |material|
 
-        material_thumbnail_basename = material.name + ' #MODEL-' + Time.now.to_i.to_s + '.png'
+        material_thumbnail_basename = material.name + ' #MODEL-' + Time.now.to_i.to_s + '.jpg'
         material_thumbnail_path = File.join(
           Cache.material_thumbnails_path, material_thumbnail_basename
         )
 
+        material_thumbnail_size = 256
+
+        # Material thumbnail size can't exceed texture size.
+        if !material.texture.nil? && material.texture.image_height <= 256
+          material_thumbnail_size = material.texture.image_height - 1
+        end
+
         # Note this method overwrites files having same name.
-        material.write_thumbnail(material_thumbnail_path, 96)
+        material.write_thumbnail(material_thumbnail_path, material_thumbnail_size)
 
         SESSION[:model_materials].push({
 

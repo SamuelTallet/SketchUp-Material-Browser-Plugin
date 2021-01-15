@@ -21,6 +21,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
+require 'material_browser/settings'
 require 'material_browser/app_observer'
 require 'material_browser/materials_observer'
 require 'material_browser/cache'
@@ -31,6 +32,12 @@ require 'material_browser/menu'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
+
+  SESSION[:settings] = Settings.new
+
+  # Settings are written when SketchUp closes.
+  # See: `MaterialBrowser::AppObserver`.
+  SESSION[:settings].read
 
   Sketchup.add_observer(AppObserver.new)
   Sketchup.active_model.materials.add_observer(MaterialsObserver.new)

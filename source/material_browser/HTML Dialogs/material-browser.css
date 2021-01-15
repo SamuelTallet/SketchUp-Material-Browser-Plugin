@@ -21,7 +21,6 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-
     text-align: center;
 
     background: white;
@@ -32,7 +31,49 @@ body {
 
 }
 
-.toolbar .search {
+.toolbar .icon {
+
+    width: 24px;
+    height: 24px;
+
+}
+
+.toolbar .zoom {
+
+    position: relative;
+    top: 7px;
+    left: 0;
+
+}
+
+.toolbar .zoom .icon {
+
+    position: absolute;
+    left: 11px;
+
+}
+
+.toolbar .zoom .in.icon {
+    top: 0;
+}
+
+.toolbar .zoom .out.icon {
+    top: 111px;
+}
+
+.toolbar .zoom .slider {
+
+    position: absolute;
+    left: -44px;
+    top: 28px;
+
+    -webkit-appearance: slider-vertical;
+    cursor: -webkit-grab;
+    
+}
+
+.toolbar .search,
+.toolbar .display {
 
     padding: 5px;
 
@@ -43,22 +84,34 @@ body {
     
 }
 
-.toolbar .search:focus {
+.toolbar .search:focus,
+.toolbar .display:focus {
     outline: none;
 }
 
-.toolbar .display-provider {
+.toolbar .search {
+
+    width: 160px;
+
+    margin-left: 16px;
+
+}
+
+.toolbar .display {
+
+    width: 192px;
+    margin-left: 1px;
+
+}
+
+.toolbar .skm-folder.icon {
 
     position: relative;
-    top: -0.5px;
-    left: 1px;
+    top: 7px;
+    left: 0;
 
-    vertical-align: middle;
+    cursor: pointer;
 
-}
-
-.toolbar .display-provider:focus {
-    outline: none;
 }
 
 .list {
@@ -83,7 +136,6 @@ body {
 .material .provider-logo {
 
     display: none;
-
     position: absolute;
     top: 5px;
     left: 5px;
@@ -100,5 +152,21 @@ body {
 }
 
 .material .name {
+
     display: none;
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+
+    width: 100%;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+
+    text-align: center;
+
+}
+
+.material .name.displayed {
+    display: block;
 }

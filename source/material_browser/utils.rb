@@ -85,15 +85,18 @@ module MaterialBrowser
       begin
 
         File.open(output, 'wb') do |output_file|
+
           output_file.write(
             URI.open(url, 'User-Agent' => user_agent).read
           )
           output_file.close
+          
         end
 
       rescue => error
 
         puts 'Error: ' + error.message
+
         return false
         
       end

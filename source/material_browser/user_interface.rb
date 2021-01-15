@@ -160,6 +160,18 @@ module MaterialBrowser
     # @return [nil]
     private def configure_html_dialog
 
+      @html_dialog.add_action_callback('setMaterialThumbnailsZoom') do |_ctx, value|
+        SESSION[:settings].set_material_thumbnails_zoom(value.to_i)
+      end
+
+      @html_dialog.add_action_callback('setMaterialThumbnailsDisplay') do |_ctx, value|
+        SESSION[:settings].set_material_thumbnails_display(value.to_s)
+      end
+
+      @html_dialog.add_action_callback('setCustomSKMPath') do |_ctx|
+        SESSION[:settings].set_custom_skm_path(UI.select_directory.to_s)
+      end
+
       @html_dialog.add_action_callback('selectModelMaterial') do |_ctx, model_material_name|
         Model.select_material(model_material_name)
       end

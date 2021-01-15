@@ -18,24 +18,88 @@ MaterialBrowser = {}
  */
 MaterialBrowser.addEventListeners = () => {
 
-    document.querySelector('.display-provider').addEventListener('change', event => {
+    document.querySelector('.zoom .slider').addEventListener('change', event => {
 
-        let providerLogos = document.querySelectorAll('.provider-logo')
+        let materialThumbnails = document.querySelectorAll('.material .thumbnail')
+        let materialThumbnailsZoomValue = event.currentTarget.value
 
-        if (event.currentTarget.checked) {
+        materialThumbnails.forEach(materialThumbnail => {
+            materialThumbnail.width = materialThumbnailsZoomValue
+            materialThumbnail.height = materialThumbnailsZoomValue
+        })
 
-            providerLogos.forEach(providerLogo => {
-                providerLogo.classList.add('displayed')
-            })
+        sketchup.setMaterialThumbnailsZoom(materialThumbnailsZoomValue)
 
-        } else {
+    })
 
-            providerLogos.forEach(providerLogo => {
-                providerLogo.classList.remove('displayed')
-            })
+    document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
+
+    document.querySelector('.display').addEventListener('change', event => {
+
+        let materialNames = document.querySelectorAll('.material .name')
+        let materialProviderLogos = document.querySelectorAll('.material .provider-logo')
+        let materialThumbnailsDisplayValue = event.currentTarget.value
+
+        switch (materialThumbnailsDisplayValue) {
+
+            case 'nothing_more':
+
+                materialNames.forEach(materialName => {
+                    materialName.classList.remove('displayed')
+                })
+
+                materialProviderLogos.forEach(materialProviderLogo => {
+                    materialProviderLogo.classList.remove('displayed')
+                })
+                
+                break;
+
+            case 'name':
+
+                materialNames.forEach(materialName => {
+                    materialName.classList.add('displayed')
+                })
+
+                materialProviderLogos.forEach(materialProviderLogo => {
+                    materialProviderLogo.classList.remove('displayed')
+                })
+
+                break;
+
+            case 'provider':
+
+                materialNames.forEach(materialName => {
+                    materialName.classList.remove('displayed')
+                })
+
+                materialProviderLogos.forEach(materialProviderLogo => {
+                    materialProviderLogo.classList.add('displayed')
+                })
+
+                break;
+
+            case 'name_and_provider':
+
+                materialNames.forEach(materialName => {
+                    materialName.classList.add('displayed')
+                })
+
+                materialProviderLogos.forEach(materialProviderLogo => {
+                    materialProviderLogo.classList.add('displayed')
+                })
+
+                break;
 
         }
 
+        sketchup.setMaterialThumbnailsDisplay(materialThumbnailsDisplayValue)
+
+    })
+
+    document.querySelector('.display').dispatchEvent(new Event('change'))
+
+    document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
+        sketchup.setCustomSKMPath()
     })
 
     document.querySelectorAll('.model-material.thumbnail').forEach(modelMaterialThumbnail => {

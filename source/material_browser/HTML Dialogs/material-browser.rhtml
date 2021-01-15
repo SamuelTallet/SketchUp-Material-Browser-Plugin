@@ -20,22 +20,81 @@
 
     <div id="materials">
 
+        <%
+        zoom_in_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'img', 'zoom-in-icon.svg')
+        )
+
+        zoom_out_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'img', 'zoom-out-icon.svg')
+        )
+
+        skm_folder_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'img', 'skm-folder-icon.svg')
+        )
+
+        sketchup_logo_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'img', 'sketchup-logo.svg')
+        )
+
+        th_logo_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'img', 'texture-haven-logo.svg')
+        )
+        %>
+
         <div class="toolbar">
+
+            <div class="zoom">
+
+                <img class="in icon" src="<%= zoom_in_icon_uri %>">
+
+                <input type="range" class="slider"
+                    value="<%= SESSION[:settings].get_material_thumbnails_zoom %>"
+                    min="64" max="256" step="8"
+                />
+                
+                <img class="out icon" src="<%= zoom_out_icon_uri %>">
+                
+            </div>
+
             <input class="search" placeholder="<%= TRANSLATE['Search by name'] %>" />
-            <input type="checkbox" class="display-provider" /> <%= TRANSLATE['Display provider'] %>
+
+            <% option_value_to_select = SESSION[:settings].get_material_thumbnails_display %>
+            <select class="display">
+                
+                <option value="nothing_more"
+                    <%= option_value_to_select == 'nothing_more' ? 'selected' : '' %>
+                ><%= TRANSLATE['Display...'] %>
+                </option>
+
+                <option value="name"
+                    <%= option_value_to_select == 'name' ? 'selected' : '' %>
+                ><%= TRANSLATE['Display name'] %>
+                </option>
+
+                <option value="provider"
+                    <%= option_value_to_select == 'provider' ? 'selected' : '' %>
+                ><%= TRANSLATE['Display provider'] %>
+                </option>
+
+                <option value="name_and_provider"
+                    <%= option_value_to_select == 'name_and_provider' ? 'selected' : '' %>
+                ><%= TRANSLATE['Display name and provider'] %>
+                </option>
+
+            </select>
+
+            <img
+                class="skm-folder icon"
+                src="<%= skm_folder_icon_uri %>"
+                title="<%= TRANSLATE['Use a custom SKM folder'] %>"
+            />
+        
         </div>
 
         <ul class="list">
 
             <%
-            sketchup_logo_uri = Utils.path2uri(
-                File.join(HTMLDialogs::DIR, 'img', 'sketchup-logo.svg')
-            )
-
-            th_logo_uri = Utils.path2uri(
-                File.join(HTMLDialogs::DIR, 'img', 'texture-haven-logo.svg')
-            )
-
             SESSION[:model_materials].each do |model_material|
             %>
             <li class="material">
