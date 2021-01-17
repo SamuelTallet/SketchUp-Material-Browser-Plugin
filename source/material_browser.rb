@@ -26,7 +26,7 @@ require 'extensions'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  VERSION = '1.0.1'
+  VERSION = '1.0.2'
 
   # Load translation if it's available for current locale.
   TRANSLATE = LanguageHandler.new('mbr.strings')

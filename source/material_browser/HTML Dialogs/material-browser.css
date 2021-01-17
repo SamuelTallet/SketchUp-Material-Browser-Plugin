@@ -40,32 +40,32 @@ body {
 
 .toolbar .zoom {
 
-    position: relative;
-    top: 7px;
+    position: absolute;
+    top: 0;
     left: 0;
+
+    width: 30px;
+
+    margin-top: 6px;
+    margin-left: 11px;
 
 }
 
 .toolbar .zoom .icon {
 
-    position: absolute;
-    left: 11px;
+    display: block;
 
-}
-
-.toolbar .zoom .in.icon {
-    top: 0;
-}
-
-.toolbar .zoom .out.icon {
-    top: 111px;
+    cursor: pointer;
+    
 }
 
 .toolbar .zoom .slider {
 
-    position: absolute;
-    left: -44px;
-    top: 28px;
+    position: relative;
+    left: -55px;
+    top: 0;
+
+    height: 120px;
 
     -webkit-appearance: slider-vertical;
     cursor: -webkit-grab;
@@ -127,7 +127,9 @@ body {
     position: relative;
     display: inline-block;
 
-    margin-right: 5px;
+    margin-right: 6px;
+
+    overflow: hidden;
 
     cursor: pointer;
 

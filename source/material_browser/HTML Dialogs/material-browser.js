@@ -34,6 +34,38 @@ MaterialBrowser.addEventListeners = () => {
 
     document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
 
+    document.querySelector('.zoom .in.icon').addEventListener('click', event => {
+
+        let materialThumbnailsZoomSlider = document.querySelector('.zoom .slider')
+        let materialThumbnailsZoomValue = parseInt(materialThumbnailsZoomSlider.value)
+
+        if ( materialThumbnailsZoomValue === parseInt(materialThumbnailsZoomSlider.max) ) {
+            return
+        }
+
+        materialThumbnailsZoomValue += parseInt(materialThumbnailsZoomSlider.step)
+        materialThumbnailsZoomSlider.value = materialThumbnailsZoomValue
+
+        materialThumbnailsZoomSlider.dispatchEvent(new Event('change'))
+
+    })
+
+    document.querySelector('.zoom .out.icon').addEventListener('click', event => {
+
+        let materialThumbnailsZoomSlider = document.querySelector('.zoom .slider')
+        let materialThumbnailsZoomValue = parseInt(materialThumbnailsZoomSlider.value)
+
+        if ( materialThumbnailsZoomValue === parseInt(materialThumbnailsZoomSlider.min) ) {
+            return
+        }
+
+        materialThumbnailsZoomValue -= parseInt(materialThumbnailsZoomSlider.step)
+        materialThumbnailsZoomSlider.value = materialThumbnailsZoomValue
+
+        materialThumbnailsZoomSlider.dispatchEvent(new Event('change'))
+
+    })
+
     document.querySelector('.display').addEventListener('change', event => {
 
         let materialNames = document.querySelectorAll('.material .name')
