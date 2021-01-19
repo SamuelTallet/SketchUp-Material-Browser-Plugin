@@ -53,10 +53,20 @@ module MaterialBrowser
   extension.creator     = 'Samuel Tallet'
   extension.copyright   = "© 2021 #{extension.creator}"
 
-  extension.description = TRANSLATE[
-    'Search for SketchUp materials by name from three sources: active model, SKM ' +
-      'collections and Texture Haven. Select material of your choice in one click.'
+  extension_features = [
+
+    TRANSLATE[
+      'Search for SketchUp materials by name from three sources: active model, SKM ' +
+      'collections and Texture Haven.'
+    ],
+
+    TRANSLATE['Filter materials by source.'],
+
+    TRANSLATE['Select material of your choice in one click.']
+
   ]
+
+  extension.description = extension_features.join(' ')
 
   Sketchup.register_extension(
     extension,

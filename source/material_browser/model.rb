@@ -48,9 +48,17 @@ module MaterialBrowser
 
         material_thumbnail_size = 256
 
-        # Material thumbnail size can't exceed texture size.
-        if !material.texture.nil? && material.texture.image_height <= 256
-          material_thumbnail_size = material.texture.image_height - 1
+        if !material.texture.nil?
+
+          material_texture_size = [
+            material.texture.image_height, material.texture.image_width
+          ].min
+  
+          # Material thumbnail size can't exceed texture size.
+          if material_texture_size <= 256
+            material_thumbnail_size = material_texture_size - 1
+          end
+
         end
 
         # Note this method overwrites files having same name.

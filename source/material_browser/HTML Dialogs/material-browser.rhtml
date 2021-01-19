@@ -18,6 +18,37 @@
 
 <body>
 
+    <div class="filters-overlay">
+
+        <% option_value_to_select = SESSION[:settings].get_source_filter_value %>
+        <select class="filter-by-source">
+
+            <option value="all"
+                <%= option_value_to_select == 'all' ? 'selected' : '' %>
+            >**<%= TRANSLATE['All sources'] %>**
+            </option>
+
+            <option value="active_model"
+                <%= option_value_to_select == 'active_model' ? 'selected' : '' %>
+            ><%= TRANSLATE['Active model'] %>
+            </option>
+
+            <option value="skm_collections"
+                <%= option_value_to_select == 'skm_collections' ? 'selected' : '' %>
+            ><%= TRANSLATE['SKM collections'] %>
+            </option>
+
+            <option value="texture_haven"
+                <%= option_value_to_select == 'texture_haven' ? 'selected' : '' %>
+            ><%= TRANSLATE['Texture Haven'] %>
+            </option>
+
+        </select>
+
+        <button class="validate-filters"><%= TRANSLATE['Validate filters'] %></button>
+
+    </div>
+
     <div id="materials">
 
         <%
@@ -33,6 +64,10 @@
             File.join(HTMLDialogs::DIR, 'img', 'skm-folder-icon.svg')
         )
 
+        filter_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'img', 'filter-icon.svg')
+        )
+
         sketchup_logo_uri = Utils.path2uri(
             File.join(HTMLDialogs::DIR, 'img', 'sketchup-logo.svg')
         )
@@ -44,52 +79,70 @@
 
         <div class="toolbar">
 
-            <div class="zoom">
+            <div class="vertical">
 
-                <img class="in icon" src="<%= zoom_in_icon_uri %>">
+                <div class="zoom">
 
-                <input type="range" class="slider"
-                    value="<%= SESSION[:settings].get_material_thumbnails_zoom %>"
-                    min="64" max="256" step="8"
+                    <img class="in icon" src="<%= zoom_in_icon_uri %>">
+    
+                    <input type="range" class="slider"
+                        value="<%= SESSION[:settings].get_zoom_value %>"
+                        min="64" max="256" step="8"
+                    />
+                    
+                    <img class="out icon" src="<%= zoom_out_icon_uri %>">
+                    
+                </div>
+
+                <img
+                    class="filter icon"
+                    src="<%= filter_icon_uri %>"
+                    title="<%= TRANSLATE['Filter by source, etc.'] %>"
                 />
-                
-                <img class="out icon" src="<%= zoom_out_icon_uri %>">
-                
+
+                <img
+                    class="skm-folder icon"
+                    src="<%= skm_folder_icon_uri %>"
+                    title="<%= TRANSLATE['Use a custom SKM folder'] %>"
+                />
+
             </div>
 
-            <input class="search" placeholder="<%= TRANSLATE['Search by name'] %>" />
+            <div class="horizontal">
 
-            <% option_value_to_select = SESSION[:settings].get_material_thumbnails_display %>
-            <select class="display">
-                
-                <option value="nothing_more"
-                    <%= option_value_to_select == 'nothing_more' ? 'selected' : '' %>
-                ><%= TRANSLATE['Display...'] %>
-                </option>
+                <input
+                    type="text"
+                    class="search"
+                    placeholder="<%= TRANSLATE['Search by name'] %>"
+                />
 
-                <option value="name"
-                    <%= option_value_to_select == 'name' ? 'selected' : '' %>
-                ><%= TRANSLATE['Display name'] %>
-                </option>
+                <% option_value_to_select = SESSION[:settings].get_display_value %>
+                <select class="display">
+                    
+                    <option value="nothing_more"
+                        <%= option_value_to_select == 'nothing_more' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Display...'] %>
+                    </option>
+    
+                    <option value="name"
+                        <%= option_value_to_select == 'name' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Display name'] %>
+                    </option>
+    
+                    <option value="source"
+                        <%= option_value_to_select == 'source' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Display source'] %>
+                    </option>
+    
+                    <option value="name_and_source"
+                        <%= option_value_to_select == 'name_and_source' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Display name and source'] %>
+                    </option>
+    
+                </select>
 
-                <option value="provider"
-                    <%= option_value_to_select == 'provider' ? 'selected' : '' %>
-                ><%= TRANSLATE['Display provider'] %>
-                </option>
-
-                <option value="name_and_provider"
-                    <%= option_value_to_select == 'name_and_provider' ? 'selected' : '' %>
-                ><%= TRANSLATE['Display name and provider'] %>
-                </option>
-
-            </select>
-
-            <img
-                class="skm-folder icon"
-                src="<%= skm_folder_icon_uri %>"
-                title="<%= TRANSLATE['Use a custom SKM folder'] %>"
-            />
-        
+            </div>
+            
         </div>
 
         <ul class="list">
@@ -97,7 +150,7 @@
             <%
             SESSION[:model_materials].each do |model_material|
             %>
-            <li class="material">
+            <li class="material" data-source="active_model">
 
                 <img
                     class="model-material thumbnail"
@@ -118,10 +171,10 @@
             <%
             SESSION[:skm_files].each do |skm_file|
             %>
-            <li class="material">
+            <li class="material" data-source="skm_collections">
 
                 <a href="https://www.sketchup.com/">
-                    <img class="provider-logo" src="<%= sketchup_logo_uri %>" title="SketchUp" />
+                    <img class="source-logo" src="<%= sketchup_logo_uri %>" title="SKM collections" />
                 </a>
 
                 <img
@@ -143,10 +196,10 @@
             <%
             SESSION[:th_materials].each do |th_material|
             %>
-            <li class="material">
+            <li class="material" data-source="texture_haven">
 
                 <a href="<%= TextureHaven::BASE_URL %>">
-                    <img class="provider-logo" src="<%= th_logo_uri %>" title="Texture Haven" />
+                    <img class="source-logo" src="<%= th_logo_uri %>" title="Texture Haven" />
                 </a>
 
                 <img

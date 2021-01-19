@@ -27,7 +27,7 @@ require 'material_browser/utils'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Texture Haven is a material provider.
+  # Texture Haven is a material source.
   module TextureHaven
 
     # Base URL of Texture Haven site.

@@ -1,5 +1,6 @@
 {
-    "material_thumbnails_zoom": 96,
-    "material_thumbnails_display": "nothing_more",
-    "custom_skm_path": ""
+    "zoom_value": 96,
+    "source_filter_value": "all",
+    "custom_skm_path": "",
+    "display_value": "nothing_more"
 }

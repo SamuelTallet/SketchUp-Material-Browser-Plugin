@@ -56,40 +56,40 @@ module MaterialBrowser
 
     end
 
-    # Sets "material thumbnails zoom" setting.
+    # Sets "zoom value" setting.
     #
-    # @param [Integer] value
-    def set_material_thumbnails_zoom(value)
-      @settings['material_thumbnails_zoom'] = value
+    # @param [Integer] zoom_value
+    def set_zoom_value(zoom_value)
+      @settings['zoom_value'] = zoom_value
     end
 
-    # Gets "material thumbnails zoom" setting.
+    # Gets "zoom value" setting.
     #
     # @return [Integer]
-    def get_material_thumbnails_zoom
-      @settings['material_thumbnails_zoom']
+    def get_zoom_value
+      @settings['zoom_value']
     end
 
-    # Sets "material thumbnails display" setting.
+    # Sets "source filter value" setting.
     #
-    # @param [String] value
-    def set_material_thumbnails_display(value)
-      @settings['material_thumbnails_display'] = value
+    # @param [Integer] source_filter_value
+    def set_source_filter_value(source_filter_value)
+      @settings['source_filter_value'] = source_filter_value
     end
 
-    # Gets "material thumbnails display" setting.
+    # Gets "source filter value" setting.
     #
-    # @return [String]
-    def get_material_thumbnails_display
-      @settings['material_thumbnails_display']
+    # @return [Integer]
+    def get_source_filter_value
+      @settings['source_filter_value']
     end
 
     # Sets "custom SKM path" setting.
     #
     # @param [String] path
-    def set_custom_skm_path(value)
+    def set_custom_skm_path(custom_skm_path)
 
-      @settings['custom_skm_path'] = value
+      @settings['custom_skm_path'] = custom_skm_path
 
       UI.messagebox(
         TRANSLATE['You must restart SketchUp to see changes in Material Browser UI.']
@@ -102,6 +102,20 @@ module MaterialBrowser
     # @return [String]
     def get_custom_skm_path
       @settings['custom_skm_path']
+    end
+
+    # Sets "display value" setting.
+    #
+    # @param [String] display_value
+    def set_display_value(display_value)
+      @settings['display_value'] = display_value
+    end
+
+    # Gets "display value" setting.
+    #
+    # @return [String]
+    def get_display_value
+      @settings['display_value']
     end
 
     # Writes settings to disk.

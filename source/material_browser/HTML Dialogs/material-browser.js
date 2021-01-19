@@ -21,58 +21,113 @@ MaterialBrowser.addEventListeners = () => {
     document.querySelector('.zoom .slider').addEventListener('change', event => {
 
         let materialThumbnails = document.querySelectorAll('.material .thumbnail')
-        let materialThumbnailsZoomValue = event.currentTarget.value
+        let zoomValue = event.currentTarget.value
 
         materialThumbnails.forEach(materialThumbnail => {
-            materialThumbnail.width = materialThumbnailsZoomValue
-            materialThumbnail.height = materialThumbnailsZoomValue
+            materialThumbnail.width = zoomValue
+            materialThumbnail.height = zoomValue
         })
 
-        sketchup.setMaterialThumbnailsZoom(materialThumbnailsZoomValue)
+        sketchup.setZoomValue(zoomValue)
 
     })
 
     document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
 
-    document.querySelector('.zoom .in.icon').addEventListener('click', event => {
+    document.querySelector('.zoom .in.icon').addEventListener('click', _event => {
 
-        let materialThumbnailsZoomSlider = document.querySelector('.zoom .slider')
-        let materialThumbnailsZoomValue = parseInt(materialThumbnailsZoomSlider.value)
+        let zoomSlider = document.querySelector('.zoom .slider')
+        let zoomValue = parseInt(zoomSlider.value)
 
-        if ( materialThumbnailsZoomValue === parseInt(materialThumbnailsZoomSlider.max) ) {
+        if ( zoomValue === parseInt(zoomSlider.max) ) {
             return
         }
 
-        materialThumbnailsZoomValue += parseInt(materialThumbnailsZoomSlider.step)
-        materialThumbnailsZoomSlider.value = materialThumbnailsZoomValue
+        zoomValue += parseInt(zoomSlider.step)
+        zoomSlider.value = zoomValue
 
-        materialThumbnailsZoomSlider.dispatchEvent(new Event('change'))
+        zoomSlider.dispatchEvent(new Event('change'))
 
     })
 
     document.querySelector('.zoom .out.icon').addEventListener('click', event => {
 
-        let materialThumbnailsZoomSlider = document.querySelector('.zoom .slider')
-        let materialThumbnailsZoomValue = parseInt(materialThumbnailsZoomSlider.value)
+        let zoomSlider = document.querySelector('.zoom .slider')
+        let zoomValue = parseInt(zoomSlider.value)
 
-        if ( materialThumbnailsZoomValue === parseInt(materialThumbnailsZoomSlider.min) ) {
+        if ( zoomValue === parseInt(zoomSlider.min) ) {
             return
         }
 
-        materialThumbnailsZoomValue -= parseInt(materialThumbnailsZoomSlider.step)
-        materialThumbnailsZoomSlider.value = materialThumbnailsZoomValue
+        zoomValue -= parseInt(zoomSlider.step)
+        zoomSlider.value = zoomValue
 
-        materialThumbnailsZoomSlider.dispatchEvent(new Event('change'))
+        zoomSlider.dispatchEvent(new Event('change'))
 
+    })
+
+    document.querySelector('.filter.icon').addEventListener('click', _event => {
+        
+        document.querySelector('#materials').classList.add('hidden')
+        document.querySelector('.filters-overlay').classList.add('displayed')
+
+    })
+
+    document.querySelector('.filter-by-source').addEventListener('change', event => {
+
+        let sourceFilterValue = event.currentTarget.value
+
+        if ( sourceFilterValue === 'all' ) {
+
+            let materials = document.querySelectorAll('.material')
+
+            materials.forEach(material => {
+                material.classList.remove('hidden')
+            })
+
+        } else {
+
+            let materialsToDisplay = document.querySelectorAll(
+                '.material[data-source="' + sourceFilterValue + '"]'
+            )
+            let materialsToHide = document.querySelectorAll(
+                '.material:not([data-source="' + sourceFilterValue + '"])'
+            )
+    
+            materialsToDisplay.forEach(materialToDisplay => {
+                materialToDisplay.classList.remove('hidden')
+            })
+    
+            materialsToHide.forEach(materialToHide => {
+                materialToHide.classList.add('hidden')
+            })
+
+        }
+
+        sketchup.setSourceFilterValue(sourceFilterValue)
+
+    })
+
+    document.querySelector('.filter-by-source').dispatchEvent(new Event('change'))
+
+    document.querySelector('.validate-filters').addEventListener('click', _event => {
+
+        document.querySelector('.filters-overlay').classList.remove('displayed')
+        document.querySelector('#materials').classList.remove('hidden')
+        
+    })
+
+    document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
+        sketchup.setCustomSKMPath()
     })
 
     document.querySelector('.display').addEventListener('change', event => {
 
+        let displayValue = event.currentTarget.value
         let materialNames = document.querySelectorAll('.material .name')
-        let materialProviderLogos = document.querySelectorAll('.material .provider-logo')
-        let materialThumbnailsDisplayValue = event.currentTarget.value
-
-        switch (materialThumbnailsDisplayValue) {
+        let materialSourceLogos = document.querySelectorAll('.material .source-logo')
+        
+        switch (displayValue) {
 
             case 'nothing_more':
 
@@ -80,8 +135,8 @@ MaterialBrowser.addEventListeners = () => {
                     materialName.classList.remove('displayed')
                 })
 
-                materialProviderLogos.forEach(materialProviderLogo => {
-                    materialProviderLogo.classList.remove('displayed')
+                materialSourceLogos.forEach(materialSourceLogo => {
+                    materialSourceLogo.classList.remove('displayed')
                 })
                 
                 break;
@@ -92,47 +147,43 @@ MaterialBrowser.addEventListeners = () => {
                     materialName.classList.add('displayed')
                 })
 
-                materialProviderLogos.forEach(materialProviderLogo => {
-                    materialProviderLogo.classList.remove('displayed')
+                materialSourceLogos.forEach(materialSourceLogo => {
+                    materialSourceLogo.classList.remove('displayed')
                 })
 
                 break;
 
-            case 'provider':
+            case 'source':
 
                 materialNames.forEach(materialName => {
                     materialName.classList.remove('displayed')
                 })
 
-                materialProviderLogos.forEach(materialProviderLogo => {
-                    materialProviderLogo.classList.add('displayed')
+                materialSourceLogos.forEach(materialSourceLogo => {
+                    materialSourceLogo.classList.add('displayed')
                 })
 
                 break;
 
-            case 'name_and_provider':
+            case 'name_and_source':
 
                 materialNames.forEach(materialName => {
                     materialName.classList.add('displayed')
                 })
 
-                materialProviderLogos.forEach(materialProviderLogo => {
-                    materialProviderLogo.classList.add('displayed')
+                materialSourceLogos.forEach(materialSourceLogo => {
+                    materialSourceLogo.classList.add('displayed')
                 })
 
                 break;
 
         }
 
-        sketchup.setMaterialThumbnailsDisplay(materialThumbnailsDisplayValue)
+        sketchup.setDisplayValue(displayValue)
 
     })
 
     document.querySelector('.display').dispatchEvent(new Event('change'))
-
-    document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
-        sketchup.setCustomSKMPath()
-    })
 
     document.querySelectorAll('.model-material.thumbnail').forEach(modelMaterialThumbnail => {
         

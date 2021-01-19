@@ -156,6 +156,8 @@ module MaterialBrowser
 
               })
 
+              break
+
             end
 
           end

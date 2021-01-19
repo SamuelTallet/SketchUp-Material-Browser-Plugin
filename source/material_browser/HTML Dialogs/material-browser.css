@@ -8,11 +8,66 @@
  * Licence: GNU General Public License 3.0
  */
 
+*:focus {
+    outline: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
 body {
 
     font-family: Arial, sans-serif;
     font-size: 13px;
 
+}
+
+input[type="text"],
+select {
+
+    padding: 5px;
+
+    border-style: solid;
+    border-color: rgb(221, 221, 221);
+    border-width: 1px;
+    border-radius: 5px;
+    
+}
+
+button {
+
+    border-color: transparent;
+    border-radius: 5px;
+
+    padding: 5px;
+    
+    background-color: rgb(0, 95, 158);
+    color: white;
+
+    cursor: pointer;
+
+}
+
+.filters-overlay {
+
+    display: none;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+    z-index: 2;
+
+}
+
+.filters-overlay.displayed {
+    display: table; /* Fix blurry text bug */
+}
+
+.validate-filters {
+    margin-left: 4px;
 }
 
 .toolbar {
@@ -33,12 +88,22 @@ body {
 
 .toolbar .icon {
 
+    display: block;
+
     width: 24px;
     height: 24px;
 
+    margin-top: 5px;
+
+    cursor: pointer;
+
 }
 
-.toolbar .zoom {
+.toolbar .icon:hover {
+    transform: scale(1.1);
+}
+
+.toolbar .vertical {
 
     position: absolute;
     top: 0;
@@ -52,11 +117,7 @@ body {
 }
 
 .toolbar .zoom .icon {
-
-    display: block;
-
-    cursor: pointer;
-    
+    margin-top: 0;
 }
 
 .toolbar .zoom .slider {
@@ -72,46 +133,16 @@ body {
     
 }
 
-.toolbar .search,
-.toolbar .display {
-
-    padding: 5px;
-
-    border-style: solid;
-    border-color: rgb(221, 221, 221);
-    border-width: 1px;
-    border-radius: 5px;
-    
-}
-
-.toolbar .search:focus,
-.toolbar .display:focus {
-    outline: none;
+.toolbar .skm-folder.icon {
+    margin-left: 1px;
 }
 
 .toolbar .search {
-
-    width: 160px;
-
     margin-left: 16px;
-
 }
 
 .toolbar .display {
-
-    width: 192px;
     margin-left: 1px;
-
-}
-
-.toolbar .skm-folder.icon {
-
-    position: relative;
-    top: 7px;
-    left: 0;
-
-    cursor: pointer;
-
 }
 
 .list {
@@ -135,7 +166,7 @@ body {
 
 }
 
-.material .provider-logo {
+.material .source-logo {
 
     display: none;
     position: absolute;
@@ -149,7 +180,7 @@ body {
 
 }
 
-.material .provider-logo.displayed {
+.material .source-logo.displayed {
     display: block;
 }
 
