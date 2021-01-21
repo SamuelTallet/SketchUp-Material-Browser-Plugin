@@ -9,8 +9,10 @@ Screenshots
 
 ![SketchUp Material Browser Plugin Screen #2](https://github.com/SamuelTS/SketchUp-Material-Browser-Plugin/raw/main/docs/screenshots/sketchup-material-browser-plugin-screenshot-2.jpg)
 
-Installation
-------------
+Documentation
+-------------
+
+### How to install this plugin?
 
 1. Be sure to have SketchUp 2017 or newer.
 2. Download latest Material Browser plugin from the [SketchUcation PluginStore](https://sketchucation.com/plugin/2365-material_browser).
