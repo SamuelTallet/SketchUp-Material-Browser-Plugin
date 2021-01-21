@@ -16,7 +16,7 @@ Documentation
 
 1. Be sure to have SketchUp 2017 or newer.
 2. Download latest Material Browser plugin from the [SketchUcation PluginStore](https://sketchucation.com/plugin/2365-material_browser).
-3. Install plugin following this [guide](https://help.sketchup.com/article/3000263).
+3. Install plugin following this [guide](https://www.youtube.com/watch?v=tyM5f81eRno).
 
 Now, you should have in SketchUp a "Material Browser" menu in "Extensions" menu.
 
