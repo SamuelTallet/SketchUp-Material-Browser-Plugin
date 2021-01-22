@@ -23,16 +23,12 @@ body {
 
 }
 
-input[type="text"],
-select {
+input[type="checkbox"] {
 
-    padding: 5px;
+    position: relative;
+    top: 2.5px;
+    left: 0;
 
-    border-style: solid;
-    border-color: rgb(221, 221, 221);
-    border-width: 1px;
-    border-radius: 5px;
-    
 }
 
 button {
@@ -49,7 +45,19 @@ button {
 
 }
 
-.filters-overlay {
+input[type="text"],
+select {
+
+    padding: 5px;
+
+    border-style: solid;
+    border-color: rgb(221, 221, 221);
+    border-width: 1px;
+    border-radius: 5px;
+    
+}
+
+.overlay {
 
     display: none;
 
@@ -57,17 +65,15 @@ button {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+
+    text-align: center;
     
     z-index: 2;
 
 }
 
-.filters-overlay.displayed {
+.overlay.displayed {
     display: table; /* Fix blurry text bug */
-}
-
-.validate-filters {
-    margin-left: 4px;
 }
 
 .toolbar {
@@ -116,6 +122,10 @@ button {
 
 }
 
+.toolbar .zoom {
+    overflow: hidden;
+}
+
 .toolbar .zoom .icon {
     margin-top: 0;
 }
@@ -141,8 +151,8 @@ button {
     margin-left: 16px;
 }
 
-.toolbar .display {
-    margin-left: 1px;
+.toolbar .filter-by-type {
+    margin-left: 2px;
 }
 
 .list {

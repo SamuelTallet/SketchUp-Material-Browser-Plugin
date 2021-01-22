@@ -26,24 +26,24 @@ require 'fileutils'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Stores material thumbnails, etc.
+  # Stores materials thumbnails, etc.
   module Cache
 
-    # Gets absolute path to material thumbnails directory.
+    # Gets absolute path to materials thumbnails directory.
     #
     # @return [String]
-    def self.material_thumbnails_path
+    def self.materials_thumbnails_path
       File.join(Sketchup.temp_dir, 'SketchUp MBR Plugin Thumbnails')
     end
 
-    # Removes material thumbnails directory.
+    # Removes materials thumbnails directory.
     def self.remove_material_thumbnails_dir
-      FileUtils.remove_dir(material_thumbnails_path) if Dir.exist?(material_thumbnails_path)
+      FileUtils.remove_dir(materials_thumbnails_path) if Dir.exist?(materials_thumbnails_path)
     end
 
-    # Creates material thumbnails directory.
+    # Creates materials thumbnails directory.
     def self.create_material_thumbnails_dir
-      FileUtils.mkdir_p(material_thumbnails_path) unless Dir.exist?(material_thumbnails_path)
+      FileUtils.mkdir_p(materials_thumbnails_path) unless Dir.exist?(materials_thumbnails_path)
     end
 
   end

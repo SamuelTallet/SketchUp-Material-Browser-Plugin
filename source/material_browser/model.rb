@@ -39,11 +39,17 @@ module MaterialBrowser
 
       Cache.create_material_thumbnails_dir
 
+      Sketchup.status_text = TRANSLATE['Material Browser: Exporting thumbnails...']
+
       Sketchup.active_model.materials.each do |material|
+
+        # To stay consistent with display of SKM files,
+        # model materials will be displayed in english.
+        material_display_name = material.name.gsub(/\[|\]/, '').gsub('_', ' ')
 
         material_thumbnail_basename = material.name + ' #MODEL-' + Time.now.to_i.to_s + '.jpg'
         material_thumbnail_path = File.join(
-          Cache.material_thumbnails_path, material_thumbnail_basename
+          Cache.materials_thumbnails_path, material_thumbnail_basename
         )
 
         material_thumbnail_size = 256
@@ -67,16 +73,17 @@ module MaterialBrowser
         SESSION[:model_materials].push({
 
           name: material.name,
-
-          # To stay consistent with display of SKM files,
-          # model materials will be displayed in english.
-          display_name: material.name.gsub(/\[|\]/, ''),
-
-          thumbnail_uri: Utils.path2uri(material_thumbnail_path)
+          display_name: material_display_name,
+          thumbnail_uri: Utils.path2uri(material_thumbnail_path),
+          type: SESSION[:materials_types].from_words(
+            Utils.clean_words(material_display_name)
+          )
 
         })
 
       end
+
+      Sketchup.status_text = nil
 
     end
 

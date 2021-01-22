@@ -59,63 +59,121 @@ module MaterialBrowser
     # Sets "zoom value" setting.
     #
     # @param [Integer] zoom_value
-    def set_zoom_value(zoom_value)
+    # @raise [ArgumentError]
+    def zoom_value=(zoom_value)
+
+      raise ArgumentError, 'Zoom value must be an Integer.'\
+        unless zoom_value.is_a?(Integer)
+
       @settings['zoom_value'] = zoom_value
+
     end
 
     # Gets "zoom value" setting.
     #
     # @return [Integer]
-    def get_zoom_value
+    def zoom_value
       @settings['zoom_value']
     end
 
-    # Sets "source filter value" setting.
+    # Sets "display name" setting.
     #
-    # @param [Integer] source_filter_value
-    def set_source_filter_value(source_filter_value)
-      @settings['source_filter_value'] = source_filter_value
+    # @param [Boolean] display_name
+    # @raise [ArgumentError]
+    def display_name=(display_name)
+
+      raise ArgumentError, 'Display name must be a Boolean.'\
+        unless display_name == true or display_name == false
+
+      @settings['display_name'] = display_name
+
     end
 
-    # Gets "source filter value" setting.
+    # Gets "display name" setting.
     #
-    # @return [Integer]
-    def get_source_filter_value
-      @settings['source_filter_value']
+    # @return [Boolean]
+    def display_name?
+      @settings['display_name']
+    end
+
+    # Sets "display source" setting.
+    #
+    # @param [Boolean] display_source
+    # @raise [ArgumentError]
+    def display_source=(display_source)
+
+      raise ArgumentError, 'Display source must be a Boolean.'\
+        unless display_source == true or display_source == false
+
+      @settings['display_source'] = display_source
+
+    end
+
+    # Gets "display source" setting.
+    #
+    # @return [Boolean]
+    def display_source?
+      @settings['display_source']
+    end
+
+    # Sets "display only model" setting.
+    #
+    # @param [Boolean] display_only_model
+    # @raise [ArgumentError]
+    def display_only_model=(display_only_model)
+
+      raise ArgumentError, 'Display only model must be a Boolean.'\
+        unless display_only_model == true or display_only_model == false
+
+      @settings['display_only_model'] = display_only_model
+
+    end
+
+    # Gets "display only model" setting.
+    #
+    # @return [Boolean]
+    def display_only_model?
+      @settings['display_only_model']
     end
 
     # Sets "custom SKM path" setting.
     #
-    # @param [String] path
-    def set_custom_skm_path(custom_skm_path)
+    # @param [String] custom_skm_path
+    # @raise [ArgumentError]
+    def custom_skm_path=(custom_skm_path)
+
+      raise ArgumentError, 'Custom SKM path must be a String.'\
+        unless custom_skm_path.is_a?(String)
 
       @settings['custom_skm_path'] = custom_skm_path
-
-      UI.messagebox(
-        TRANSLATE['You must restart SketchUp to see changes in Material Browser UI.']
-      )
 
     end
 
     # Gets "custom SKM path" setting.
     #
     # @return [String]
-    def get_custom_skm_path
+    def custom_skm_path
       @settings['custom_skm_path']
     end
 
-    # Sets "display value" setting.
+    # Sets "type filter value" setting.
     #
-    # @param [String] display_value
-    def set_display_value(display_value)
-      @settings['display_value'] = display_value
+    # @param [String] type_filter_value
+    # @raise [ArgumentError]
+    def type_filter_value=(type_filter_value)
+
+      raise ArgumentError, 'Type filter value must be a String.'\
+        unless type_filter_value.is_a?(String)
+
+      @settings['type_filter_value'] = type_filter_value
+
     end
 
-    # Gets "display value" setting.
+    # Gets "type filter value" setting.
     #
     # @return [String]
-    def get_display_value
-      @settings['display_value']
+    def type_filter_value
+      @settings['type_filter_value']
     end
 
     # Writes settings to disk.

@@ -104,7 +104,7 @@ module MaterialBrowser
 
       skm_glob_patterns = [stock_skm_glob_pattern, custom_skm_glob_pattern]
 
-      user_custom_skm_path = SESSION[:settings].get_custom_skm_path
+      user_custom_skm_path = SESSION[:settings].custom_skm_path
 
       if Dir.exist?(user_custom_skm_path)
 
@@ -123,6 +123,8 @@ module MaterialBrowser
       end
       
       skm_file_count = 0
+
+      Sketchup.status_text = TRANSLATE['Material Browser: Extracting thumbnails...']
   
       Dir.glob(skm_glob_patterns).each do |skm_file_path|
   
@@ -131,14 +133,14 @@ module MaterialBrowser
         # SKM files are ZIP archive files renamed.
         Zip::File.open(skm_file_path) do |skm_file|
 
-          skm_display_name = File.basename(skm_file_path).sub('.skm', '')
+          skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
 
           skm_thumbnail_basename = File.basename(skm_file_path).sub(
             '.skm',
             ' #SKM-' + skm_file_count.to_s + '.png'
           )
           skm_thumbnail_path = File.join(
-            Cache.material_thumbnails_path, skm_thumbnail_basename
+            Cache.materials_thumbnails_path, skm_thumbnail_basename
           )
   
           skm_file.each do |skm_file_entry|
@@ -152,7 +154,10 @@ module MaterialBrowser
 
                 path: skm_file_path,
                 display_name: skm_display_name,
-                thumbnail_uri: Utils.path2uri(skm_thumbnail_path)
+                thumbnail_uri: Utils.path2uri(skm_thumbnail_path),
+                type: SESSION[:materials_types].from_words(
+                  Utils.clean_words(skm_display_name)
+                )
 
               })
 
@@ -165,6 +170,8 @@ module MaterialBrowser
         end
   
       end
+
+      Sketchup.status_text = nil
   
     end
 

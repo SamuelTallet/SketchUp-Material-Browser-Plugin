@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="<%= Sketchup.get_locale %>">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="x-package" content="Material Browser extension for SketchUp">
+    <meta name="x-copyright" content="© 2021 Samuel Tallet">
+    <meta name="x-license" content="GNU General Public License 3.0">
+
+	<title><%= NAME %></title>
+
+	<%= scripts['libraries/list.js'] %>
+	<%= scripts['user-interface.js'] %>
+
+	<%= styles['user-interface.css'] %>
+
+</head>
+
+<body>
+
+    <div class="overlay">
+
+        <input
+            type="checkbox"
+            class="display-name"
+            <%= SESSION[:settings].display_name? ? 'checked' : '' %>
+        />
+        <%= TRANSLATE['Display materials name'] %>
+
+        <input
+            type="checkbox"
+            class="display-source"
+            <%= SESSION[:settings].display_source? ? 'checked' : '' %>
+        />
+        <%= TRANSLATE['Display materials source'] %>
+
+        <br />
+
+        <input
+            type="checkbox"
+            class="display-only-model"
+            <%= SESSION[:settings].display_only_model? ? 'checked' : '' %>
+        />
+        <%= TRANSLATE['Display only model materials'] %>
+        
+        <button class="close-overlay"><%= TRANSLATE['OK'] %></button>
+
+    </div>
+
+    <div id="materials">
+
+        <%
+        zoom_in_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'zoom-in-icon.svg')
+        )
+
+        zoom_out_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'zoom-out-icon.svg')
+        )
+
+        eye_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'eye-icon.svg')
+        )
+
+        skm_folder_icon_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'skm-folder-icon.svg')
+        )
+
+        sketchup_logo_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'sketchup-logo.svg')
+        )
+
+        th_logo_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'texture-haven-logo.svg')
+        )
+        %>
+
+        <div class="toolbar">
+
+            <div class="vertical">
+
+                <div class="zoom">
+
+                    <img class="in icon" src="<%= zoom_in_icon_uri %>">
+    
+                    <input type="range" class="slider"
+                        value="<%= SESSION[:settings].zoom_value %>"
+                        min="64" max="256" step="8"
+                    />
+                    
+                    <img class="out icon" src="<%= zoom_out_icon_uri %>">
+                    
+                </div>
+
+                <img
+                    class="eye icon"
+                    src="<%= eye_icon_uri %>"
+                    title="<%= TRANSLATE['Choose what to display'] %>"
+                />
+
+                <img
+                    class="skm-folder icon"
+                    src="<%= skm_folder_icon_uri %>"
+                    title="<%= TRANSLATE['Use a custom SKM folder'] %>"
+                />
+
+            </div>
+
+            <div class="horizontal">
+
+                <input
+                    type="text"
+                    class="search"
+                    placeholder="<%= TRANSLATE['Search by name'] %>"
+                />
+
+                <% option_value_to_select = SESSION[:settings].type_filter_value %>
+                <select class="filter-by-type">
+        
+                    <option value="all"
+                        <%= option_value_to_select == 'all' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Filter by type...'] %>
+                    </option>
+        
+                    <option value="asphalt"
+                        <%= option_value_to_select == 'asphalt' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Asphalt'] %>
+                    </option>
+        
+                    <option value="brick"
+                        <%= option_value_to_select == 'brick' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Brick'] %>
+                    </option>
+        
+                    <option value="ceramic"
+                        <%= option_value_to_select == 'ceramic' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Ceramic'] %>
+                    </option>
+        
+                    <option value="concrete"
+                        <%= option_value_to_select == 'concrete' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Concrete'] %>
+                    </option>
+        
+                    <option value="earth"
+                        <%= option_value_to_select == 'earth' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Earth'] %>
+                    </option>
+        
+                    <option value="glass"
+                        <%= option_value_to_select == 'glass' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Glass'] %>
+                    </option>
+        
+                    <option value="leather"
+                        <%= option_value_to_select == 'leather' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Leather'] %>
+                    </option>
+        
+                    <option value="metallic"
+                        <%= option_value_to_select == 'metallic' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Metallic'] %>
+                    </option>
+        
+                    <option value="organic"
+                        <%= option_value_to_select == 'organic' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Organic'] %>
+                    </option>
+        
+                    <option value="paper"
+                        <%= option_value_to_select == 'paper' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Paper'] %>
+                    </option>
+        
+                    <option value="plaster"
+                        <%= option_value_to_select == 'plaster' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Plaster'] %>
+                    </option>
+        
+                    <option value="plastic"
+                        <%= option_value_to_select == 'plastic' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Plastic'] %>
+                    </option>
+                
+                    <option value="rubber"
+                        <%= option_value_to_select == 'rubber' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Rubber'] %>
+                    </option>
+
+                    <option value="stone"
+                        <%= option_value_to_select == 'stone' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Stone'] %>
+                    </option>
+        
+                    <option value="textile"
+                        <%= option_value_to_select == 'textile' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Textile'] %>
+                    </option>
+        
+                    <option value="tile"
+                        <%= option_value_to_select == 'tile' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Tile'] %>
+                    </option>
+        
+                    <option value="unknown"
+                        <%= option_value_to_select == 'unknown' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Unknown'] %>
+                    </option>
+        
+                    <option value="vegetation"
+                        <%= option_value_to_select == 'vegetation' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Vegetation'] %>
+                    </option>
+        
+                    <option value="water"
+                        <%= option_value_to_select == 'water' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Water'] %>
+                    </option>
+        
+                    <option value="wood"
+                        <%= option_value_to_select == 'wood' ? 'selected' : '' %>
+                    ><%= TRANSLATE['Wood'] %>
+                    </option>
+        
+                </select>
+
+            </div>
+            
+        </div>
+
+        <ul class="list">
+
+            <%
+            SESSION[:model_materials].each do |model_material|
+            %>
+            <li
+                class="material"
+                data-type="<%= model_material[:type] %>"
+            >
+
+                <img
+                    class="model-material thumbnail"
+                    src="<%= model_material[:thumbnail_uri] %>"
+                    width="96"
+                    height="96"
+                    title="<%= model_material[:display_name] %> <%= TRANSLATE['in model'] %>"
+                    data-name="<%= model_material[:name] %>"
+                />
+
+                <span class="name"><%= model_material[:display_name] %></span>
+
+            </li>
+            <%
+            end
+            %>
+
+            <%
+            unless SESSION[:settings].display_only_model?
+
+                SESSION[:skm_files].each do |skm_file|
+            %>
+            <li
+                class="material"
+                data-type="<%= skm_file[:type] %>"
+            >
+
+                <img
+                    class="source-logo"
+                    src="<%= sketchup_logo_uri %>"
+                    title="SKM collections"
+                    data-source-url="https://www.sketchup.com/"
+                />
+
+                <img
+                    class="skm-file thumbnail"
+                    src="<%= skm_file[:thumbnail_uri] %>"
+                    width="96"
+                    height="96"
+                    title="<%= skm_file[:display_name] %>"
+                    data-path="<%= skm_file[:path] %>"
+                />
+
+                <span class="name"><%= skm_file[:display_name] %></span>
+
+            </li>
+            <%
+                end
+
+            end
+            %>
+
+            <%
+            unless SESSION[:settings].display_only_model?
+
+                SESSION[:th_materials].each do |th_material|
+            %>
+            <li
+                class="material"
+                data-type="<%= th_material[:type] %>"
+            >
+
+                <img
+                    class="source-logo"
+                    src="<%= th_logo_uri %>"
+                    title="Texture Haven"
+                    data-source-url="<%= th_material[:source_url] %>"
+                />
+
+                <img
+                    class="th-material thumbnail"
+                    src="<%= th_material[:thumbnail_uri] %>"
+                    width="96"
+                    height="96"
+                    title="<%= th_material[:display_name] %>"
+                    data-texture-url="<%= th_material[:texture_url] %>"
+                    data-texture-size="<%= th_material[:texture_size] %>"
+                    data-display-name="<%= th_material[:display_name] %>"
+                />
+
+                <span class="name"><%= th_material[:display_name] %></span>
+
+            </li>
+            <%
+                end
+
+            end
+            %>
+
+        </ul>
+
+    </div>
+
+</body>
+
+</html>

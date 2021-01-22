@@ -56,15 +56,29 @@ module MaterialBrowser
     # Mimics PHP `ucwords` function.
     # See: https://github.com/maintainable/php-ruby-reference/blob/master/strings/ucwords.markdown
     #
-    # @param [String] string
+    # @param [String] words
     # @raise [ArgumentError]
     #
-    # @return [String] String.
-    def self.ucwords(string)
+    # @return [String] Words.
+    def self.ucwords(words)
 
-      raise ArgumentError, "This isn't a String." unless string.is_a?(String)
+      raise ArgumentError, "This isn't a String." unless words.is_a?(String)
 
-      string.split(' ').select { |word| word.capitalize! || word }.join(' ')
+      words.split(' ').select { |word| word.capitalize! || word }.join(' ')
+
+    end
+
+    # Cleans a word list.
+    #
+    # @param [String] words Space-separated words.
+    # @raise [ArgumentError]
+    #
+    # @return [String] Words.
+    def self.clean_words(words)
+
+      raise ArgumentError, "This isn't a String." unless words.is_a?(String)
+      
+      words.gsub(/[^\p{L}\- ]/, '')
 
     end
 

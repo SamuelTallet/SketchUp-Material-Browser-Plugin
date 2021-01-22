@@ -1,0 +1,51 @@
+/////////////////////////////////////////////
+// Material Browser (MBR) French Translation.
+//
+// Package: MBR extension for SketchUp
+// Translation author: Samuel Tallet
+/////////////////////////////////////////////
+
+"Material Browser"="Navigateur de matériaux";
+"Search for SketchUp materials by name from three sources: active model, SKM collections and Texture Haven."="Recherchez des matériaux SketchUp par nom à partir de trois sources : modèle actif, collections SKM et Texture Haven.";
+"Filter materials by type (Brick, Wood, etc)."="Filtrez les matériaux par type (Brique, Bois, etc).";
+"Select material of your choice in one click."="Sélectionnez le matériau de votre choix en un clic.";
+
+"Material Browser: Exporting thumbnails..."="Navigateur de matériaux : exportation des vignettes...";
+
+"Material Browser: Extracting thumbnails..."="Navigateur de matériaux : extraction des vignettes...";
+
+"Material Browser: Downloading texture..."="Navigateur de matériaux : téléchargement de la texture...";
+"Material Browser Error: Texture download failed. Check your firewall settings."="Erreur du navigateur de matériaux : le téléchargement de la texture a échoué. Vérifiez les paramètres de votre pare-feu.";
+
+"Material Browser is already open."="Le navigateur de matériaux est déjà ouvert.";
+"You must reopen Material Browser to see changes."="Vous devez rouvrir le navigateur de matériaux pour voir les changements.";
+
+"Display materials name"="Afficher le nom des matériaux";
+"Display materials source"="Afficher la source des matériaux";
+"Display only model materials"="Afficher uniquement les matériaux du modèle";
+"OK"="OK";
+"Choose what to display"="Choisir ce que vous souhaitez afficher";
+"Use a custom SKM folder"="Utiliser un dossier SKM personnalisé";
+"Search by name"="Rechercher par nom";
+"Filter by type..."="Filtrer par type...";
+"Asphalt"="Asphalte";
+"Brick"="Brique";
+"Ceramic"="Céramique";
+"Concrete"="Béton";
+"Earth"="Terre";
+"Glass"="Verre";
+"Leather"="Cuir";
+"Metallic"="Métallique";
+"Organic"="Organique";
+"Paper"="Papier";
+"Plaster"="Plâtre";
+"Plastic"="Plastique";
+"Rubber"="Caoutchouc";
+"Stone"="Pierre";
+"Textile"="Textile";
+"Tile"="Tuile/Carreau";
+"Unknown"="Inconnu";
+"Vegetation"="Végétation";
+"Water"="Eau";
+"Wood"="Bois";
+"in model"="dans le modèle";

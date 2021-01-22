@@ -25,6 +25,7 @@ require 'material_browser/settings'
 require 'material_browser/app_observer'
 require 'material_browser/materials_observer'
 require 'material_browser/cache'
+require 'material_browser/materials_types'
 require 'material_browser/model'
 require 'material_browser/skm'
 require 'material_browser/texture_haven'
@@ -45,6 +46,8 @@ module MaterialBrowser
   # If SketchUp was not properly closed:
   # remove material thumbnails directory.
   Cache.remove_material_thumbnails_dir
+
+  SESSION[:materials_types] = MaterialsTypes.new
 
   Model.export_material_thumbnails
   SKM.extract_thumbnails

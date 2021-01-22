@@ -21,7 +21,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
-require 'material_browser/material_catalogs'
+require 'material_browser/materials_catalogs'
 require 'material_browser/utils'
 
 # Material Browser plugin namespace.
@@ -39,7 +39,7 @@ module MaterialBrowser
 
       SESSION[:th_materials] = []
 
-      th_material_thumbnails_path = File.join(MaterialCatalogs::DIR, 'Texture Haven')
+      th_material_thumbnails_path = File.join(MaterialsCatalogs::DIR, 'Texture Haven')
 
       Dir.foreach(th_material_thumbnails_path) do |th_material_thumbnail_basename|
 
@@ -50,7 +50,8 @@ module MaterialBrowser
         th_material_texture_size = th_material_metadata[1].to_f
 
         th_material_texture_url = BASE_URL + '/files/textures/jpg/4k/' +
-        th_material_name + '/' + th_material_name + '_diff_4k.jpg'
+          th_material_name + '/' + th_material_name + '_diff_4k.jpg'
+        th_material_source_url = BASE_URL + '/tex/?t=' + th_material_name
 
         th_material_display_name = Utils.ucwords(th_material_name.gsub('_', ' '))
 
@@ -62,8 +63,12 @@ module MaterialBrowser
 
           texture_url: th_material_texture_url,
           texture_size: th_material_texture_size,
+          source_url: th_material_source_url,
           display_name: th_material_display_name,
-          thumbnail_uri: Utils.path2uri(th_material_thumbnail_path)
+          thumbnail_uri: Utils.path2uri(th_material_thumbnail_path),
+          type: SESSION[:materials_types].from_words(
+            Utils.clean_words(th_material_display_name)
+          )
 
         })
 
@@ -87,7 +92,7 @@ module MaterialBrowser
       ]
 
       return UI.messagebox(texture_download_failed_message) unless Utils.download(
-        th_material['texture_url'], MaterialCatalogs.user_agent, material_texture_path
+        th_material['texture_url'], MaterialsCatalogs.user_agent, material_texture_path
       )
 
       Sketchup.status_text = nil

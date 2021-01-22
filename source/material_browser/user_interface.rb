@@ -39,7 +39,7 @@ module MaterialBrowser
 
       if SESSION[:html_dialog_open?]
 
-        UI.messagebox(TRANSLATE['Material Browser UI is already open.'])
+        UI.messagebox(TRANSLATE['Material Browser is already open.'])
         return false
 
       end
@@ -71,13 +71,13 @@ module MaterialBrowser
         SESSION[:html_dialog].set_html(HTMLDialogs.merge(
 
           # Note: Paths below are relative to `HTMLDialogs::DIR`.
-          document: 'material-browser.rhtml',
+          document: 'user-interface.rhtml',
           scripts: [
-            'lib/list.js',
-            'material-browser.js'
+            'libraries/list.js',
+            'user-interface.js'
           ],
           styles: [
-            'material-browser.css'
+            'user-interface.css'
           ]
   
         ))
@@ -140,13 +140,13 @@ module MaterialBrowser
       @html_dialog.set_html(HTMLDialogs.merge(
 
         # Note: Paths below are relative to `HTMLDialogs::DIR`.
-        document: 'material-browser.rhtml',
+        document: 'user-interface.rhtml',
         scripts: [
-          'lib/list.js',
-          'material-browser.js'
+          'libraries/list.js',
+          'user-interface.js'
         ],
         styles: [
-          'material-browser.css'
+          'user-interface.css'
         ]
 
       ))
@@ -161,19 +161,42 @@ module MaterialBrowser
     private def configure_html_dialog
 
       @html_dialog.add_action_callback('setZoomValue') do |_ctx, zoom_value|
-        SESSION[:settings].set_zoom_value(zoom_value.to_i)
+        SESSION[:settings].zoom_value = zoom_value
       end
 
-      @html_dialog.add_action_callback('setSourceFilterValue') do |_ctx, source_filter_value|
-        SESSION[:settings].set_source_filter_value(source_filter_value.to_s)
+      @html_dialog.add_action_callback('setDisplayName') do |_ctx, display_name|
+        SESSION[:settings].display_name = display_name
+      end
+
+      @html_dialog.add_action_callback('setDisplaySource') do |_ctx, display_source|
+        SESSION[:settings].display_source = display_source
+      end
+
+      @html_dialog.add_action_callback('setDisplayOnlyModel') do |_ctx, display_only_model|
+
+        SESSION[:settings].display_only_model = display_only_model
+
+        UI.messagebox(TRANSLATE['You must reopen Material Browser to see changes.'])
+        @html_dialog.close
+
       end
 
       @html_dialog.add_action_callback('setCustomSKMPath') do |_ctx|
-        SESSION[:settings].set_custom_skm_path(UI.select_directory.to_s)
+
+        SESSION[:settings].custom_skm_path = UI.select_directory.to_s
+
+        UI.messagebox(TRANSLATE['You must reopen Material Browser to see changes.'])
+        @html_dialog.close
+
+        Cache.remove_material_thumbnails_dir
+
+        Model.export_material_thumbnails
+        SKM.extract_thumbnails
+
       end
 
-      @html_dialog.add_action_callback('setDisplayValue') do |_ctx, display_value|
-        SESSION[:settings].set_display_value(display_value.to_s)
+      @html_dialog.add_action_callback('setTypeFilterValue') do |_ctx, type_filter_value|
+        SESSION[:settings].type_filter_value = type_filter_value
       end
 
       @html_dialog.add_action_callback('selectModelMaterial') do |_ctx, model_material_name|
@@ -186,6 +209,10 @@ module MaterialBrowser
 
       @html_dialog.add_action_callback('selectTHMaterial') do |_ctx, th_material|
         TextureHaven.select_material(th_material)
+      end
+
+      @html_dialog.add_action_callback('openURL') do |_ctx, url|
+        UI.openURL(url)
       end
 
       @html_dialog.set_on_closed { SESSION[:html_dialog_open?] = false }

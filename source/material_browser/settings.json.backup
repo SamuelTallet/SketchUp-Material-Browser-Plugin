@@ -1,6 +1,8 @@
 {
     "zoom_value": 96,
-    "source_filter_value": "all",
+    "display_name": false,
+    "display_source": false,
+    "display_only_model": false,
     "custom_skm_path": "",
-    "display_value": "nothing_more"
+    "type_filter_value": "all"
 }

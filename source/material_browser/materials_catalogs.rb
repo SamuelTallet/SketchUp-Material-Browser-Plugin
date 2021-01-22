@@ -25,11 +25,11 @@ require 'fileutils'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Third-party material catalogs.
-  module MaterialCatalogs
+  # Third-party materials catalogs.
+  module MaterialsCatalogs
 
-    # Absolute path to "Material Catalogs" directory.
-    DIR = File.join(__dir__, 'Material Catalogs')
+    # Absolute path to "Materials Catalogs" directory.
+    DIR = File.join(__dir__, 'Materials Catalogs')
 
     # Gets User Agent used to download textures, etc.
     #
