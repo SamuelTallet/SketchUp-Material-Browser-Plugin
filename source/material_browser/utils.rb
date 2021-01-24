@@ -23,6 +23,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 require 'sketchup'
 require 'erb'
 require 'open-uri'
+require 'fileutils'
 
 # Material Browser plugin namespace.
 module MaterialBrowser

@@ -97,7 +97,7 @@ module MaterialBrowser
 
       SESSION[:skm_files] = []
 
-      Cache.create_material_thumbnails_dir
+      Cache.create_materials_thumbnails_dir
 
       stock_skm_glob_pattern = File.join(stock_skm_path, '**', '*.skm')
       custom_skm_glob_pattern = File.join(custom_skm_path, '**', '*.skm')

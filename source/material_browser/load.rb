@@ -44,12 +44,12 @@ module MaterialBrowser
   Sketchup.active_model.materials.add_observer(MaterialsObserver.new)
 
   # If SketchUp was not properly closed:
-  # remove material thumbnails directory.
-  Cache.remove_material_thumbnails_dir
+  # remove materials thumbnails directory.
+  Cache.remove_materials_thumbnails_dir
 
   SESSION[:materials_types] = MaterialsTypes.new
 
-  Model.export_material_thumbnails
+  Model.export_materials_thumbnails
   SKM.extract_thumbnails
   
   TextureHaven.catalog_materials

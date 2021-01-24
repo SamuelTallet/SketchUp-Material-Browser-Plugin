@@ -188,9 +188,9 @@ module MaterialBrowser
         UI.messagebox(TRANSLATE['You must reopen Material Browser to see changes.'])
         @html_dialog.close
 
-        Cache.remove_material_thumbnails_dir
+        Cache.remove_materials_thumbnails_dir
 
-        Model.export_material_thumbnails
+        Model.export_materials_thumbnails
         SKM.extract_thumbnails
 
       end

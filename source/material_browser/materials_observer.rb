@@ -33,7 +33,7 @@ module MaterialBrowser
     # When a new material is added:
     def onMaterialAdd(_materials, _material)
 
-      Model.export_material_thumbnails
+      Model.export_materials_thumbnails
 
       UserInterface.reload
 
@@ -43,7 +43,7 @@ module MaterialBrowser
     # FIXME: This event is called too many times.
     def onMaterialChange(_materials, _material)
 
-      Model.export_material_thumbnails
+      Model.export_materials_thumbnails
 
       UserInterface.reload
 
@@ -52,7 +52,7 @@ module MaterialBrowser
     # When a material is deleted:
     def onMaterialRemove(_materials, _material)
 
-      Model.export_material_thumbnails
+      Model.export_materials_thumbnails
 
       UserInterface.reload
       

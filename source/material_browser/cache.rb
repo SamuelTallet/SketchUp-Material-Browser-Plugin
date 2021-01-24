@@ -37,12 +37,12 @@ module MaterialBrowser
     end
 
     # Removes materials thumbnails directory.
-    def self.remove_material_thumbnails_dir
+    def self.remove_materials_thumbnails_dir
       FileUtils.remove_dir(materials_thumbnails_path) if Dir.exist?(materials_thumbnails_path)
     end
 
     # Creates materials thumbnails directory.
-    def self.create_material_thumbnails_dir
+    def self.create_materials_thumbnails_dir
       FileUtils.mkdir_p(materials_thumbnails_path) unless Dir.exist?(materials_thumbnails_path)
     end
 

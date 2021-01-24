@@ -37,7 +37,7 @@ module MaterialBrowser
 
       model.materials.add_observer(MaterialsObserver.new)
 
-      Model.export_material_thumbnails
+      Model.export_materials_thumbnails
 
       UserInterface.reload
 
@@ -48,7 +48,7 @@ module MaterialBrowser
 
       model.materials.add_observer(MaterialsObserver.new)
 
-      Model.export_material_thumbnails
+      Model.export_materials_thumbnails
 
       UserInterface.reload
 
@@ -57,7 +57,7 @@ module MaterialBrowser
     # When SketchUp closes:
     def onQuit()
 
-      Cache.remove_material_thumbnails_dir
+      Cache.remove_materials_thumbnails_dir
 
       SESSION[:settings].write
 

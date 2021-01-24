@@ -31,13 +31,13 @@ module MaterialBrowser
   # Manages SketchUp active model.
   module Model
 
-    # Exports material thumbnails of active model.
+    # Exports materials thumbnails of active model.
     # Material metadata is stored in `MaterialBrowser::SESSION`.
-    def self.export_material_thumbnails
+    def self.export_materials_thumbnails
 
       SESSION[:model_materials] = []
 
-      Cache.create_material_thumbnails_dir
+      Cache.create_materials_thumbnails_dir
 
       Sketchup.status_text = TRANSLATE['Material Browser: Exporting thumbnails...']
 

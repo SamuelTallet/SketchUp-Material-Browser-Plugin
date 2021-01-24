@@ -22,30 +22,124 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'sketchup'
 require 'material_browser/materials_catalogs'
+require 'fileutils'
+require 'open-uri'
+require 'rehtml'
+require 'rexml/xpath'
 require 'material_browser/utils'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Texture Haven is a material source.
+  # Texture Haven (TH) is a material source.
   module TextureHaven
 
-    # Base URL of Texture Haven site.
+    # Base URL of TH site.
     BASE_URL = 'https://texturehaven.com'
 
-    # Catalogs Texture Haven (TH) materials.
+    # Gets absolute path to TH materials catalog.
+    #
+    # @return [String]
+    def self.materials_catalog_path
+      File.join(MaterialsCatalogs::DIR, 'Texture Haven')
+    end
+
+    # Prepares TH materials catalog.
+    #
+    # @return [Integer] Count of added TH materials to catalog.
+    def self.prepare_materials_catalog
+
+      added_th_materials_count = 0
+
+      UI.messagebox('Warning: this process can take many minutes. Be patient.')
+
+      th_materials_rexml_document = REHTML.to_rexml(
+        URI.open(
+          BASE_URL + '/textures/',
+          'User-Agent' => MaterialsCatalogs.user_agent
+        ).read
+      )
+
+      th_materials_sources_urls = REXML::XPath.match(
+        th_materials_rexml_document, '//div[@id="item-grid"]/a/@href'
+      )
+
+      th_materials_sources_urls.each do |th_material_source_url|
+
+        sleep(1)
+
+        th_material_name = th_material_source_url.value.to_s.sub('/tex/?t=', '')
+
+        th_material_source_html = URI.open(
+          BASE_URL + th_material_source_url.value.to_s,
+          'User-Agent' => MaterialsCatalogs.user_agent
+        ).read
+
+        th_material_texture_size = 2.0 # m
+
+        if th_material_source_html_match = th_material_source_html.match(
+            /<li title='Real-world scale: (.+)'><b><i class='material-icons'>accessibility/
+          )
+
+          th_material_texture_scale = th_material_source_html_match.captures.first.downcase
+
+          th_material_texture_size = th_material_texture_scale\
+            .split('x').first.gsub(/[^0-9\.]/, '').to_f
+
+          if th_material_texture_scale.include?('cm')
+            th_material_texture_size = th_material_texture_size / 100.0
+          end
+
+        end
+
+        th_material_thumbnail_path = File.join(
+          materials_catalog_path,
+          th_material_name + '-' + th_material_texture_size.to_s + '.jpg'
+        )
+
+        next if File.exist?(th_material_thumbnail_path)
+
+        th_material_texture_url = BASE_URL + '/files/textures/png/1k/' +
+          th_material_name + '/' + th_material_name + '_diff_1k.png'
+
+        material_texture_path = File.join(
+          Sketchup.temp_dir, 'texture_haven-' + th_material_name + '.png'
+        )
+
+        if Utils.download(
+            th_material_texture_url, MaterialsCatalogs.user_agent, material_texture_path
+          )
+
+          material = Sketchup.active_model.materials.add(th_material_name)
+
+          material.texture = material_texture_path
+
+          material.write_thumbnail(th_material_thumbnail_path, 256)
+          added_th_materials_count = added_th_materials_count + 1
+
+          Sketchup.active_model.materials.remove(material)
+
+        end
+
+        File.delete(material_texture_path) if File.exist?(material_texture_path)
+
+      end
+
+      added_th_materials_count
+
+    end
+
+    # Catalogs TH materials.
     # Material metadata is stored in `MaterialBrowser::SESSION`.
     def self.catalog_materials
 
       SESSION[:th_materials] = []
 
-      th_material_thumbnails_path = File.join(MaterialsCatalogs::DIR, 'Texture Haven')
+      Dir.foreach(materials_catalog_path) do |th_materials_catalog_entry|
 
-      Dir.foreach(th_material_thumbnails_path) do |th_material_thumbnail_basename|
-
-        next if th_material_thumbnail_basename == '.' or th_material_thumbnail_basename == '..'
+        next if th_materials_catalog_entry == '.' or th_materials_catalog_entry == '..'
         
-        th_material_metadata = th_material_thumbnail_basename.sub('.jpg', '').split('-')
+        th_material_metadata = th_materials_catalog_entry.sub('.jpg', '').split('-')
         th_material_name = th_material_metadata[0]
         th_material_texture_size = th_material_metadata[1].to_f
 
@@ -56,7 +150,7 @@ module MaterialBrowser
         th_material_display_name = Utils.ucwords(th_material_name.gsub('_', ' '))
 
         th_material_thumbnail_path = File.join(
-          th_material_thumbnails_path, th_material_thumbnail_basename
+          materials_catalog_path, th_materials_catalog_entry
         )
 
         SESSION[:th_materials].push({
@@ -76,7 +170,7 @@ module MaterialBrowser
 
     end
 
-    # Selects a Texture Haven material then activates paint tool.
+    # Selects a TH material then activates paint tool.
     #
     # @param [Hash] th_material
     def self.select_material(th_material)
