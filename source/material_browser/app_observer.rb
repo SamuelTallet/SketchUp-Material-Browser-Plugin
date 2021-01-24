@@ -63,6 +63,13 @@ module MaterialBrowser
 
     end
 
+    # When SketchUp user turns off an extension:
+    def onUnloadExtension(extension_name)
+
+      Cache.remove_materials_textures_dir if extension_name == NAME
+
+    end
+
   end
 
 end

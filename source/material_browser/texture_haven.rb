@@ -21,12 +21,13 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
-require 'material_browser/materials_catalogs'
 require 'fileutils'
 require 'open-uri'
 require 'rehtml'
 require 'rexml/xpath'
+require 'material_browser/materials_catalogs'
 require 'material_browser/utils'
+require 'material_browser/cache'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -175,26 +176,35 @@ module MaterialBrowser
     # @param [Hash] th_material
     def self.select_material(th_material)
 
+      Cache.create_materials_textures_dir
+
       material_texture_path = File.join(
-        Sketchup.temp_dir, 'Texture Haven ' + th_material['display_name'] + '.jpg'
+        Cache.materials_textures_path,
+        'Texture Haven ' + th_material['display_name'] + '.jpg'
       )
 
-      Sketchup.status_text = TRANSLATE['Material Browser: Downloading texture...']
+      if !File.exist?(material_texture_path)
 
-      texture_download_failed_message = TRANSLATE[
-        'Material Browser Error: Texture download failed. Check your firewall settings.'
-      ]
+        texture_download_failed_message = TRANSLATE[
+          'Material Browser Error: Texture download failed. Check your firewall settings.'
+        ]
 
-      return UI.messagebox(texture_download_failed_message) unless Utils.download(
-        th_material['texture_url'], MaterialsCatalogs.user_agent, material_texture_path
-      )
+        Sketchup.status_text = TRANSLATE['Material Browser: Downloading texture...']
 
-      Sketchup.status_text = nil
+        return UI.messagebox(texture_download_failed_message) unless Utils.download(
+          th_material['texture_url'], MaterialsCatalogs.user_agent, material_texture_path
+        )
+
+        Sketchup.status_text = nil
+
+        # We also cache downloaded material texture creation date-time.
+        File.write(material_texture_path + '.ctime', Time.now.to_i.to_s)
+      
+      end
 
       material = Sketchup.active_model.materials.add(th_material['display_name'])
 
       material.texture = material_texture_path
-      File.delete(material_texture_path)
       material.texture.size = th_material['texture_size'].to_f.m
 
       Sketchup.active_model.materials.current = material

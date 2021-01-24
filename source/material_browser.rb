@@ -28,7 +28,7 @@ $LOAD_PATH.push(File.join(__dir__, 'material_browser', 'Libraries'))
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  VERSION = '1.0.3'
+  VERSION = '1.0.4'
 
   # Load translation if it's available for current locale.
   TRANSLATE = LanguageHandler.new('mbr.strings')

@@ -47,6 +47,8 @@ module MaterialBrowser
   # remove materials thumbnails directory.
   Cache.remove_materials_thumbnails_dir
 
+  Cache.delete_old_materials_textures
+
   SESSION[:materials_types] = MaterialsTypes.new
 
   Model.export_materials_thumbnails

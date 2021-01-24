@@ -26,7 +26,7 @@ require 'fileutils'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Stores materials thumbnails, etc.
+  # Stores materials thumbnails and textures.
   module Cache
 
     # Gets absolute path to materials thumbnails directory.
@@ -44,6 +44,48 @@ module MaterialBrowser
     # Creates materials thumbnails directory.
     def self.create_materials_thumbnails_dir
       FileUtils.mkdir_p(materials_thumbnails_path) unless Dir.exist?(materials_thumbnails_path)
+    end
+
+    # Gets absolute path to materials textures directory.
+    #
+    # @return [String]
+    def self.materials_textures_path
+      File.join(Sketchup.temp_dir, 'SketchUp MBR Plugin Textures')
+    end
+
+    # Removes materials textures directory.
+    def self.remove_materials_textures_dir
+      FileUtils.remove_dir(materials_textures_path) if Dir.exist?(materials_textures_path)
+    end
+
+    # Creates materials textures directory.
+    def self.create_materials_textures_dir
+      FileUtils.mkdir_p(materials_textures_path) unless Dir.exist?(materials_textures_path)
+    end
+
+    # Deletes materials textures older than a month.
+    def self.delete_old_materials_textures
+
+      materials_textures_ctime_glob_pattern = File.join(materials_textures_path, '*.ctime')
+
+      # Fix materials textures... glob pattern only on Windows.
+      materials_textures_ctime_glob_pattern.gsub!('\\', '/')\
+        if Sketchup.platform == :platform_win
+
+      Dir.glob(materials_textures_ctime_glob_pattern).each do |material_texture_ctime_file|
+
+        material_texture_ctime = File.read(material_texture_ctime_file).to_i
+        one_month_ago = Time.now.to_i - 2592000
+
+        if material_texture_ctime < one_month_ago
+
+          File.delete(material_texture_ctime_file)
+          File.delete(material_texture_ctime_file.sub('.ctime', ''))
+
+        end
+
+      end
+
     end
 
   end

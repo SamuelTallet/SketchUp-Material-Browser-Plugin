@@ -54,7 +54,7 @@ module MaterialBrowser
 
         material_thumbnail_size = 256
 
-        if !material.texture.nil?
+        unless material.texture.nil?
 
           material_texture_size = [
             material.texture.image_height, material.texture.image_width
