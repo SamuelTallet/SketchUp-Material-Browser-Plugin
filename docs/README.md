@@ -27,7 +27,7 @@ In Material Browser, click on eye icon then check "Display only model materials"
 Thanks
 ------
 
-Material Browser plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [REHTML](https://github.com/nazoking/rehtml) [List.js](https://github.com/javve/list.js), [Texture Haven](https://github.com/gregzaal/Texture-Haven) and [CC0 Textures](https://cc0textures.com/).
+Material Browser plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [REHTML](https://github.com/nazoking/rehtml), [List.js](https://github.com/javve/list.js), [Texture Haven](https://github.com/gregzaal/Texture-Haven) and [CC0 Textures](https://cc0textures.com/).
 
 Copyright
 ---------
