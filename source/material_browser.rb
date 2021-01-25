@@ -28,7 +28,7 @@ $LOAD_PATH.push(File.join(__dir__, 'material_browser', 'Libraries'))
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  VERSION = '1.0.4'
+  VERSION = '1.0.5'
 
   # Load translation if it's available for current locale.
   TRANSLATE = LanguageHandler.new('mbr.strings')
@@ -44,6 +44,7 @@ module MaterialBrowser
     model_materials: [],
     skm_files: [],
     th_materials: [],
+    ct_materials: [],
     html_dialog_open?: false,
     html_dialog: nil
   }
@@ -59,8 +60,8 @@ module MaterialBrowser
   extension_features = [
 
     TRANSLATE[
-      'Search for SketchUp materials by name from three sources: active model, SKM ' +
-      'collections and Texture Haven.'
+      'Search for SketchUp materials by name from four sources: active model, SKM ' +
+      'collections, Texture Haven and CC0 Textures.'
     ],
 
     TRANSLATE['Filter materials by type (Brick, Wood, etc).'],

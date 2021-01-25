@@ -24,6 +24,7 @@ require 'sketchup'
 require 'erb'
 require 'open-uri'
 require 'fileutils'
+require 'zip'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -87,25 +88,76 @@ module MaterialBrowser
     #
     # @param [String] url
     # @param [String] user_agent
-    # @param [String] output
+    # @param [String] output_path
     # @raise [ArgumentError]
     #
     # @return [Boolean] true if download succeeded, false if download failed.
-    def self.download(url, user_agent, output)
+    def self.download(url, user_agent, output_path)
 
-      raise ArgumentError, 'URL must be a String.' unless url.is_a?(String)
-      raise ArgumentError, 'User Agent must be a String.' unless user_agent.is_a?(String)
-      raise ArgumentError, 'Output must be a String.' unless output.is_a?(String)
+      raise ArgumentError, 'URL must be a String.'\
+        unless url.is_a?(String)
+      raise ArgumentError, 'User Agent must be a String.'\
+        unless user_agent.is_a?(String)
+      raise ArgumentError, 'Output path must be a String.'\
+        unless output_path.is_a?(String)
 
       begin
 
-        File.open(output, 'wb') do |output_file|
+        File.open(output_path, 'wb') do |output_file|
 
           output_file.write(
             URI.open(url, 'User-Agent' => user_agent).read
           )
           output_file.close
           
+        end
+
+      rescue => error
+
+        puts 'Error: ' + error.message
+
+        return false
+        
+      end
+
+      true
+
+    end
+
+    # Extracts a file from a ZIP archive file.
+    #
+    # @param [String] zip_file_path
+    # @param [String] file_to_extract
+    # @param [String] output_path
+    # @raise [ArgumentError]
+    #
+    # @return [Boolean] true if extract succeeded, false if extract failed.
+    def self.unzip(zip_file_path, file_to_extract, output_path)
+
+      raise ArgumentError, 'URL must be a String.'\
+        unless zip_file_path.is_a?(String)
+      raise ArgumentError, 'File to extract must be a String.'\
+        unless file_to_extract.is_a?(String)
+      raise ArgumentError, 'Output path must be a String.'\
+        unless output_path.is_a?(String)
+
+      begin
+
+        Zip::File.open(zip_file_path) do |zip_file|
+
+          zip_file.each do |zip_file_entry|
+
+            if zip_file_entry.name == file_to_extract
+
+              # Note this method doesn't overwrite files.
+              zip_file_entry.extract(output_path)
+            
+              break
+
+            end
+
+          end
+
         end
 
       rescue => error

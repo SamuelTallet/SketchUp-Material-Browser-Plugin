@@ -206,9 +206,21 @@ MaterialBrowser.addEventListeners = () => {
         
         thMaterialThumbnail.addEventListener('click', event => {
             sketchup.selectTHMaterial({
+                display_name: event.currentTarget.dataset.displayName,
                 texture_url: event.currentTarget.dataset.textureUrl,
-                texture_size: event.currentTarget.dataset.textureSize,
-                display_name: event.currentTarget.dataset.displayName
+                texture_size: event.currentTarget.dataset.textureSize
+            })
+        })
+
+    })
+
+    document.querySelectorAll('.ct-material.thumbnail').forEach(ctMaterialThumbnail => {
+        
+        ctMaterialThumbnail.addEventListener('click', event => {
+            sketchup.selectCTMaterial({
+                display_name: event.currentTarget.dataset.displayName,
+                texture_zip_url: event.currentTarget.dataset.textureZipUrl,
+                name: event.currentTarget.dataset.name
             })
         })
 

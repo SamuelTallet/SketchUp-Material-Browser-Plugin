@@ -6,7 +6,7 @@
 /////////////////////////////////////////////
 
 "Material Browser"="Navigateur de matériaux";
-"Search for SketchUp materials by name from three sources: active model, SKM collections and Texture Haven."="Recherchez des matériaux SketchUp par nom à partir de trois sources : modèle actif, collections SKM et Texture Haven.";
+"Search for SketchUp materials by name from four sources: active model, SKM collections, Texture Haven and CC0 Textures."="Recherchez des matériaux SketchUp par nom à partir de quatre sources : modèle actif, collections SKM, Texture Haven et CC0 Textures.";
 "Filter materials by type (Brick, Wood, etc)."="Filtrez les matériaux par type (Brique, Bois, etc).";
 "Select material of your choice in one click."="Sélectionnez le matériau de votre choix en un clic.";
 
@@ -14,8 +14,10 @@
 
 "Material Browser: Extracting thumbnails..."="Navigateur de matériaux : extraction des vignettes...";
 
-"Material Browser: Downloading texture..."="Navigateur de matériaux : téléchargement de la texture...";
 "Material Browser Error: Texture download failed. Check your firewall settings."="Erreur du navigateur de matériaux : le téléchargement de la texture a échoué. Vérifiez les paramètres de votre pare-feu.";
+"Material Browser: Downloading texture..."="Navigateur de matériaux : téléchargement de la texture...";
+"Material Browser Error: Texture extracting failed. Please try again later."="Erreur du navigateur de matériaux : l'extraction de la texture a échoué. Veuillez réessayer plus tard.";
+"Material Browser: Extracting texture..."="Navigateur de matériaux : extraction de la texture...";
 
 "Material Browser is already open."="Le navigateur de matériaux est déjà ouvert.";
 "You must reopen Material Browser to see changes."="Vous devez rouvrir le navigateur de matériaux pour voir les changements.";

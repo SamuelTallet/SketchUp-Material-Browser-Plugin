@@ -22,7 +22,6 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'sketchup'
 require 'fileutils'
-require 'zip'
 require 'material_browser/cache'
 require 'material_browser/utils'
 
@@ -129,46 +128,33 @@ module MaterialBrowser
       Dir.glob(skm_glob_patterns).each do |skm_file_path|
   
         skm_file_count = skm_file_count + 1
-  
+
+        skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
+
+        skm_thumbnail_basename = File.basename(skm_file_path).sub(
+          '.skm',
+          ' #SKM-' + skm_file_count.to_s + '.png'
+        )
+        skm_thumbnail_path = File.join(
+          Cache.materials_thumbnails_path, skm_thumbnail_basename
+        )
+
         # SKM files are ZIP archive files renamed.
-        Zip::File.open(skm_file_path) do |skm_file|
+        if Utils.unzip(skm_file_path, 'doc_thumbnail.png', skm_thumbnail_path)
 
-          skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
+          SESSION[:skm_files].push({
 
-          skm_thumbnail_basename = File.basename(skm_file_path).sub(
-            '.skm',
-            ' #SKM-' + skm_file_count.to_s + '.png'
-          )
-          skm_thumbnail_path = File.join(
-            Cache.materials_thumbnails_path, skm_thumbnail_basename
-          )
+            path: skm_file_path,
+            display_name: skm_display_name,
+            thumbnail_uri: Utils.path2uri(skm_thumbnail_path),
+            type: SESSION[:materials_types].from_words(
+              Utils.clean_words(skm_display_name)
+            )
   
-          skm_file.each do |skm_file_entry|
+          })
 
-            if skm_file_entry.name == 'doc_thumbnail.png'
-
-              # Note this method doesn't overwrite files.
-              skm_file_entry.extract(skm_thumbnail_path)
-            
-              SESSION[:skm_files].push({
-
-                path: skm_file_path,
-                display_name: skm_display_name,
-                thumbnail_uri: Utils.path2uri(skm_thumbnail_path),
-                type: SESSION[:materials_types].from_words(
-                  Utils.clean_words(skm_display_name)
-                )
-
-              })
-
-              break
-
-            end
-
-          end
-  
         end
-  
+
       end
 
       Sketchup.status_text = nil

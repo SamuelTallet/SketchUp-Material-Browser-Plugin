@@ -25,6 +25,7 @@ require 'material_browser/html_dialogs'
 require 'material_browser/model'
 require 'material_browser/skm'
 require 'material_browser/texture_haven'
+require 'material_browser/cc0_textures'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -209,6 +210,10 @@ module MaterialBrowser
 
       @html_dialog.add_action_callback('selectTHMaterial') do |_ctx, th_material|
         TextureHaven.select_material(th_material)
+      end
+
+      @html_dialog.add_action_callback('selectCTMaterial') do |_ctx, ct_material|
+        CC0Textures.select_material(ct_material)
       end
 
       @html_dialog.add_action_callback('openURL') do |_ctx, url|

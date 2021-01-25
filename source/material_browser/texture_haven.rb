@@ -67,9 +67,9 @@ module MaterialBrowser
 
       th_materials_sources_urls.each do |th_material_source_url|
 
-        sleep(1)
-
         th_material_name = th_material_source_url.value.to_s.sub('/tex/?t=', '')
+
+        sleep(1)
 
         th_material_source_html = URI.open(
           BASE_URL + th_material_source_url.value.to_s,
@@ -106,6 +106,8 @@ module MaterialBrowser
         material_texture_path = File.join(
           Sketchup.temp_dir, 'texture_haven-' + th_material_name + '.png'
         )
+
+        sleep(1)
 
         if Utils.download(
             th_material_texture_url, MaterialsCatalogs.user_agent, material_texture_path
