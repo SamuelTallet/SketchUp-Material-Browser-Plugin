@@ -1,5 +1,9 @@
 module Zip
-  class StreamableStream < DelegateClass(Entry) # nodoc:all
+
+  # Fix "TypeError: superclass mismatch for class StreamableStream" ?!
+  DELEGATE_ENTRY = DelegateClass(Entry) unless defined?(DELEGATE_ENTRY)
+
+  class StreamableStream < DELEGATE_ENTRY # nodoc:all
     def initialize(entry)
       super(entry)
       dirname = if zipfile.is_a?(::String)
