@@ -131,10 +131,7 @@ module MaterialBrowser
 
         skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
 
-        skm_thumbnail_basename = File.basename(skm_file_path).sub(
-          '.skm',
-          ' #SKM-' + skm_file_count.to_s + '.png'
-        )
+        skm_thumbnail_basename = 'SKM #' + skm_file_count.to_s + '.png'
         skm_thumbnail_path = File.join(
           Cache.materials_thumbnails_path, skm_thumbnail_basename
         )

@@ -21,6 +21,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
+require 'cgi'
 require 'material_browser/html_dialogs'
 require 'material_browser/model'
 require 'material_browser/skm'

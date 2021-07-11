@@ -41,13 +41,17 @@ module MaterialBrowser
 
       Sketchup.status_text = TRANSLATE['Material Browser: Exporting thumbnails...']
 
+      materials_count = 0
+
       Sketchup.active_model.materials.each do |material|
+
+        materials_count = materials_count + 1
 
         # To stay consistent with display of SKM files,
         # model materials will be displayed in english.
         material_display_name = material.name.gsub(/\[|\]/, '').gsub('_', ' ')
 
-        material_thumbnail_basename = material.name + ' #MODEL-' + Time.now.to_i.to_s + '.jpg'
+        material_thumbnail_basename = 'Model #' + materials_count.to_s + '.jpg'
         material_thumbnail_path = File.join(
           Cache.materials_thumbnails_path, material_thumbnail_basename
         )

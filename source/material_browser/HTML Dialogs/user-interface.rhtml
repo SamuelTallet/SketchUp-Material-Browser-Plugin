@@ -252,7 +252,7 @@
                     data-name="<%= model_material[:name] %>"
                 />
 
-                <span class="name"><%= model_material[:display_name] %></span>
+                <span class="name"><%= CGI.escapeHTML(model_material[:display_name]) %></span>
 
             </li>
             <%
@@ -285,7 +285,7 @@
                     data-path="<%= skm_file[:path] %>"
                 />
 
-                <span class="name"><%= skm_file[:display_name] %></span>
+                <span class="name"><%= CGI.escapeHTML(skm_file[:display_name]) %></span>
 
             </li>
             <%
