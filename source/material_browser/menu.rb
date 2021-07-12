@@ -38,7 +38,7 @@ module MaterialBrowser
       raise ArgumentError, 'Parent menu must be a SketchUp::Menu.'\
         unless parent_menu.is_a?(Sketchup::Menu)
 
-      parent_menu.add_item('⬕ ' + NAME) { UserInterface.safe_show }
+      parent_menu.add_item('⬕ ' + NAME) { UserInterface.open }
 
     end
 

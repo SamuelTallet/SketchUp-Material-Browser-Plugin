@@ -34,30 +34,39 @@ module MaterialBrowser
   # Allows to search for SketchUp materials by name.
   class UserInterface
 
-    # Is it safe to open Material Browser UI right now?
-    #
-    # @return [Boolean]
-    def self.safe_to_open?
+    # Opens Material Browser UI.
+    def self.open
 
       if SESSION[:html_dialog_open?]
 
-        UI.messagebox(TRANSLATE['Material Browser is already open.'])
-        return false
+        raise 'HTML Dialog instance is missing.' if SESSION[:html_dialog].nil?
 
+        SESSION[:html_dialog].bring_to_front
+
+      else
+        self.new.show
       end
-
-      true
 
     end
 
-    # Shows Material Browser UI if all good conditions are met.
+    # Gets Material Browser UI HTML code.
     #
-    # @return [nil]
-    def self.safe_show
+    # @return [String]
+    def self.html
 
-      self.new.show if safe_to_open?
+      HTMLDialogs.merge(
 
-      nil
+        # Note: Paths below are relative to `HTMLDialogs::DIR`.
+        document: 'user-interface.rhtml',
+        scripts: [
+          'libraries/list.js',
+          'user-interface.js'
+        ],
+        styles: [
+          'user-interface.css'
+        ]
+  
+      )
 
     end
 
@@ -68,21 +77,9 @@ module MaterialBrowser
 
       if SESSION[:html_dialog_open?]
 
-        raise 'UI HTML Dialog instance is missing.' if SESSION[:html_dialog].nil?
+        raise 'HTML Dialog instance is missing.' if SESSION[:html_dialog].nil?
 
-        SESSION[:html_dialog].set_html(HTMLDialogs.merge(
-
-          # Note: Paths below are relative to `HTMLDialogs::DIR`.
-          document: 'user-interface.rhtml',
-          scripts: [
-            'libraries/list.js',
-            'user-interface.js'
-          ],
-          styles: [
-            'user-interface.css'
-          ]
-  
-        ))
+        SESSION[:html_dialog].set_html(html)
 
         return true
 
@@ -106,8 +103,6 @@ module MaterialBrowser
     end
 
     # Shows Material Browser UI.
-    #
-    # @return [void]
     def show
 
       @html_dialog.show
@@ -135,31 +130,11 @@ module MaterialBrowser
     end
 
     # Fills HTML dialog.
-    #
-    # @return [nil]
     private def fill_html_dialog
-
-      @html_dialog.set_html(HTMLDialogs.merge(
-
-        # Note: Paths below are relative to `HTMLDialogs::DIR`.
-        document: 'user-interface.rhtml',
-        scripts: [
-          'libraries/list.js',
-          'user-interface.js'
-        ],
-        styles: [
-          'user-interface.css'
-        ]
-
-      ))
-
-      nil
-
+      @html_dialog.set_html(self.class.html)
     end
 
     # Configures HTML dialog.
-    #
-    # @return [nil]
     private def configure_html_dialog
 
       @html_dialog.add_action_callback('setZoomValue') do |_ctx, zoom_value|
@@ -178,8 +153,7 @@ module MaterialBrowser
 
         SESSION[:settings].display_only_model = display_only_model
 
-        UI.messagebox(TRANSLATE['You must reopen Material Browser to see changes.'])
-        @html_dialog.close
+        self.class.reload
 
       end
 
@@ -187,13 +161,12 @@ module MaterialBrowser
 
         SESSION[:settings].custom_skm_path = UI.select_directory.to_s
 
-        UI.messagebox(TRANSLATE['You must reopen Material Browser to see changes.'])
-        @html_dialog.close
-
         Cache.remove_materials_thumbnails_dir
 
         Model.export_materials_thumbnails
         SKM.extract_thumbnails
+
+        self.class.reload
 
       end
 
@@ -224,8 +197,6 @@ module MaterialBrowser
       @html_dialog.set_on_closed { SESSION[:html_dialog_open?] = false }
 
       @html_dialog.center
-
-      nil
 
     end
 

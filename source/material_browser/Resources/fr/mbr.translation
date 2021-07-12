@@ -19,9 +19,6 @@
 "Material Browser Error: Texture extracting failed. Please try again later."="Erreur du navigateur de matériaux : l'extraction de la texture a échoué. Veuillez réessayer plus tard.";
 "Material Browser: Extracting texture..."="Navigateur de matériaux : extraction de la texture...";
 
-"Material Browser is already open."="Le navigateur de matériaux est déjà ouvert.";
-"You must reopen Material Browser to see changes."="Vous devez rouvrir le navigateur de matériaux pour voir les changements.";
-
 "Display materials name"="Afficher le nom des matériaux";
 "Display materials source"="Afficher la source des matériaux";
 "Display only model materials"="Afficher uniquement les matériaux du modèle";

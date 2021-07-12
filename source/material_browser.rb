@@ -28,11 +28,11 @@ $LOAD_PATH.push(File.join(__dir__, 'material_browser', 'Libraries'))
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  VERSION = '1.0.8'
+  VERSION = '1.0.9'
 
   # Load translation if it's available for current locale.
-  TRANSLATE = LanguageHandler.new('mbr.strings')
-  # See: "material_browser/Resources/#{Sketchup.get_locale}/mbr.strings"
+  TRANSLATE = LanguageHandler.new('mbr.translation')
+  # @see "material_browser/Resources/#{Sketchup.get_locale}/mbr.translation"
 
   # Remember extension name. See: `MaterialBrowser::Menu`.
   NAME = TRANSLATE['Material Browser']
@@ -72,9 +72,6 @@ module MaterialBrowser
 
   extension.description = extension_features.join(' ')
 
-  Sketchup.register_extension(
-    extension,
-    true # load_at_start
-  )
+  Sketchup.register_extension(extension, load_at_start = true)
   
 end
