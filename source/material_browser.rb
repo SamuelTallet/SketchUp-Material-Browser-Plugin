@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ module MaterialBrowser
     model_materials: [],
     skm_files: [],
     th_materials: [],
-    ct_materials: [],
     html_dialog_open?: false,
     html_dialog: nil
   }
@@ -55,13 +54,12 @@ module MaterialBrowser
 
   extension.version     = VERSION
   extension.creator     = 'Samuel Tallet'
-  extension.copyright   = "© 2021 #{extension.creator}"
+  extension.copyright   = "© 2025 #{extension.creator}"
 
   extension_features = [
 
     TRANSLATE[
-      'Search for SketchUp materials by name from four sources: active model, SKM ' +
-      'collections, Texture Haven and CC0 Textures.'
+      'Search for SketchUp materials by name from three sources: active model, SKM collections and Texture Haven.'
     ],
 
     TRANSLATE['Filter materials by type (Brick, Wood, etc).'],

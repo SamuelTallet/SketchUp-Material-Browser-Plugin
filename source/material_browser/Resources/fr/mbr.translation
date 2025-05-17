@@ -6,7 +6,7 @@
 /////////////////////////////////////////////
 
 "Material Browser"="Navigateur de matériaux";
-"Search for SketchUp materials by name from four sources: active model, SKM collections, Texture Haven and CC0 Textures."="Recherchez des matériaux SketchUp par nom à partir de quatre sources : modèle actif, collections SKM, Texture Haven et CC0 Textures.";
+"Search for SketchUp materials by name from three sources: active model, SKM collections and Texture Haven."="Recherchez des matériaux SketchUp par nom à partir de trois sources : modèle actif, collections SKM et Texture Haven.";
 "Filter materials by type (Brick, Wood, etc)."="Filtrez les matériaux par type (Brique, Bois, etc).";
 "Select material of your choice in one click."="Sélectionnez le matériau de votre choix en un clic.";
 

@@ -3,7 +3,7 @@
  *
  * @package MBR extension for SketchUp
  *
- * @copyright © 2021 Samuel Tallet
+ * @copyright © 2025 Samuel Tallet
  *
  * @licence GNU General Public License 3.0
  */
@@ -209,18 +209,6 @@ MaterialBrowser.addEventListeners = () => {
                 display_name: event.currentTarget.dataset.displayName,
                 texture_url: event.currentTarget.dataset.textureUrl,
                 texture_size: event.currentTarget.dataset.textureSize
-            })
-        })
-
-    })
-
-    document.querySelectorAll('.ct-material.thumbnail').forEach(ctMaterialThumbnail => {
-        
-        ctMaterialThumbnail.addEventListener('click', event => {
-            sketchup.selectCTMaterial({
-                display_name: event.currentTarget.dataset.displayName,
-                texture_zip_url: event.currentTarget.dataset.textureZipUrl,
-                name: event.currentTarget.dataset.name
             })
         })
 

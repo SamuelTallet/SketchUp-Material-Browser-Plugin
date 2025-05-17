@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ require 'material_browser/html_dialogs'
 require 'material_browser/model'
 require 'material_browser/skm'
 require 'material_browser/texture_haven'
-require 'material_browser/cc0_textures'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -184,10 +183,6 @@ module MaterialBrowser
 
       @html_dialog.add_action_callback('selectTHMaterial') do |_ctx, th_material|
         TextureHaven.select_material(th_material)
-      end
-
-      @html_dialog.add_action_callback('selectCTMaterial') do |_ctx, ct_material|
-        CC0Textures.select_material(ct_material)
       end
 
       @html_dialog.add_action_callback('openURL') do |_ctx, url|

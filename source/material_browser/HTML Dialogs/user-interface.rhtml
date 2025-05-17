@@ -74,10 +74,6 @@
         th_logo_uri = Utils.path2uri(
             File.join(HTMLDialogs::DIR, 'images', 'texture-haven-logo.svg')
         )
-
-        ct_logo_uri = Utils.path2uri(
-            File.join(HTMLDialogs::DIR, 'images', 'cc0-textures-logo.svg')
-        )
         %>
 
         <div class="toolbar">
@@ -323,43 +319,6 @@
                 />
 
                 <span class="name"><%= th_material[:display_name] %></span>
-
-            </li>
-            <%
-                end
-
-            end
-            %>
-
-            <%
-            unless SESSION[:settings].display_only_model?
-
-                SESSION[:ct_materials].each do |ct_material|
-            %>
-            <li
-                class="material"
-                data-type="<%= ct_material[:type] %>"
-            >
-
-                <img
-                    class="source-logo"
-                    src="<%= ct_logo_uri %>"
-                    title="CC0 Textures"
-                    data-source-url="<%= ct_material[:source_url] %>"
-                />
-
-                <img
-                    class="ct-material thumbnail"
-                    src="<%= ct_material[:thumbnail_uri] %>"
-                    width="96"
-                    height="96"
-                    title="<%= ct_material[:display_name] %>"
-                    data-display-name="<%= ct_material[:display_name] %>"
-                    data-texture-zip-url="<%= ct_material[:texture_zip_url] %>"
-                    data-name="<%= ct_material[:name] %>"
-                />
-
-                <span class="name"><%= ct_material[:display_name] %></span>
 
             </li>
             <%
