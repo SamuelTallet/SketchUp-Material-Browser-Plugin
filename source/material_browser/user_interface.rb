@@ -160,9 +160,7 @@ module MaterialBrowser
 
         SESSION[:settings].custom_skm_path = UI.select_directory.to_s
 
-        Cache.remove_materials_thumbnails_dir
-
-        Model.export_materials_thumbnails
+        SKM.remove_thumbnails_dir
         SKM.extract_thumbnails
 
         self.class.reload

@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ require 'rehtml'
 require 'rexml/xpath'
 require 'material_browser/materials_catalogs'
 require 'material_browser/utils'
-require 'material_browser/cache'
+require 'material_browser/textures_cache'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -35,7 +35,7 @@ module MaterialBrowser
   # Texture Haven (TH) is a material source.
   module TextureHaven
 
-    # Base URL of TH site.
+    # Base URL of TH site. FIXME
     BASE_URL = 'https://texturehaven.com'
 
     # Gets absolute path to TH materials catalog.
@@ -178,10 +178,10 @@ module MaterialBrowser
     # @param [Hash] th_material
     def self.select_material(th_material)
 
-      Cache.create_materials_textures_dir
+      TexturesCache.create_dir
 
       material_texture_path = File.join(
-        Cache.materials_textures_path,
+        TexturesCache.path,
         'Texture Haven ' + th_material['display_name'] + '.jpg'
       )
 
@@ -199,7 +199,7 @@ module MaterialBrowser
 
         Sketchup.status_text = nil
 
-        # We also cache downloaded material texture creation date-time.
+        # We also cache downloaded material texture creation date-time, as a timestamp.
         File.write(material_texture_path + '.ctime', Time.now.to_i.to_s)
       
       end

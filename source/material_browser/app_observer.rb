@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ require 'sketchup'
 require 'material_browser/materials_observer'
 require 'material_browser/model'
 require 'material_browser/user_interface'
-require 'material_browser/cache'
+require 'material_browser/textures_cache'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -57,7 +57,7 @@ module MaterialBrowser
     # When SketchUp closes:
     def onQuit()
 
-      Cache.remove_materials_thumbnails_dir
+      Model.remove_materials_thumbnails_dir
 
       SESSION[:settings].write
 
@@ -65,7 +65,8 @@ module MaterialBrowser
 
     # When SketchUp user turns off an extension:
     def onUnloadExtension(extension_name)
-      Cache.remove_materials_textures_dir if extension_name == NAME
+      # @todo Asks user if he wants to drop SKM thumbs?
+      TexturesCache.remove_dir if extension_name == NAME
     end
 
   end

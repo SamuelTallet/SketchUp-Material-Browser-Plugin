@@ -25,6 +25,7 @@ require 'material_browser/settings'
 require 'material_browser/app_observer'
 require 'material_browser/materials_observer'
 require 'material_browser/cache'
+require 'material_browser/textures_cache'
 require 'material_browser/materials_types'
 require 'material_browser/model'
 require 'material_browser/skm'
@@ -44,10 +45,16 @@ module MaterialBrowser
   Sketchup.active_model.materials.add_observer(MaterialsObserver.new)
 
   # If SketchUp was not properly closed:
-  # remove materials thumbnails directory.
+  # removes previous active model's materials thumbnails directory.
+  Model.remove_materials_thumbnails_dir
+
+  # Maybe user migrated from an older version of Material Browser:
+  # removes materials thumbs legacy directory.
+  # @since 1.1.0
   Cache.remove_materials_thumbnails_dir
 
-  Cache.delete_old_materials_textures
+  # Downloaded textures can consume disk space, let's drop old ones!
+  TexturesCache.delete_old
 
   SESSION[:materials_types] = MaterialsTypes.new
 
@@ -56,7 +63,7 @@ module MaterialBrowser
   
   TextureHaven.catalog_materials
 
-  # Plug Material Browser menu into SketchUp UI.
+  # Plugs Material Browser menu into SketchUp UI.
   Menu.new(
     UI.menu('Plugins') # parent_menu
   )

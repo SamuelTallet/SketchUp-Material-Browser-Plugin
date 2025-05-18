@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'sketchup'
 require 'fileutils'
-require 'material_browser/cache'
 require 'material_browser/utils'
 
 # Material Browser plugin namespace.
@@ -31,13 +30,32 @@ module MaterialBrowser
   # Manages SketchUp active model.
   module Model
 
+    # Gets absolute path to active model's materials thumbnails directory.
+    #
+    # @return [String]
+    def self.materials_thumbnails_path
+      # User can open Material Browser plugin in different SketchUp versions at the same time.
+      # Better isolate this thumbnails directory for each...
+      File.join(Sketchup.temp_dir, "SketchUp 20#{Sketchup.version.to_i} MBR Plugin AM Thumbs")
+    end
+
+    # Removes active model's materials thumbnails directory.
+    def self.remove_materials_thumbnails_dir
+      FileUtils.remove_dir(materials_thumbnails_path) if Dir.exist?(materials_thumbnails_path)
+    end
+
+    # Creates active model's materials thumbnails directory.
+    def self.create_materials_thumbnails_dir
+      FileUtils.mkdir_p(materials_thumbnails_path) unless Dir.exist?(materials_thumbnails_path)
+    end
+
     # Exports materials thumbnails of active model.
     # Material metadata is stored in `MaterialBrowser::SESSION`.
     def self.export_materials_thumbnails
 
       SESSION[:model_materials] = []
 
-      Cache.create_materials_thumbnails_dir
+      create_materials_thumbnails_dir
 
       Sketchup.status_text = TRANSLATE['Material Browser: Exporting thumbnails...']
 
@@ -51,13 +69,14 @@ module MaterialBrowser
         # model materials will be displayed in english.
         material_display_name = material.name.gsub(/\[|\]/, '').gsub('_', ' ')
 
-        material_thumbnail_basename = 'Model #' + materials_count.to_s + '.jpg'
+        material_thumbnail_basename = materials_count.to_s + '.jpg'
         material_thumbnail_path = File.join(
-          Cache.materials_thumbnails_path, material_thumbnail_basename
+          materials_thumbnails_path, material_thumbnail_basename
         )
 
         material_thumbnail_size = 256
 
+        # Assumes a color by default.
         unless material.texture.nil?
 
           material_texture_size = [
