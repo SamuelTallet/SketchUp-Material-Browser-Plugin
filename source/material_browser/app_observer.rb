@@ -65,7 +65,7 @@ module MaterialBrowser
 
     # When SketchUp user turns off an extension:
     def onUnloadExtension(extension_name)
-      # @todo Asks user if he wants to drop SKM thumbs?
+      # @todo Ask user if he wants to drop SKM thumbs?
       TexturesCache.remove_dir if extension_name == NAME
     end
 

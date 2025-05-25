@@ -20,8 +20,9 @@
 raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
-require 'sketchup'
+require 'zlib'
 require 'fileutils'
+require 'sketchup'
 require 'material_browser/utils'
 
 # Material Browser plugin namespace.
@@ -30,25 +31,23 @@ module MaterialBrowser
   # Manages SketchUp Material (SKM) files.
   module SKM
 
-    # Gets absolute path to stock SKM directory.
+    # Absolute path to stock SKM directory.
+    # This is where materials shipped with SketchUp are.
     #
     # @raise [RuntimeError]
     #
     # @return [String]
-    def self.stock_skm_path
-
+    def self.stock_path
       sketchup_year_version = Sketchup.version.to_i.to_s
 
       if Sketchup.platform == :platform_osx
-
-        stock_skm_path = File.join(
+        File.join(
           '/', 'Applications', 'SketchUp ' + '20' + sketchup_year_version,
           'SketchUp.app', 'Contents', 'Resources', 'Content', 'Materials'
         )
 
       elsif Sketchup.platform == :platform_win
-
-        stock_skm_path = File.join(
+        File.join(
           ENV['PROGRAMDATA'], 'SketchUp', 'SketchUp ' + '20' + sketchup_year_version,
           'SketchUp', 'Materials'
         )
@@ -56,40 +55,35 @@ module MaterialBrowser
       else
         raise 'Unknown operating system.'
       end
-
     end
 
-    # Gets absolute path to custom SKM directory.
+    # Absolute path to custom SKM directory.
     # Not to be confused with custom SKM path set by user in Material Browser UI.
     #
     # @raise [RuntimeError]
     #
     # @return [String]
-    def self.custom_skm_path
-
+    def self.custom_path
       sketchup_year_version = Sketchup.version.to_i.to_s
 
       if Sketchup.platform == :platform_osx
-
-        custom_skm_path = File.join(
+        File.join(
           ENV['HOME'], 'Library', 'Application Support',
           'SketchUp ' + '20' + sketchup_year_version, 'SketchUp', 'Materials'
         )
 
       elsif Sketchup.platform == :platform_win
-
-        custom_skm_path = File.join(
+        File.join(
           ENV['APPDATA'], 'SketchUp', 'SketchUp ' + '20' + sketchup_year_version,
           'SketchUp', 'Materials'
         )
-        
+
       else
         raise 'Unknown operating system.'
       end
-
     end
 
-    # Gets absolute path to SKM thumbnails directory.
+    # Absolute path to SKM thumbnails directory.
     #
     # @return [String]
     def self.thumbnails_path
@@ -117,66 +111,66 @@ module MaterialBrowser
 
       create_thumbnails_dir
 
-      stock_skm_glob_pattern = File.join(stock_skm_path, '**', '*.skm')
-      custom_skm_glob_pattern = File.join(custom_skm_path, '**', '*.skm')
+      stock_skm_glob_pattern = File.join(stock_path, '**', '*.skm')
+      custom_skm_glob_pattern = File.join(custom_path, '**', '*.skm')
 
       skm_glob_patterns = [stock_skm_glob_pattern, custom_skm_glob_pattern]
 
       user_custom_skm_path = SESSION[:settings].custom_skm_path
 
       if Dir.exist?(user_custom_skm_path)
-
         user_custom_skm_glob_pattern = File.join(user_custom_skm_path, '**', '*.skm')
         skm_glob_patterns.push(user_custom_skm_glob_pattern)
-
       end
-      
+
       # Fixes SKM glob patterns only on Windows.
       if Sketchup.platform == :platform_win
-
         skm_glob_patterns.each do |skm_glob_pattern|
           skm_glob_pattern.gsub!('\\', '/')
         end
-        
       end
-      
-      skm_file_count = 0
 
       Sketchup.status_text = TRANSLATE['Material Browser: Extracting thumbnails...']
-  
+
       Dir.glob(skm_glob_patterns).each do |skm_file_path|
+        thumbnail_basename = Zlib.crc32(skm_file_path).to_s
+        thumbnail_basename += '@' + File.mtime(skm_file_path).to_i.to_s + '.png'
 
-        # @todo Remove this counter.
-        skm_file_count = skm_file_count + 1
+        thumbnail_path = File.join(thumbnails_path, thumbnail_basename)
+        thumbnail_available = File.exist?(thumbnail_path)
 
-        # @todo Use file path CRC32 instead of file count...
-        skm_thumbnail_basename = 'SKM #' + skm_file_count.to_s + '.png'
-        skm_thumbnail_path = File.join(thumbnails_path, skm_thumbnail_basename)
+        # To index SKM files faster:
+        # We don't re-extract thumbnails of SKM files having same path and modification time.
+        # This isn't perfect... There are cases where a thumbnail shouldn't be re-extracted:
+        # - A SKM file with no intrinsic change have been moved/renamed.
+        # - A SKM file contents has been modified in a way that didn't affect its thumbnail.
+        # But I think it's less bad than displaying outdated thumbnails, more user-friendly.
+        # In an ideal world, SKM files are deep-compared...
+        unless thumbnail_available
+          thumbnail_available = Utils.unzip(skm_file_path, 'doc_thumbnail.png', thumbnail_path)
+          # SKM files are ZIP files.
 
-        skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
-
-        # SKM files are ZIP archive files renamed.
-        if Utils.unzip(skm_file_path, 'doc_thumbnail.png', skm_thumbnail_path)
-
-          # FIXME: Add SKM file to list even if not unzipped.
-          # Because Rubyzip doesn't overwrite existing files?
-          SESSION[:skm_files].push({
-
-            path: skm_file_path,
-            display_name: skm_display_name,
-            thumbnail_uri: Utils.path2uri(skm_thumbnail_path),
-            type: SESSION[:materials_types].from_words(
-              Utils.clean_words(skm_display_name)
-            )
-  
-          })
-
+          unless thumbnail_available
+            puts "Material Browser: Failed to extract thumbnail from #{skm_file_path}."
+          end
         end
 
+        if thumbnail_available
+          skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
+
+          SESSION[:skm_files].push({
+            path: skm_file_path,
+            display_name: skm_display_name,
+            thumbnail_uri: Utils.path2uri(thumbnail_path),
+            type: SESSION[:materials_types].from_words(Utils.clean_words(skm_display_name))
+          })
+        end
       end
 
+      # @todo Remove outdated/unused SKM thumbnails.
+
       Sketchup.status_text = nil
-  
+
     end
 
     # Selects a SKM file then activates paint tool.

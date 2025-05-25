@@ -53,14 +53,17 @@ module MaterialBrowser
   # @since 1.1.0
   Cache.remove_materials_thumbnails_dir
 
-  # Downloaded textures can consume disk space, let's drop old ones!
+  # Downloaded textures can consume disk space.
+  # And maybe user doesn't use Material Browser anymore.
+  # Thus better remove these old textures now.
   TexturesCache.delete_old
 
   SESSION[:materials_types] = MaterialsTypes.new
 
   Model.export_materials_thumbnails
+
+  # @todo Defer these to "HTML dialog loaded" event with a callback?
   SKM.extract_thumbnails
-  
   TextureHaven.catalog_materials
 
   # Plugs Material Browser menu into SketchUp UI.
