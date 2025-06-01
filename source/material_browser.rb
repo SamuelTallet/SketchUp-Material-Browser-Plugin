@@ -38,12 +38,12 @@ module MaterialBrowser
   NAME = TRANSLATE['Material Browser']
 
   # Initialize session storage.
+  # @todo Move these variables to `Settings`, `Model`, etc.
   SESSION = {
     settings: nil,
     model_materials: [],
     skm_files: [],
     th_materials: [],
-    html_dialog: nil
   }
 
   # Register extension.

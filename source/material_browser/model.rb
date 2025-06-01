@@ -28,7 +28,7 @@ require 'material_browser/materials_types'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Manages SketchUp active model.
+  # Manages SketchUp active model materials.
   module Model
 
     # Gets absolute path to active model's materials thumbnails directory.
