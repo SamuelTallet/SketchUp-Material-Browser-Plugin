@@ -33,22 +33,28 @@ module MaterialBrowser
   # Allows to search for SketchUp materials by name.
   class UserInterface
 
+    @@is_open = false
+
+    # Indicates whether Material Browser UI (underlying HTML Dialog) is open.
+    def self.is_open?
+      @@is_open
+    end
+
     # Opens Material Browser UI.
+    # If already open, brings it to the front.
     def self.open
 
-      if SESSION[:html_dialog_open?]
-
+      if @@is_open
         raise 'HTML Dialog instance is missing.' if SESSION[:html_dialog].nil?
 
         SESSION[:html_dialog].bring_to_front
-
       else
         self.new.show
       end
 
     end
 
-    # Gets Material Browser UI HTML code.
+    # Material Browser UI HTML code.
     #
     # @return [String]
     def self.html
@@ -74,14 +80,12 @@ module MaterialBrowser
     # @return [Boolean]
     def self.reload
 
-      if SESSION[:html_dialog_open?]
-
+      if @@is_open
         raise 'HTML Dialog instance is missing.' if SESSION[:html_dialog].nil?
 
         SESSION[:html_dialog].set_html(html)
 
         return true
-
       end
 
       false
@@ -103,12 +107,9 @@ module MaterialBrowser
 
     # Shows Material Browser UI.
     def show
-
       @html_dialog.show
 
-      # Material Browser UI is open.
-      SESSION[:html_dialog_open?] = true
-
+      @@is_open = true
     end
 
     # Creates SketchUp HTML dialog that powers Material Browser UI.
@@ -187,7 +188,7 @@ module MaterialBrowser
         UI.openURL(url)
       end
 
-      @html_dialog.set_on_closed { SESSION[:html_dialog_open?] = false }
+      @html_dialog.set_on_closed { @@is_open = false }
 
       @html_dialog.center
 

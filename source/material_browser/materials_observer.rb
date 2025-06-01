@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
-require 'material_browser/model'
 require 'material_browser/user_interface'
+require 'material_browser/model'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -33,29 +33,30 @@ module MaterialBrowser
     # When a new material is added:
     def onMaterialAdd(_materials, _material)
 
-      Model.export_materials_thumbnails
-
-      UserInterface.reload
-
+      # No need to sync thumbnails if UI isn't open.
+      if UserInterface.is_open?
+        Model.export_materials_thumbnails
+        UserInterface.reload
+      end
     end
 
     # When a material is altered:
     # FIXME: This event is called too many times.
     def onMaterialChange(_materials, _material)
 
-      Model.export_materials_thumbnails
-
-      UserInterface.reload
-
+      if UserInterface.is_open?
+        Model.export_materials_thumbnails
+        UserInterface.reload
+      end
     end
 
     # When a material is deleted:
     def onMaterialRemove(_materials, _material)
 
-      Model.export_materials_thumbnails
-
-      UserInterface.reload
-      
+      if UserInterface.is_open?
+        Model.export_materials_thumbnails
+        UserInterface.reload
+      end
     end
 
   end

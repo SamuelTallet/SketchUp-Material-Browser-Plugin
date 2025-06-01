@@ -43,7 +43,6 @@ module MaterialBrowser
     model_materials: [],
     skm_files: [],
     th_materials: [],
-    html_dialog_open?: false,
     html_dialog: nil
   }
 

@@ -22,8 +22,8 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'sketchup'
 require 'material_browser/materials_observer'
-require 'material_browser/model'
 require 'material_browser/user_interface'
+require 'material_browser/model'
 require 'material_browser/textures_cache'
 
 # Material Browser plugin namespace.
@@ -34,24 +34,23 @@ module MaterialBrowser
 
     # When SketchUp user creates a new, empty model:
     def onNewModel(model)
-
       model.materials.add_observer(MaterialsObserver.new)
 
-      Model.export_materials_thumbnails
-
-      UserInterface.reload
-
+      # No need to sync thumbnails if UI isn't open.
+      if UserInterface.is_open?
+        Model.export_materials_thumbnails
+        UserInterface.reload
+      end
     end
 
     # When SketchUp user opens an existing model:
     def onOpenModel(model)
-
       model.materials.add_observer(MaterialsObserver.new)
 
-      Model.export_materials_thumbnails
-
-      UserInterface.reload
-
+      if UserInterface.is_open?
+        Model.export_materials_thumbnails
+        UserInterface.reload
+      end
     end
 
     # When SketchUp closes:
