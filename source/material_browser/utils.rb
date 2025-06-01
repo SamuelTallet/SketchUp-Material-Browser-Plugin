@@ -143,7 +143,7 @@ module MaterialBrowser
         unless output_path.is_a?(String)
 
       begin
-        # @todo Drop RubyZip because it's slow when there are many archives
+        # @todo Drop Rubyzip because it's slow when there are many archives
         # to extract. Instead load an "unzip.dll" with Fiddle?
         Zip::File.open(zip_file_path) do |zip_file|
           zip_file.each do |zip_file_entry|

@@ -26,10 +26,7 @@ require 'material_browser/app_observer'
 require 'material_browser/materials_observer'
 require 'material_browser/cache'
 require 'material_browser/textures_cache'
-require 'material_browser/materials_types'
 require 'material_browser/model'
-require 'material_browser/skm'
-require 'material_browser/texture_haven'
 require 'material_browser/menu'
 
 # Material Browser plugin namespace.
@@ -48,29 +45,18 @@ module MaterialBrowser
   # removes previous active model's materials thumbnails directory.
   Model.remove_materials_thumbnails_dir
 
-  # Maybe user migrated from an older version of Material Browser:
+  # Maybe user migrated from a Material Browser version prior to 1.1:
   # removes materials thumbs legacy directory.
-  # @since 1.1.0
   Cache.remove_materials_thumbnails_dir
 
   # Downloaded textures can consume disk space.
   # And maybe user doesn't use Material Browser anymore.
-  # Thus better remove these old textures now.
+  # Thus better remove these old textures here rather in lazy_load.rb
   TexturesCache.delete_old
-
-  SESSION[:materials_types] = MaterialsTypes.new
-
-  Model.export_materials_thumbnails
-
-  # @todo Defer these to "HTML dialog loaded" event with a callback?
-  SKM.extract_thumbnails
-  TextureHaven.catalog_materials
 
   # Plugs Material Browser menu into SketchUp UI.
   Menu.new(
     UI.menu('Plugins') # parent_menu
   )
-
-  # Load complete.
 
 end

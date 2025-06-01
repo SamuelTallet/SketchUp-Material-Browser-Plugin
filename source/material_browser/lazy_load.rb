@@ -21,29 +21,34 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
-require 'material_browser/lazy_load'
-require 'material_browser/user_interface'
+require 'material_browser/materials_types'
+require 'material_browser/model'
+require 'material_browser/skm'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Connects Material Browser plugin menu to SketchUp user interface.
-  class Menu
+  module LazyLoad
 
-    # Adds Material Browser plugin menu in a SketchUp menu.
-    #
-    # @param [Sketchup::Menu] parent_menu Target parent menu.
-    # @raise [ArgumentError]
-    def initialize(parent_menu)
+    # Lazy load done?
+    @@done = false
 
-      raise ArgumentError, 'Parent menu must be a SketchUp::Menu.'\
-        unless parent_menu.is_a?(Sketchup::Menu)
+    # Completes plugin loading when needed...
+    # Used to accelerate SketchUp startup time.
+    def self.once
+      return if @@done
 
-      parent_menu.add_item(NAME) do
-        LazyLoad.once
-        UserInterface.open
-      end
+      SESSION[:materials_types] = MaterialsTypes.new
 
+      Model.export_materials_thumbnails
+
+      SKM.extract_thumbnails
+      # @todo Remove outdated/unused SKM thumbnails from time to time.
+
+      # @todo Migrate to Poly Haven.
+      #TextureHaven.catalog_materials
+
+      @@done = true
     end
 
   end
