@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,13 +26,21 @@ require 'fileutils'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
+  # Manages materials types.
   class MaterialsTypes
 
     # Absolute path to "Materials Types" directory.
     DIR = File.join(__dir__, 'Materials Types')
 
-    # Makes a MaterialsTypes object.
-    def initialize
+    @instance = nil
+
+    # Gets singleton instance of `MaterialsTypes`.
+    def self.get
+      @instance ||= new
+    end
+
+    # Makes a `MaterialsTypes` object.
+    private def initialize
 
       @dictionary = {}
       load_dictionary
@@ -61,7 +69,7 @@ module MaterialBrowser
     # @raise [ArgumentError]
     #
     # @return [String] material type or 'unknown' if word isn't in dictionary.
-    def from_word(word)
+    private def from_word(word)
 
       raise ArgumentError, 'Word must be a String.' unless word.is_a?(String)
 

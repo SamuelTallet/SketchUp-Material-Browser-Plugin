@@ -21,7 +21,6 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'sketchup'
-require 'material_browser/materials_types'
 require 'material_browser/model'
 require 'material_browser/skm'
 
@@ -37,8 +36,6 @@ module MaterialBrowser
     # Used to accelerate SketchUp startup time.
     def self.once
       return if @@done
-
-      SESSION[:materials_types] = MaterialsTypes.new
 
       Model.export_materials_thumbnails
 

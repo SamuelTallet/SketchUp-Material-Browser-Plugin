@@ -26,6 +26,7 @@ require 'open-uri'
 require 'rehtml'
 require 'rexml/xpath'
 require 'material_browser/materials_catalogs'
+require 'material_browser/materials_types'
 require 'material_browser/utils'
 require 'material_browser/textures_cache'
 
@@ -157,16 +158,12 @@ module MaterialBrowser
         )
 
         SESSION[:th_materials].push({
-
           texture_url: th_material_texture_url,
           texture_size: th_material_texture_size,
           source_url: th_material_source_url,
           display_name: th_material_display_name,
           thumbnail_uri: Utils.path2uri(th_material_thumbnail_path),
-          type: SESSION[:materials_types].from_words(
-            Utils.clean_words(th_material_display_name)
-          )
-
+          type: MaterialsTypes.get.from_words(Utils.clean_words(th_material_display_name))
         })
 
       end

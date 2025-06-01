@@ -24,6 +24,7 @@ require 'zlib'
 require 'fileutils'
 require 'sketchup'
 require 'material_browser/utils'
+require 'material_browser/materials_types'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -162,12 +163,10 @@ module MaterialBrowser
             path: skm_file_path,
             display_name: skm_display_name,
             thumbnail_uri: Utils.path2uri(thumbnail_path),
-            type: SESSION[:materials_types].from_words(Utils.clean_words(skm_display_name))
+            type: MaterialsTypes.get.from_words(Utils.clean_words(skm_display_name))
           })
         end
       end
-
-      # @todo Remove outdated/unused SKM thumbnails.
 
       Sketchup.status_text = nil
 

@@ -40,7 +40,6 @@ module MaterialBrowser
   # Initialize session storage.
   SESSION = {
     settings: nil,
-    materials_types: nil,
     model_materials: [],
     skm_files: [],
     th_materials: [],
