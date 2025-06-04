@@ -23,6 +23,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 require 'sketchup'
 require 'cgi'
 require 'material_browser/html_dialogs'
+require 'material_browser/settings'
 require 'material_browser/model'
 require 'material_browser/skm'
 require 'material_browser/texture_haven'
@@ -140,20 +141,20 @@ module MaterialBrowser
     private def configure_html_dialog
 
       @html_dialog.add_action_callback('setZoomValue') do |_ctx, zoom_value|
-        SESSION[:settings].zoom_value = zoom_value
+        Settings.current.zoom_value = zoom_value
       end
 
       @html_dialog.add_action_callback('setDisplayName') do |_ctx, display_name|
-        SESSION[:settings].display_name = display_name
+        Settings.current.display_name = display_name
       end
 
       @html_dialog.add_action_callback('setDisplaySource') do |_ctx, display_source|
-        SESSION[:settings].display_source = display_source
+        Settings.current.display_source = display_source
       end
 
       @html_dialog.add_action_callback('setDisplayOnlyModel') do |_ctx, display_only_model|
 
-        SESSION[:settings].display_only_model = display_only_model
+        Settings.current.display_only_model = display_only_model
 
         self.class.reload
 
@@ -161,7 +162,7 @@ module MaterialBrowser
 
       @html_dialog.add_action_callback('setCustomSKMPath') do |_ctx|
 
-        SESSION[:settings].custom_skm_path = UI.select_directory.to_s
+        Settings.current.custom_skm_path = UI.select_directory.to_s
 
         SKM.remove_thumbnails_dir
         SKM.extract_thumbnails
@@ -171,7 +172,7 @@ module MaterialBrowser
       end
 
       @html_dialog.add_action_callback('setTypeFilterValue') do |_ctx, type_filter_value|
-        SESSION[:settings].type_filter_value = type_filter_value
+        Settings.current.type_filter_value = type_filter_value
       end
 
       @html_dialog.add_action_callback('selectModelMaterial') do |_ctx, model_material_name|

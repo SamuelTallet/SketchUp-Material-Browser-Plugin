@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="x-package" content="Material Browser extension for SketchUp">
-    <meta name="x-copyright" content="© 2021 Samuel Tallet">
+    <meta name="x-copyright" content="© 2025 Samuel Tallet">
     <meta name="x-license" content="GNU General Public License 3.0">
 
 	<title><%= NAME %></title>
@@ -24,14 +24,14 @@
         <input
             type="checkbox"
             class="display-name"
-            <%= SESSION[:settings].display_name? ? 'checked' : '' %>
+            <%= Settings.current.display_name? ? 'checked' : '' %>
         />
         <%= TRANSLATE['Display materials name'] %>
 
         <input
             type="checkbox"
             class="display-source"
-            <%= SESSION[:settings].display_source? ? 'checked' : '' %>
+            <%= Settings.current.display_source? ? 'checked' : '' %>
         />
         <%= TRANSLATE['Display materials source'] %>
 
@@ -40,7 +40,7 @@
         <input
             type="checkbox"
             class="display-only-model"
-            <%= SESSION[:settings].display_only_model? ? 'checked' : '' %>
+            <%= Settings.current.display_only_model? ? 'checked' : '' %>
         />
         <%= TRANSLATE['Display only model materials'] %>
         
@@ -85,7 +85,7 @@
                     <img class="in icon" src="<%= zoom_in_icon_uri %>">
     
                     <input type="range" class="slider"
-                        value="<%= SESSION[:settings].zoom_value %>"
+                        value="<%= Settings.current.zoom_value %>"
                         min="64" max="256" step="8"
                     />
                     
@@ -115,7 +115,7 @@
                     placeholder="<%= TRANSLATE['Search by name'] %>"
                 />
 
-                <% option_value_to_select = SESSION[:settings].type_filter_value %>
+                <% option_value_to_select = Settings.current.type_filter_value %>
                 <select class="filter-by-type">
         
                     <option value="all"
@@ -256,7 +256,7 @@
             %>
 
             <%
-            unless SESSION[:settings].display_only_model?
+            unless Settings.current.display_only_model?
 
                 SESSION[:skm_files].each do |skm_file|
             %>
@@ -291,7 +291,7 @@
             %>
 
             <%
-            unless SESSION[:settings].display_only_model?
+            unless Settings.current.display_only_model?
 
                 SESSION[:th_materials].each do |th_material|
             %>

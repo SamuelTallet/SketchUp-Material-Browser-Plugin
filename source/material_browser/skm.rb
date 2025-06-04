@@ -23,6 +23,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 require 'zlib'
 require 'fileutils'
 require 'sketchup'
+require 'material_browser/settings'
 require 'material_browser/utils'
 require 'material_browser/materials_types'
 
@@ -117,7 +118,7 @@ module MaterialBrowser
 
       skm_glob_patterns = [stock_skm_glob_pattern, custom_skm_glob_pattern]
 
-      user_custom_skm_path = SESSION[:settings].custom_skm_path
+      user_custom_skm_path = Settings.current.custom_skm_path
 
       if Dir.exist?(user_custom_skm_path)
         user_custom_skm_glob_pattern = File.join(user_custom_skm_path, '**', '*.skm')

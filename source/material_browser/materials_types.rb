@@ -32,9 +32,10 @@ module MaterialBrowser
     # Absolute path to "Materials Types" directory.
     DIR = File.join(__dir__, 'Materials Types')
 
+    # Singleton instance.
     @instance = nil
 
-    # Gets singleton instance of `MaterialsTypes`.
+    # Materials types (singleton instance).
     def self.get
       @instance ||= new
     end

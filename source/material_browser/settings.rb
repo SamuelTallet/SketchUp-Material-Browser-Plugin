@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,27 +33,30 @@ module MaterialBrowser
     # Absolute path to "./settings.json".
     JSON_FILE = File.join(__dir__, 'settings.json')
 
-    # Makes a Settings object.
-    def initialize
+    # Singleton instance.
+    @instance = nil
+
+    # Current settings (singleton instance).
+    def self.current
+      @instance ||= new
+    end
+
+    # Makes a `Settings` object.
+    private def initialize
       @settings = {}
     end
 
     # Reads settings from disk.
     def read
-
       begin
-
         @settings = JSON.parse(File.read(JSON_FILE))
 
       rescue => error
-
-        puts 'Error: ' + error.message
-
         # If something went wrong: read "./settings.json.backup".
+        # @todo Fallback to default settings (`default!` method).
+        puts 'Material Browser Error: ' + error.message
         @settings = JSON.parse(File.read(JSON_FILE + '.backup'))
-
       end
-
     end
 
     # Sets "zoom value" setting.
@@ -65,8 +68,10 @@ module MaterialBrowser
       raise ArgumentError, 'Zoom value must be an Integer.'\
         unless zoom_value.is_a?(Integer)
 
-      @settings['zoom_value'] = zoom_value
+      raise ArgumentError, 'Zoom value must be strictly positive.'\
+        unless zoom_value > 0
 
+      @settings['zoom_value'] = zoom_value
     end
 
     # Gets "zoom value" setting.
@@ -83,10 +88,9 @@ module MaterialBrowser
     def display_name=(display_name)
 
       raise ArgumentError, 'Display name must be a Boolean.'\
-        unless display_name == true or display_name == false
+        unless [true, false].include?(display_name)
 
       @settings['display_name'] = display_name
-
     end
 
     # Gets "display name" setting.
@@ -103,10 +107,9 @@ module MaterialBrowser
     def display_source=(display_source)
 
       raise ArgumentError, 'Display source must be a Boolean.'\
-        unless display_source == true or display_source == false
+        unless [true, false].include?(display_source)
 
       @settings['display_source'] = display_source
-
     end
 
     # Gets "display source" setting.
@@ -123,10 +126,9 @@ module MaterialBrowser
     def display_only_model=(display_only_model)
 
       raise ArgumentError, 'Display only model must be a Boolean.'\
-        unless display_only_model == true or display_only_model == false
+        unless [true, false].include?(display_only_model)
 
       @settings['display_only_model'] = display_only_model
-
     end
 
     # Gets "display only model" setting.
@@ -146,7 +148,6 @@ module MaterialBrowser
         unless custom_skm_path.is_a?(String)
 
       @settings['custom_skm_path'] = custom_skm_path
-
     end
 
     # Gets "custom SKM path" setting.
@@ -166,7 +167,6 @@ module MaterialBrowser
         unless type_filter_value.is_a?(String)
 
       @settings['type_filter_value'] = type_filter_value
-
     end
 
     # Gets "type filter value" setting.

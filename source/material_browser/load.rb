@@ -32,11 +32,10 @@ require 'material_browser/menu'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  SESSION[:settings] = Settings.new
-
+  # Reads "settings.json" file.
   # Settings are written when SketchUp closes.
   # See: `MaterialBrowser::AppObserver`.
-  SESSION[:settings].read
+  Settings.current.read
 
   Sketchup.add_observer(AppObserver.new)
   Sketchup.active_model.materials.add_observer(MaterialsObserver.new)
@@ -45,13 +44,13 @@ module MaterialBrowser
   # removes previous active model's materials thumbnails directory.
   Model.remove_materials_thumbnails_dir
 
-  # Maybe user migrated from a Material Browser version prior to 1.1:
-  # removes materials thumbs legacy directory.
+  # Maybe user migrated from a Material Browser version prior to 1.1?
+  # Removes materials thumbs legacy directory.
   Cache.remove_materials_thumbnails_dir
 
   # Downloaded textures can consume disk space.
-  # And maybe user doesn't use Material Browser anymore.
-  # Thus better remove these old textures here rather in *menu.rb*.
+  # And maybe user doesn't use Material Browser anymore?
+  # Thus better remove these old textures here rather in "menu.rb".
   TexturesCache.delete_old
 
   # Plugs Material Browser menu into SketchUp UI.

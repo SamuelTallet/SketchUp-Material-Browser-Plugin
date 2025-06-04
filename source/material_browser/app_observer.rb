@@ -24,6 +24,7 @@ require 'sketchup'
 require 'material_browser/materials_observer'
 require 'material_browser/user_interface'
 require 'material_browser/model'
+require 'material_browser/settings'
 require 'material_browser/textures_cache'
 
 # Material Browser plugin namespace.
@@ -58,7 +59,7 @@ module MaterialBrowser
 
       Model.remove_materials_thumbnails_dir
 
-      SESSION[:settings].write
+      Settings.current.write
 
     end
 
