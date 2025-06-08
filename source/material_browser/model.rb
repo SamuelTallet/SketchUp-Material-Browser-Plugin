@@ -31,7 +31,15 @@ module MaterialBrowser
   # Manages SketchUp active model materials.
   module Model
 
-    # Gets absolute path to active model's materials thumbnails directory.
+    # Active model's materials metadata.
+    @@materials = []
+
+    # Materials metadata of active model.
+    def self.materials
+      @@materials
+    end
+
+    # Absolute path to active model's materials thumbnails directory.
     #
     # @return [String]
     def self.materials_thumbnails_path
@@ -51,11 +59,10 @@ module MaterialBrowser
     end
 
     # Exports materials thumbnails of active model.
-    # Material metadata is stored in `MaterialBrowser::SESSION`.
+    # Material metadata is stored in `@@materials`.
     def self.export_materials_thumbnails
 
-      SESSION[:model_materials] = []
-
+      @@materials = []
       create_materials_thumbnails_dir
 
       Sketchup.status_text = TRANSLATE['Material Browser: Exporting thumbnails...']
@@ -94,7 +101,7 @@ module MaterialBrowser
         # Note this method overwrites files having same name.
         material.write_thumbnail(material_thumbnail_path, material_thumbnail_size)
 
-        SESSION[:model_materials].push({
+        @@materials.push({
           name: material.name,
           display_name: material_display_name,
           thumbnail_uri: Utils.path2uri(material_thumbnail_path),
@@ -104,7 +111,6 @@ module MaterialBrowser
       end
 
       Sketchup.status_text = nil
-
     end
 
     # Selects a material of active model then activates paint tool.
@@ -116,7 +122,6 @@ module MaterialBrowser
       Sketchup.active_model.materials.current = material
 
       Sketchup.send_action('selectPaintTool:')
-
     end
 
   end

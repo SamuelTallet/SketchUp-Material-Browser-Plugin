@@ -42,9 +42,8 @@ module MaterialBrowser
   NAME = TRANSLATE['Material Browser']
 
   # Deprecated session storage.
-  # @todo Move these variables to `Model`, `SKM`, etc.
+  # @todo Move `skm_files` to `SKM`.
   SESSION = {
-    model_materials: [],
     skm_files: [],
     th_materials: [],
   }
