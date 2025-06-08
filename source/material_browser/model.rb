@@ -35,6 +35,13 @@ module MaterialBrowser
     @@materials = []
 
     # Materials metadata of active model.
+    #
+    # @return [Array<Hash>]
+    #   Where each hash contains:
+    #   - `:name` (String) - Material name.
+    #   - `:display_name` (String) - Material display name.
+    #   - `:thumbnail_uri` (String) - Material thumbnail file URI.
+    #   - `:type` (String) - Material type. e.g. "glass"
     def self.materials
       @@materials
     end

@@ -43,7 +43,7 @@ module MaterialBrowser
     #   - `:path` (String) - Absolute path to source SKM file.
     #   - `:display_name` (String) - Material display name.
     #   - `:thumbnail_uri` (String) - SKM thumbnail file URI.
-    #   - `:type` (String) - Material type ("brick", "wood", etc).
+    #   - `:type` (String) - Material type ("stone", "wood", etc).
     def self.files
       @@files
     end
