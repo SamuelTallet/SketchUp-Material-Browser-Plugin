@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ require 'fileutils'
 module MaterialBrowser
 
   # Third-party materials catalogs.
+  # @deprecated
   module MaterialsCatalogs
 
     # Absolute path to "Materials Catalogs" directory.

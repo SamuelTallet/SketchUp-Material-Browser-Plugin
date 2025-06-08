@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2021 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ module MaterialBrowser
     DIR = File.join(__dir__, 'HTML Dialogs')
 
     # Loads assets contents given their relative URI.
-    # @see HTMLDialogs::DIR to know which path they're relative to.
+    # See: `HTMLDialogs::DIR` to know which path they're relative to.
     #
     # @private
     #
