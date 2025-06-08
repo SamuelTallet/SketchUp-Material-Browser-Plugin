@@ -33,6 +33,21 @@ module MaterialBrowser
   # Manages SketchUp Material (SKM) files.
   module SKM
 
+    # SKM files metadata.
+    @@files = []
+
+    # Metadata of SKM files.
+    #
+    # @return [Array<Hash>]
+    #   Where each hash contains:
+    #   - `:path` (String) - Absolute path to source SKM file.
+    #   - `:display_name` (String) - Material display name.
+    #   - `:thumbnail_uri` (String) - SKM thumbnail file URI.
+    #   - `:type` (String) - Material type ("brick", "wood", etc).
+    def self.files
+      @@files
+    end
+
     # Absolute path to stock SKM directory.
     # This is where materials shipped with SketchUp are.
     #
@@ -106,11 +121,10 @@ module MaterialBrowser
     end
 
     # Extracts thumbnails from SKM files.
-    # Material metadata is stored in `MaterialBrowser::SESSION`.
+    # SKM metadata is stored in `@@files`.
     def self.extract_thumbnails
 
-      SESSION[:skm_files] = []
-
+      @@files = []
       create_thumbnails_dir
 
       stock_skm_glob_pattern = File.join(stock_path, '**', '*.skm')
@@ -160,7 +174,7 @@ module MaterialBrowser
         if thumbnail_available
           skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
 
-          SESSION[:skm_files].push({
+          @@files.push({
             path: skm_file_path,
             display_name: skm_display_name,
             thumbnail_uri: Utils.path2uri(thumbnail_path),
