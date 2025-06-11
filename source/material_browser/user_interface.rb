@@ -26,7 +26,7 @@ require 'material_browser/html_dialogs'
 require 'material_browser/settings'
 require 'material_browser/model'
 require 'material_browser/skm'
-require 'material_browser/texture_haven'
+require 'material_browser/poly_haven'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -183,8 +183,9 @@ module MaterialBrowser
         SKM.select_file(skm_file_path)
       end
 
-      @html_dialog.add_action_callback('selectTHMaterial') do |_ctx, th_material|
-        TextureHaven.select_material(th_material)
+      @html_dialog.add_action_callback('selectPolyHavenTexture') do |_ctx, ph_texture|
+        # FIXME: Migrate to Poly Haven.
+        #PolyHaven.select_texture(ph_texture)
       end
 
       @html_dialog.add_action_callback('openURL') do |_ctx, url|

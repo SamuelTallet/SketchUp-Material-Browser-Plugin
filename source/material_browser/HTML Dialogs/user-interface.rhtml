@@ -71,8 +71,8 @@
             File.join(HTMLDialogs::DIR, 'images', 'sketchup-logo.svg')
         )
 
-        th_logo_uri = Utils.path2uri(
-            File.join(HTMLDialogs::DIR, 'images', 'texture-haven-logo.svg')
+        ph_logo_uri = Utils.path2uri(
+            File.join(HTMLDialogs::DIR, 'images', 'poly-haven-logo.svg')
         )
         %>
 
@@ -293,32 +293,32 @@
             <%
             unless Settings.current.display_only_model?
 
-                SESSION[:th_materials].each do |th_material|
+                PolyHaven.textures.each do |ph_texture|
             %>
             <li
                 class="material"
-                data-type="<%= th_material[:type] %>"
+                data-type="<%= ph_texture[:type] %>"
             >
 
                 <img
                     class="source-logo"
-                    src="<%= th_logo_uri %>"
-                    title="Texture Haven"
-                    data-source-url="<%= th_material[:source_url] %>"
+                    src="<%= ph_logo_uri %>"
+                    title="Poly Haven"
+                    data-source-url="<%= ph_texture[:source_url] %>"
                 />
 
                 <img
-                    class="th-material thumbnail"
-                    src="<%= th_material[:thumbnail_uri] %>"
+                    class="ph-texture thumbnail"
+                    src="<%= ph_texture[:thumbnail_uri] %>"
                     width="96"
                     height="96"
-                    title="<%= th_material[:display_name] %>"
-                    data-display-name="<%= th_material[:display_name] %>"
-                    data-texture-url="<%= th_material[:texture_url] %>"
-                    data-texture-size="<%= th_material[:texture_size] %>"
+                    title="<%= ph_texture[:name] %>"
+                    data-slug="<%= ph_texture[:slug] %>"
+                    data-name="<%= ph_texture[:name] %>"
+                    data-meters="<%= ph_texture[:meters] %>"
                 />
 
-                <span class="name"><%= th_material[:display_name] %></span>
+                <span class="name"><%= ph_texture[:name] %></span>
 
             </li>
             <%

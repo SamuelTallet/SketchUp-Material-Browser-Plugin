@@ -41,11 +41,6 @@ module MaterialBrowser
   # Plugin name.
   NAME = TRANSLATE['Material Browser']
 
-  # Deprecated session storage.
-  SESSION = {
-    th_materials: [],
-  }
-
   # Plugin, registered.
   extension = SketchupExtension.new(NAME, 'material_browser/load.rb')
 
@@ -55,7 +50,7 @@ module MaterialBrowser
 
   extension_features = [
     TRANSLATE[
-      'Search for SketchUp materials by name from three sources: active model, SKM collections and Texture Haven.'
+      'Search for SketchUp materials by name from three sources: active model, SKM collections and Poly Haven.'
     ],
     TRANSLATE['Filter materials by type (Brick, Wood, etc).'],
     TRANSLATE['Select material of your choice in one click.']

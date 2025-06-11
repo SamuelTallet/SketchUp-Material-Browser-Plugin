@@ -202,13 +202,13 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
-    document.querySelectorAll('.th-material.thumbnail').forEach(thMaterialThumbnail => {
+    document.querySelectorAll('.ph-texture.thumbnail').forEach(phTextureThumbnail => {
         
-        thMaterialThumbnail.addEventListener('click', event => {
-            sketchup.selectTHMaterial({
-                display_name: event.currentTarget.dataset.displayName,
-                texture_url: event.currentTarget.dataset.textureUrl,
-                texture_size: event.currentTarget.dataset.textureSize
+        phTextureThumbnail.addEventListener('click', event => {
+            sketchup.selectPolyHavenTexture({
+                slug: event.currentTarget.dataset.slug,
+                name: event.currentTarget.dataset.name,
+                meters: event.currentTarget.dataset.meters
             })
         })
 
