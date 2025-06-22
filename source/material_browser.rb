@@ -31,7 +31,7 @@ module MaterialBrowser
   # Plugin version.
   VERSION = '1.0.9'
 
-  # Plugin `User-Agent` used to download textures, etc.
+  # Plugin `User-Agent` HTTP header used to download textures, etc.
   USER_AGENT = 'SketchUp Material Browser Plugin/' + VERSION
 
   # Plugin translation (in current locale if available).

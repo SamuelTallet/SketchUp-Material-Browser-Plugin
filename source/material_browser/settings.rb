@@ -54,7 +54,7 @@ module MaterialBrowser
       rescue => error
         # If something went wrong: read "./settings.json.backup".
         # @todo Fallback to default settings (`default!` method).
-        puts 'Material Browser Error: ' + error.message
+        warn 'Material Browser Error: ' + error.message
         @settings = JSON.parse(File.read(JSON_FILE + '.backup'))
       end
     end

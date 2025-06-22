@@ -22,7 +22,8 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'fileutils'
 require 'sketchup'
-require 'material_browser/utils'
+require 'material_browser/fs'
+require 'material_browser/words'
 require 'material_browser/materials_types'
 
 # Material Browser plugin namespace.
@@ -111,8 +112,8 @@ module MaterialBrowser
         @@materials.push({
           name: material.name,
           display_name: material_display_name,
-          thumbnail_uri: Utils.path2uri(material_thumbnail_path),
-          type: MaterialsTypes.get.from_words(Utils.clean_words(material_display_name))
+          thumbnail_uri: FS.path2uri(material_thumbnail_path),
+          type: MaterialsTypes.get.from_words(Words.clean(material_display_name))
         })
 
       end

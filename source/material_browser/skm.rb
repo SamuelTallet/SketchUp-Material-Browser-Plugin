@@ -24,7 +24,9 @@ require 'zlib'
 require 'fileutils'
 require 'sketchup'
 require 'material_browser/settings'
-require 'material_browser/utils'
+require 'material_browser/unzip'
+require 'material_browser/fs'
+require 'material_browser/words'
 require 'material_browser/materials_types'
 
 # Material Browser plugin namespace.
@@ -163,11 +165,11 @@ module MaterialBrowser
         # But I think it's less bad than displaying outdated thumbnails, more user-friendly.
         # In an ideal world, SKM files are deep-compared...
         unless thumbnail_available
-          thumbnail_available = Utils.unzip(skm_file_path, 'doc_thumbnail.png', thumbnail_path)
+          thumbnail_available = Unzip.file(skm_file_path, 'doc_thumbnail.png', thumbnail_path)
           # SKM files are ZIP files.
 
           unless thumbnail_available
-            puts "Material Browser: Failed to extract thumbnail from #{skm_file_path}."
+            warn "Material Browser: Failed to extract thumbnail from #{skm_file_path}."
           end
         end
 
@@ -177,8 +179,8 @@ module MaterialBrowser
           @@files.push({
             path: skm_file_path,
             display_name: skm_display_name,
-            thumbnail_uri: Utils.path2uri(thumbnail_path),
-            type: MaterialsTypes.get.from_words(Utils.clean_words(skm_display_name))
+            thumbnail_uri: FS.path2uri(thumbnail_path),
+            type: MaterialsTypes.get.from_words(Words.clean(skm_display_name))
           })
         end
       end
