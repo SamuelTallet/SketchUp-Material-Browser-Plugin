@@ -50,10 +50,10 @@ module MaterialBrowser
           # Remarks:
           # - User-Agent is required by some APIs, including Poly Haven one.
           # - Seems HTTP redirects are not followed?
+          # - Output file is overwritten if it already exists.
         end
       rescue => error
         warn "Material Browser: Download failed with #{error.message} for #{url}"
-        FileUtils.rm(output_path) if File.exist?(output_path)
         return false
       end
 
