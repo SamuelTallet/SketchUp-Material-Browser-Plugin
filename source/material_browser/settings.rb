@@ -43,19 +43,24 @@ module MaterialBrowser
 
     # Makes a `Settings` object.
     private def initialize
-      @settings = {}
+      @settings = {
+        'zoom_value' => 96,
+        'display_name' => false,
+        'display_source' => false,
+        'display_only_model' => false,
+        'custom_skm_path' => '',
+        'type_filter_value' => 'all'
+      }
     end
 
-    # Reads settings from disk.
+    # Reads settings from disk, if such file exists.
     def read
+      return unless File.exist?(JSON_FILE)
+
       begin
         @settings = JSON.parse(File.read(JSON_FILE))
-
       rescue => error
-        # If something went wrong: read "./settings.json.backup".
-        # @todo Fallback to default settings (`default!` method).
-        warn 'Material Browser Error: ' + error.message
-        @settings = JSON.parse(File.read(JSON_FILE + '.backup'))
+        warn "Material Browser: Can't read settings: #{error.message}"
       end
     end
 
@@ -178,7 +183,11 @@ module MaterialBrowser
 
     # Writes settings to disk.
     def write
-      File.write(JSON_FILE, JSON.pretty_generate(@settings))
+      begin
+        File.write(JSON_FILE, JSON.pretty_generate(@settings))
+      rescue => error
+        warn "Material Browser: Can't write settings: #{error.message}"
+      end
     end
 
   end
