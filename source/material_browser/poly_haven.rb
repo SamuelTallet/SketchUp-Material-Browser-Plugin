@@ -20,8 +20,10 @@
 raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
+require 'fileutils'
 require 'json'
 require 'sketchup'
+require 'material_browser/download'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -38,41 +40,65 @@ module MaterialBrowser
     DIR = File.join(__dir__, 'Poly Haven')
 
     # Absolute path to a minimal Poly Haven textures index file.
-    # This index is distributed with Material Browser.
     MINI_INDEX_FILE = File.join(DIR, 'textures.json')
 
     # Absolute path to Poly Haven textures thumbnails directory.
-    # These thumbnails are distributed with Material Browser.
     THUMBNAILS_DIR = File.join(DIR, 'Thumbnails')
 
+    # Index file and thumbnails are included in plugin's RBZ package because:
+    # - Poly Haven API is a free service so I don't want to abuse it.
+    # - This pre-download accelerates Material Browser's UI first opening.
+
     # Fetches textures index and thumbnails from Poly Haven API.
+    # Warning: This is a blocking operation for internal use only.
     def self.fetch_textures
       # Where each key is texture slug and each value is its size in meters.
       # @type [Hash<String, Float>]
       minimal_index = {}
 
       request = Sketchup::Http::Request.new(API_URL + '/assets?type=textures')
+      # Poly Haven API requires "a unique User-Agent header".
+      # See: https://polyhaven.com/our-api
       request.headers = { 'User-Agent' => USER_AGENT }
 
       request.start do |_request, response|
         unless response.status_code == 200 # OK
           raise "Material Browser: Poly Haven API Error: #{response.body}"
         end
+
         # @type [Hash<String, Hash>]
         textures = JSON.parse(response.body)
 
         textures.each do |slug, metadata|
           # @type [Integer, Float]
           # Example: 2049.999713897705
-          millimeters = metadata['dimensions'][0] # We assume a square.
+          millimeters = metadata['dimensions'][0] # We assume a square texture.
           meters = millimeters.round / 1000.0
 
+          # Adds texture to minimal index.
           minimal_index[slug] = meters
-          # @todo Download texture thumbnail.
+
+          # @type [String]
+          # Example: https://cdn.polyhaven.com/asset_img/thumbs/mud_forest.png?width=256&height=256
+          thumb_url = metadata['thumbnail_url']
+
+          # Currently, Poly Haven's CDN forces WebP format for thumbnails.
+          # @todo Detect used image format and don't always expect WebP?
+          thumb_file = File.join(THUMBNAILS_DIR, "#{slug}.webp")
+
+          # @todo Find a more robust way to ensure existing thumbnail is valid.
+          next if File.exist?(thumb_file) && File.size(thumb_file) > 0
+
+          unless Download.file(thumb_url, thumb_file)
+            raise "Material Browser: Poly Haven thumbnail download failed for #{slug}."
+          end
+          sleep(0.3) # Avoids overloading API with too many requests.
         end
 
         # Overwrites minimal index file.
         File.write(MINI_INDEX_FILE, JSON.pretty_generate(minimal_index))
+
+        UI.messagebox "We now have #{minimal_index.size} Poly Haven textures."
       end
     end
 
