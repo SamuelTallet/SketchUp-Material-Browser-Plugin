@@ -3,7 +3,7 @@
  *
  * Package: MBR extension for SketchUp
  *
- * Copyright: © 2021 Samuel Tallet
+ * Copyright: © 2025 Samuel Tallet
  *
  * Licence: GNU General Public License 3.0
  */
@@ -84,9 +84,7 @@ select {
     width: 100%;
     text-align: center;
 
-    background: white;
-
-    padding-bottom: 20px;
+    margin-top: 10px;
 
     z-index: 1;
 

@@ -184,9 +184,8 @@ module MaterialBrowser
         SKM.select_file(skm_file_path)
       end
 
-      @html_dialog.add_action_callback('selectPolyHavenTexture') do |_ctx, ph_texture|
-        # FIXME: Migrate to Poly Haven.
-        #PolyHaven.select_texture(ph_texture)
+      @html_dialog.add_action_callback('selectPolyHavenTexture') do |_ctx, ph_texture_slug|
+        PolyHaven.select_texture(ph_texture_slug)
       end
 
       @html_dialog.add_action_callback('openURL') do |_ctx, url|

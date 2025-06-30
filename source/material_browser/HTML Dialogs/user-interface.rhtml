@@ -113,6 +113,7 @@
                     type="text"
                     class="search"
                     placeholder="<%= TRANSLATE['Search by name'] %>"
+                    autofocus
                 />
 
                 <% option_value_to_select = Settings.current.type_filter_value %>
@@ -268,8 +269,6 @@
                 <img
                     class="source-logo"
                     src="<%= sketchup_logo_uri %>"
-                    title="SKM collections"
-                    data-source-url="https://www.sketchup.com/"
                 />
 
                 <img
@@ -303,8 +302,8 @@
                 <img
                     class="source-logo"
                     src="<%= ph_logo_uri %>"
-                    title="Poly Haven"
-                    data-source-url="<%= ph_texture[:source_url] %>"
+                    title="<%= TRANSLATE['See on Poly Haven'] %>"
+                    data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
                 />
 
                 <img
@@ -314,8 +313,6 @@
                     height="96"
                     title="<%= ph_texture[:name] %>"
                     data-slug="<%= ph_texture[:slug] %>"
-                    data-name="<%= ph_texture[:name] %>"
-                    data-meters="<%= ph_texture[:meters] %>"
                 />
 
                 <span class="name"><%= ph_texture[:name] %></span>

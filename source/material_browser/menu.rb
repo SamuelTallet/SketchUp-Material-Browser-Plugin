@@ -52,8 +52,8 @@ module MaterialBrowser
         SKM.extract_thumbnails
         # @todo Remove outdated/unused SKM thumbnails from time to time.
 
-        # FIXME: Migrate to Poly Haven.
-        #PolyHaven.load_textures if PolyHaven.textures.empty?
+        # Loads Poly Haven textures (once per session).
+        PolyHaven.load_textures if PolyHaven.textures.empty?
 
         UserInterface.open
       end

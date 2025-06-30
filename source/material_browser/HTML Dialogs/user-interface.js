@@ -205,20 +205,18 @@ MaterialBrowser.addEventListeners = () => {
     document.querySelectorAll('.ph-texture.thumbnail').forEach(phTextureThumbnail => {
         
         phTextureThumbnail.addEventListener('click', event => {
-            sketchup.selectPolyHavenTexture({
-                slug: event.currentTarget.dataset.slug,
-                name: event.currentTarget.dataset.name,
-                meters: event.currentTarget.dataset.meters
-            })
+            sketchup.selectPolyHavenTexture(event.currentTarget.dataset.slug)
         })
 
     })
 
     document.querySelectorAll('.material .source-logo').forEach(materialSourceLogo => {
 
-        materialSourceLogo.addEventListener('click', event => {
-            sketchup.openURL(event.currentTarget.dataset.sourceUrl)
-        })
+        if ( materialSourceLogo.hasAttribute('data-source-url') ) {
+            materialSourceLogo.addEventListener('click', event => {
+                sketchup.openURL(event.currentTarget.dataset.sourceUrl)
+            })
+        }
 
     })
 

@@ -24,26 +24,31 @@ require 'fileutils'
 require 'json'
 require 'sketchup'
 require 'material_browser/download'
+require 'material_browser/words'
+require 'material_browser/fs'
+require 'material_browser/materials_types'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
 
   # Manages Poly Haven textures.
-  # @todo Complete this module.
   module PolyHaven
 
     # Base URL of Poly Haven API.
     # See: https://redocly.github.io/redoc/?url=https://api.polyhaven.com/api-docs/swagger.json
     API_URL = 'https://api.polyhaven.com'
 
+    # Base URL of Poly Haven site.
+    SITE_URL = 'https://polyhaven.com'
+
     # Absolute path to "Poly Haven" directory.
     DIR = File.join(__dir__, 'Poly Haven')
 
-    # Absolute path to a minimal Poly Haven textures index file.
-    MINI_INDEX_FILE = File.join(DIR, 'textures.json')
+    # Absolute path to Poly Haven textures index file.
+    TEX_INDEX_FILE = File.join(DIR, 'textures.json')
 
-    # Absolute path to Poly Haven textures thumbnails directory.
-    THUMBNAILS_DIR = File.join(DIR, 'Thumbnails')
+    # Absolute path to Poly Haven assets thumbnails directory.
+    THUMBS_DIR = File.join(DIR, 'Thumbnails')
 
     # Index file and thumbnails are included in plugin's RBZ package because:
     # - Poly Haven API is a free service so I don't want to abuse it.
@@ -54,7 +59,7 @@ module MaterialBrowser
     def self.fetch_textures
       # Where each key is texture slug and each value is its size in meters.
       # @type [Hash<String, Float>]
-      minimal_index = {}
+      local_index = {}
 
       request = Sketchup::Http::Request.new(API_URL + '/assets?type=textures')
       # Poly Haven API requires "a unique User-Agent header".
@@ -63,7 +68,7 @@ module MaterialBrowser
 
       request.start do |_request, response|
         unless response.status_code == 200 # OK
-          raise "Material Browser: Poly Haven API Error: #{response.body}"
+          raise "Material Browser: Can't fetch textures index: #{response.body}"
         end
 
         # @type [Hash<String, Hash>]
@@ -75,8 +80,8 @@ module MaterialBrowser
           millimeters = metadata['dimensions'][0] # We assume a square texture.
           meters = millimeters.round / 1000.0
 
-          # Adds texture to minimal index.
-          minimal_index[slug] = meters
+          # Adds texture to local index.
+          local_index[slug] = meters
 
           # @type [String]
           # Example: https://cdn.polyhaven.com/asset_img/thumbs/mud_forest.png?width=256&height=256
@@ -84,7 +89,7 @@ module MaterialBrowser
 
           # Currently, Poly Haven's CDN forces WebP format for thumbnails.
           # @todo Detect used image format and don't always expect WebP?
-          thumb_file = File.join(THUMBNAILS_DIR, "#{slug}.webp")
+          thumb_file = File.join(THUMBS_DIR, "#{slug}.webp")
 
           # @todo Find a more robust way to ensure existing thumbnail is valid.
           next if File.exist?(thumb_file) && File.size(thumb_file) > 0
@@ -95,18 +100,57 @@ module MaterialBrowser
           sleep(0.3) # Avoids overloading API with too many requests.
         end
 
-        # Overwrites minimal index file.
-        File.write(MINI_INDEX_FILE, JSON.pretty_generate(minimal_index))
+        # Overwrites index file.
+        File.write(TEX_INDEX_FILE, JSON.pretty_generate(local_index))
 
-        UI.messagebox "We now have #{minimal_index.size} Poly Haven textures."
+        UI.messagebox "We now have #{local_index.size} Poly Haven textures."
       end
     end
 
     # Poly Haven textures metadata.
     @@textures = []
 
+    # Metadata of Poly Haven textures.
+    #
+    # @return [Array<Hash>]
+    #   Where each hash contains:
+    #   - `:slug` (String) - Texture ID. e.g. "brick_pavement_02".
+    #   - `:name` (String) - Texture name, derived from its slug.
+    #   - `:meters` (Float) - Texture size, in meters.
+    #   - `:thumbnail_uri` (String) - Texture thumbnail file URI.
+    #   - `:type` (String) - Material type. e.g. "brick"
     def self.textures
       @@textures
+    end
+
+    # Loads Poly Haven textures metadata from local index file.
+    def self.load_textures
+      @@textures.clear
+
+      # @type [Hash<String, Float>]
+      local_index = JSON.parse(File.read(TEX_INDEX_FILE))
+
+      local_index.each do |texture_slug, texture_size_in_meters|
+        # Example: "brick_pavement_02" --> "Brick Pavement 02"
+        texture_name = Words.upper(texture_slug.gsub('_', ' '))
+
+        @@textures << {
+          slug: texture_slug,
+          name: texture_name,
+          meters: texture_size_in_meters,
+          thumbnail_uri: FS.path2uri(File.join(THUMBS_DIR, "#{texture_slug}.webp")),
+          type: MaterialsTypes.get.from_words(texture_name)
+        }
+      end
+    end
+
+    def self.texture_files(texture_slug)
+      # @todo Implement texture fetching from Poly Haven API.
+    end
+
+    def self.select_texture(texture_slug)
+      # @todo Use texture_files to select texture in SketchUp.
+      UI.messagebox "Texture slug: #{texture_slug}" # DEBUG
     end
 
   end
