@@ -27,6 +27,7 @@ require 'material_browser/download'
 require 'material_browser/words'
 require 'material_browser/fs'
 require 'material_browser/materials_types'
+require 'material_browser/textures_cache'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -68,7 +69,7 @@ module MaterialBrowser
 
       request.start do |_request, response|
         unless response.status_code == 200 # OK
-          raise "Material Browser: Can't fetch textures index: #{response.body}"
+          raise "Material Browser: Can't fetch Poly Haven textures index: #{response.body}"
         end
 
         # @type [Hash<String, Hash>]
@@ -95,7 +96,7 @@ module MaterialBrowser
           next if File.exist?(thumb_file) && File.size(thumb_file) > 0
 
           unless Download.file(thumb_url, thumb_file)
-            raise "Material Browser: Poly Haven thumbnail download failed for #{slug}."
+            raise "Material Browser: Poly Haven texture thumbnail download failed for #{slug}."
           end
           sleep(0.3) # Avoids overloading API with too many requests.
         end
@@ -144,13 +145,69 @@ module MaterialBrowser
       end
     end
 
-    def self.texture_files(texture_slug)
-      # @todo Implement texture fetching from Poly Haven API.
+    # Metadata of a given Poly Haven texture.
+    # @param [String] texture_slug
+    #
+    # @return [Hash]
+    def self.texture_metadata(texture_slug)
+      metadata = @@textures.find { |texture| texture[:slug] == texture_slug }
+
+      raise "Material Browser: No Poly Haven texture metadata found for #{texture_slug}." \
+        unless metadata.is_a?(Hash)
+
+      metadata
     end
 
+    # Fetches texture files from Poly Haven API.
+    # @param [String] texture_slug
+    #
+    # @yieldparam [Hash] files
+    def self.texture_files(texture_slug)
+      request = Sketchup::Http::Request.new(API_URL + '/files/' + texture_slug)
+      request.headers = { 'User-Agent' => USER_AGENT } # Required
+
+      request.start do |_request, response|
+        unless response.status_code == 200 # OK
+          raise "Material Browser: Can't fetch Poly Haven texture files: #{response.body}"
+        end
+
+        yield JSON.parse(response.body)
+      end
+    end
+
+    # Selects a Poly Haven texture.
+    # @param [String] texture_slug
     def self.select_texture(texture_slug)
-      # @todo Use texture_files to select texture in SketchUp.
-      UI.messagebox "Texture slug: #{texture_slug}" # DEBUG
+      raise ArgumentError, "Texture Slug must be a String." unless texture_slug.is_a?(String)
+
+      TexturesCache.create_dir
+      metadata = texture_metadata(texture_slug)
+
+      texture_files(texture_slug) { |files|
+        Sketchup.status_text = TRANSLATE["Material Browser: Preparing Poly Haven texture..."]
+        diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse.jpg")
+
+        unless File.exist?(diffuse_file)
+          unless files.dig('Diffuse', '4k', 'jpg', 'url')
+            raise "Material Browser: Poly Haven #{texture_slug} diffuse texture is missing."
+          end
+          unless Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
+            FileUtils.remove_file(diffuse_file) if File.exist?(diffuse_file) # Clean up
+            raise "Material Browser: Can't get Poly Haven #{texture_slug} diffuse texture."
+          end
+        end
+
+        material = Sketchup.active_model.materials.add("#{metadata[:name]} - Poly Haven")
+        material.texture = diffuse_file
+
+        # @todo Set available PBR textures: normal, roughness, metallic, etc.
+
+        material.texture.size = metadata[:meters].m # => Inches
+        Sketchup.active_model.materials.current = material
+        Sketchup.status_text = nil
+
+        Sketchup.send_action('selectPaintTool:')
+      }
     end
 
   end
