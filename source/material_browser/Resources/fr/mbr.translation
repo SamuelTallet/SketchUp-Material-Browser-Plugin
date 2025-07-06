@@ -14,11 +14,6 @@
 
 "Material Browser: Extracting thumbnails..."="Navigateur de matériaux : extraction des vignettes...";
 
-"Material Browser Error: Texture download failed. Check your firewall settings."="Erreur du navigateur de matériaux : le téléchargement de la texture a échoué. Vérifiez les paramètres de votre pare-feu.";
-"Material Browser: Downloading texture..."="Navigateur de matériaux : téléchargement de la texture...";
-"Material Browser Error: Texture extracting failed. Please try again later."="Erreur du navigateur de matériaux : l'extraction de la texture a échoué. Veuillez réessayer plus tard.";
-"Material Browser: Extracting texture..."="Navigateur de matériaux : extraction de la texture...";
-
 "Display materials name"="Afficher le nom des matériaux";
 "Display materials source"="Afficher la source des matériaux";
 "Display only model materials"="Afficher uniquement les matériaux du modèle";
@@ -48,3 +43,4 @@
 "Water"="Eau";
 "Wood"="Bois";
 "in model"="dans le modèle";
+"See on Poly Haven"="Voir sur Poly Haven";
