@@ -10,9 +10,7 @@
 "Filter materials by type (Brick, Wood, etc)."="Filtrez les matériaux par type (Brique, Bois, etc).";
 "Select material of your choice in one click."="Sélectionnez le matériau de votre choix en un clic.";
 
-"Material Browser: Exporting thumbnails..."="Navigateur de matériaux : exportation des vignettes...";
-
-"Material Browser: Extracting thumbnails..."="Navigateur de matériaux : extraction des vignettes...";
+"Loading Material Browser..."="Chargement du navigateur de matériaux...";
 
 "Display materials name"="Afficher le nom des matériaux";
 "Display materials source"="Afficher la source des matériaux";

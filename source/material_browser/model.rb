@@ -66,14 +66,11 @@ module MaterialBrowser
       FileUtils.mkdir_p(materials_thumbnails_path) unless Dir.exist?(materials_thumbnails_path)
     end
 
-    # Exports materials thumbnails of active model.
-    # Material metadata is stored in `@@materials`.
+    # Exports materials thumbnails of active model and loads their metadata.
+    # After that, those metadata are accessible through `Model.materials`.
     def self.export_materials_thumbnails
-
-      @@materials = []
+      @@materials.clear
       create_materials_thumbnails_dir
-
-      Sketchup.status_text = TRANSLATE['Material Browser: Exporting thumbnails...']
 
       materials_count = 0
 
@@ -118,7 +115,7 @@ module MaterialBrowser
 
       end
 
-      Sketchup.status_text = nil
+      nil
     end
 
     # Selects a material of active model then activates paint tool.

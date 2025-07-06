@@ -20,6 +20,7 @@
 raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
+require 'sketchup'
 require 'material_browser/model'
 require 'material_browser/skm'
 require 'material_browser/poly_haven'
@@ -32,16 +33,20 @@ module MaterialBrowser
 
     # Before opening user interface:
     def self.before_ui_open
-      # Ensures we are in sync with model materials.
+      Sketchup.status_text = TRANSLATE['Loading Material Browser...']
+
+      # Always ensures we are in sync with model materials.
       Model.export_materials_thumbnails
 
       # SKM files can be managed outside of SketchUp.
-      # Better scan SKM folders again, this can avoid a restart.
-      SKM.extract_thumbnails
-      # @todo Remove outdated/unused SKM thumbnails from time to time.
+      # So always scans SKM folders, this can avoid a restart.
+      # And sometimes (1 chance in 10), cleanups thumbnails directory.
+      SKM.extract_thumbnails(then_cleanup: rand(10).zero?)
 
       # Loads Poly Haven textures (once per SketchUp session).
       PolyHaven.load_textures if PolyHaven.textures.empty?
+
+      Sketchup.status_text = nil
     end
 
   end

@@ -122,13 +122,10 @@ module MaterialBrowser
       FileUtils.mkdir_p(thumbnails_path) unless Dir.exist?(thumbnails_path)
     end
 
-    # Extracts thumbnails from SKM files.
-    # SKM metadata is stored in `@@files`.
-    def self.extract_thumbnails
-
-      @@files = []
-      create_thumbnails_dir
-
+    # Glob patterns to find SKM files.
+    #
+    # @return [Array<String>]
+    def self.glob_patterns
       stock_skm_glob_pattern = File.join(stock_path, '**', '*.skm')
       custom_skm_glob_pattern = File.join(custom_path, '**', '*.skm')
 
@@ -148,11 +145,29 @@ module MaterialBrowser
         end
       end
 
-      Sketchup.status_text = TRANSLATE['Material Browser: Extracting thumbnails...']
+      skm_glob_patterns
+    end
 
-      Dir.glob(skm_glob_patterns).each do |skm_file_path|
+    # Extracts thumbnails from SKM files and loads their metadata.
+    # If `then_cleanup` param is `true`, it removes also outdated/unused thumbnails.
+    # After that, those metadata are accessible through `SKM.files`.
+    #
+    # @param [Boolean] then_cleanup
+    # @raise [ArgumentError]
+    def self.extract_thumbnails(then_cleanup: false)
+      raise ArgumentError, 'then_cleanup must be a Boolean.' \
+        unless [true, false].include?(then_cleanup)
+
+      @@files.clear
+      create_thumbnails_dir
+
+      used_thumbnails = []
+
+      Dir.glob(glob_patterns).each do |skm_file_path|
         thumbnail_basename = Zlib.crc32(skm_file_path).to_s
         thumbnail_basename += '@' + File.mtime(skm_file_path).to_i.to_s + '.png'
+
+        used_thumbnails.push(thumbnail_basename) if then_cleanup
 
         thumbnail_path = File.join(thumbnails_path, thumbnail_basename)
         thumbnail_available = File.exist?(thumbnail_path)
@@ -185,8 +200,18 @@ module MaterialBrowser
         end
       end
 
-      Sketchup.status_text = nil
+      if then_cleanup
+        thumbnails_glob_pattern = File.join(thumbnails_path, '**', '*.png')
+        thumbnails_glob_pattern.gsub!('\\', '/') if Sketchup.platform == :platform_win
 
+        Dir.glob(thumbnails_glob_pattern).each do |thumbnail_path|
+          unless used_thumbnails.include?(File.basename(thumbnail_path))
+            FileUtils.remove_file(thumbnail_path) # Since it's outdated or no longer used.
+          end
+        end
+      end
+
+      nil
     end
 
     # Selects a SKM file then activates paint tool.

@@ -165,7 +165,6 @@ module MaterialBrowser
 
         Settings.current.custom_skm_path = UI.select_directory.to_s
 
-        SKM.remove_thumbnails_dir
         SKM.extract_thumbnails
 
         self.class.reload

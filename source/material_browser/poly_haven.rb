@@ -124,7 +124,8 @@ module MaterialBrowser
       @@textures
     end
 
-    # Loads Poly Haven textures metadata from local index file.
+    # Starting from local index file, extrapolates metadata of Poly Haven textures.
+    # After that, those metadata are accessible through `PolyHaven.textures`.
     def self.load_textures
       @@textures.clear
 
@@ -143,6 +144,8 @@ module MaterialBrowser
           type: MaterialsTypes.get.from_words(texture_name)
         }
       end
+
+      nil
     end
 
     # Metadata of a given Poly Haven texture.
@@ -184,7 +187,6 @@ module MaterialBrowser
       metadata = texture_metadata(texture_slug)
 
       texture_files(texture_slug) { |files|
-        Sketchup.status_text = TRANSLATE["Material Browser: Preparing Poly Haven texture..."]
         diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse.jpg")
 
         unless File.exist?(diffuse_file)
@@ -204,7 +206,6 @@ module MaterialBrowser
 
         material.texture.size = metadata[:meters].m # => Inches
         Sketchup.active_model.materials.current = material
-        Sketchup.status_text = nil
 
         Sketchup.send_action('selectPaintTool:')
       }
