@@ -27,7 +27,7 @@ In Material Browser, click on eye icon then check "Display only model materials"
 Thanks
 ------
 
-Material Browser plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [List.js](https://github.com/javve/list.js) and [Poly Haven](https://polyhaven.com).
+Material Browser plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [Ruby backports](https://github.com/marcandre/backports), [List.js](https://github.com/javve/list.js) and [Poly Haven](https://polyhaven.com).
 
 Copyright
 ---------

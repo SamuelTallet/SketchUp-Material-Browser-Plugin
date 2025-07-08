@@ -23,6 +23,8 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 require 'fileutils'
 require 'json'
 require 'sketchup'
+require 'backports/2.3.0/hash/dig'
+require 'backports/2.3.0/array/dig'
 require 'material_browser/download'
 require 'material_browser/words'
 require 'material_browser/fs'
@@ -194,7 +196,7 @@ module MaterialBrowser
             raise "Material Browser: Poly Haven #{texture_slug} diffuse texture is missing."
           end
           unless Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
-            FileUtils.remove_file(diffuse_file) if File.exist?(diffuse_file) # Clean up
+            FileUtils.remove_file(diffuse_file) if File.exist?(diffuse_file) # Cleanup
             raise "Material Browser: Can't get Poly Haven #{texture_slug} diffuse texture."
           end
         end
