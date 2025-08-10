@@ -51,7 +51,7 @@ module MaterialBrowser
   # Downloaded textures can consume disk space.
   # And maybe user doesn't use Material Browser anymore?
   # Thus better remove these old files here rather in "lazy_load.rb".
-  TexturesCache.delete_old
+  TexturesCache.delete_old if rand(30).zero? # But not too often...
 
   # Plugs Material Browser menu into SketchUp UI.
   Menu.new(
