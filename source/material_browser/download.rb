@@ -29,13 +29,13 @@ module MaterialBrowser
   # Download helper.
   module Download
 
-    # Downloads a file from an URL, synchronously.
+    # Tries to download a file from an URL, synchronously.
     #
     # @param [String] url
     # @param [String] output_path
     # @raise [ArgumentError]
     #
-    # @return [Boolean] true if download succeeded, false if download failed.
+    # @raise [RuntimeError] if download failed.
     def self.file(url, output_path)
       raise ArgumentError, 'URL must be a String.'\
         unless url.is_a?(String)
@@ -53,11 +53,9 @@ module MaterialBrowser
           # - Output file is overwritten if it already exists.
         end
       rescue => error
-        warn "Material Browser: Download failed with #{error.message} for #{url}"
-        return false
+        FileUtils.remove_file(output_path) if File.exist?(output_path) # Cleanup
+        raise "Material Browser: Download failed with #{error.message} for #{url}"
       end
-
-      true
     end
 
   end

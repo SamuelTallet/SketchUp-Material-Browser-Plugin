@@ -94,12 +94,9 @@ module MaterialBrowser
           # @todo Detect used image format and don't always expect WebP?
           thumb_file = File.join(THUMBS_DIR, "#{slug}.webp")
 
-          # @todo Find a more robust way to ensure existing thumbnail is valid.
-          next if File.exist?(thumb_file) && File.size(thumb_file) > 0
+          next if File.exist?(thumb_file) # We assume existing thumbnail is valid.
 
-          unless Download.file(thumb_url, thumb_file)
-            raise "Material Browser: Poly Haven texture thumbnail download failed for #{slug}."
-          end
+          Download.file(thumb_url, thumb_file)
           sleep(0.3) # Avoids overloading API with too many requests.
         end
 
@@ -166,51 +163,48 @@ module MaterialBrowser
     # Fetches texture files from Poly Haven API.
     # @param [String] texture_slug
     #
-    # @yieldparam [Hash] files
+    # @return [Hash]
     def self.texture_files(texture_slug)
-      request = Sketchup::Http::Request.new(API_URL + '/files/' + texture_slug)
-      request.headers = { 'User-Agent' => USER_AGENT } # Required
+      url = API_URL + '/files/' + texture_slug
+      temp_file = File.join(Sketchup.temp_dir, "su_mbr_ph_#{texture_slug}_files.json")
 
-      request.start do |_request, response|
-        unless response.status_code == 200 # OK
-          raise "Material Browser: Can't fetch Poly Haven texture files: #{response.body}"
-        end
+      Download.file(url, temp_file)
 
-        yield JSON.parse(response.body)
-      end
+      # @type [Hash]
+      response = JSON.parse(File.read(temp_file))
+      FileUtils.remove_file(temp_file) if File.exist?(temp_file) # Cleanup
+
+      response
     end
 
     # Selects a Poly Haven texture.
     # @param [String] texture_slug
     def self.select_texture(texture_slug)
-      raise ArgumentError, "Texture Slug must be a String." unless texture_slug.is_a?(String)
+      raise ArgumentError, "Texture Slug must be a String." \
+        unless texture_slug.is_a?(String)
 
       TexturesCache.create_dir
       metadata = texture_metadata(texture_slug)
+      files = texture_files(texture_slug)
 
-      texture_files(texture_slug) { |files|
-        diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse.jpg")
+      diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse.jpg")
 
-        unless File.exist?(diffuse_file)
-          unless files.dig('Diffuse', '4k', 'jpg', 'url')
-            raise "Material Browser: Poly Haven #{texture_slug} diffuse texture is missing."
-          end
-          unless Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
-            FileUtils.remove_file(diffuse_file) if File.exist?(diffuse_file) # Cleanup
-            raise "Material Browser: Can't get Poly Haven #{texture_slug} diffuse texture."
-          end
+      unless File.exist?(diffuse_file)
+        unless files.dig('Diffuse', '4k', 'jpg', 'url')
+          raise "Material Browser: Poly Haven #{texture_slug} diffuse texture is missing."
         end
+        Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
+      end
 
-        material = Sketchup.active_model.materials.add("#{metadata[:name]} - Poly Haven")
-        material.texture = diffuse_file
+      material = Sketchup.active_model.materials.add("#{metadata[:name]} - Poly Haven")
+      material.texture = diffuse_file
 
-        # @todo Set available PBR textures: normal, roughness, metallic, etc.
+      # @todo Set available PBR textures: normal, roughness, metallic, etc.
 
-        material.texture.size = metadata[:meters].m # => Inches
-        Sketchup.active_model.materials.current = material
+      material.texture.size = metadata[:meters].m # => Inches
+      Sketchup.active_model.materials.current = material
 
-        Sketchup.send_action('selectPaintTool:')
-      }
+      Sketchup.send_action('selectPaintTool:')  
     end
 
   end
