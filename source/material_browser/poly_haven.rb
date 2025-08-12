@@ -183,11 +183,19 @@ module MaterialBrowser
       raise ArgumentError, "Texture Slug must be a String." \
         unless texture_slug.is_a?(String)
 
-      TexturesCache.create_dir
       metadata = texture_metadata(texture_slug)
-      files = texture_files(texture_slug)
+      # Based on name, don't add materials already in active model.
+      existing_material = Sketchup.active_model.materials[metadata[:name]]
 
-      diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse.jpg")
+      if existing_material.is_a?(Sketchup::Material)
+        Sketchup.active_model.materials.current = existing_material
+        return Sketchup.send_action('selectPaintTool:')
+      end
+
+      TexturesCache.create_dir
+
+      diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse_4k.jpg")
+      files = texture_files(texture_slug)
 
       unless File.exist?(diffuse_file)
         unless files.dig('Diffuse', '4k', 'jpg', 'url')
@@ -196,14 +204,14 @@ module MaterialBrowser
         Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
       end
 
-      material = Sketchup.active_model.materials.add("#{metadata[:name]} - Poly Haven")
+      material = Sketchup.active_model.materials.add(metadata[:name])
       material.texture = diffuse_file
 
       # @todo Set available PBR textures: normal, roughness, metallic, etc.
 
       material.texture.size = metadata[:meters].m # => Inches
-      Sketchup.active_model.materials.current = material
 
+      Sketchup.active_model.materials.current = material
       Sketchup.send_action('selectPaintTool:')  
     end
 
