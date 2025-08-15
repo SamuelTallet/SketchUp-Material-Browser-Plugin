@@ -184,17 +184,27 @@ module MaterialBrowser
         unless texture_slug.is_a?(String)
 
       metadata = texture_metadata(texture_slug)
-      # Based on name, don't add materials already in active model.
-      existing_material = Sketchup.active_model.materials[metadata[:name]]
+      material = Sketchup.active_model.materials[metadata[:name]]
 
-      if existing_material.is_a?(Sketchup::Material)
-        Sketchup.active_model.materials.current = existing_material
-        return Sketchup.send_action('selectPaintTool:')
+      # Don't add a material already present in active model.
+      unless material.is_a?(Sketchup::Material)
+        material = add_material(texture_slug, metadata)
       end
 
+      Sketchup.active_model.materials.current = material
+      Sketchup.send_action('selectPaintTool:')  
+    end
+
+    # Adds a Poly Haven texture to active model materials.
+    #
+    # @param [String] texture_slug
+    # @param [Hash] metadata
+    #
+    # @return [Sketchup::Material]
+    def self.add_material(texture_slug, metadata)
       TexturesCache.create_dir
 
-      diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diffuse_4k.jpg")
+      diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diff_4k.jpg")
       files = texture_files(texture_slug)
 
       unless File.exist?(diffuse_file)
@@ -205,14 +215,47 @@ module MaterialBrowser
       end
 
       material = Sketchup.active_model.materials.add(metadata[:name])
+
+      # Poly Haven diffuse texture is equivalent to "legacy" texture available in SketchUp.
       material.texture = diffuse_file
+      material.texture.size = metadata[:meters].m # as inches
 
-      # @todo Set available PBR textures: normal, roughness, metallic, etc.
+      # Some Physically Based Rendering textures are natively supported since SketchUp 2025:
 
-      material.texture.size = metadata[:meters].m # => Inches
+      if material.respond_to?(:metallic_texture=) && files.dig('Metal', '4k', 'jpg', 'url')
+        metallic_file = File.join(TexturesCache.path, "ph_#{texture_slug}_metal_4k.jpg")
+        unless File.exist?(metallic_file)
+          Download.file(files['Metal']['4k']['jpg']['url'], metallic_file)
+        end
+        material.metallic_texture = metallic_file
+      end
 
-      Sketchup.active_model.materials.current = material
-      Sketchup.send_action('selectPaintTool:')  
+      if material.respond_to?(:roughness_texture=) && files.dig('Rough', '4k', 'jpg', 'url')
+        roughness_file = File.join(TexturesCache.path, "ph_#{texture_slug}_rough_4k.jpg")
+        unless File.exist?(roughness_file)
+          Download.file(files['Rough']['4k']['jpg']['url'], roughness_file)
+        end
+        material.roughness_texture = roughness_file
+      end
+
+      if material.respond_to?(:normal_texture=) && files.dig('nor_gl', '4k', 'jpg', 'url')
+        normal_file = File.join(TexturesCache.path, "ph_#{texture_slug}_nor_gl_4k.jpg")
+        unless File.exist?(normal_file)
+          Download.file(files['nor_gl']['4k']['jpg']['url'], normal_file)
+        end
+        material.normal_texture = normal_file
+        material.normal_style = Sketchup::Material::NORMAL_STYLE_OPENGL
+      end
+
+      if material.respond_to?(:ao_texture=) && files.dig('AO', '4k', 'jpg', 'url')
+        ao_file = File.join(TexturesCache.path, "ph_#{texture_slug}_ao_4k.jpg")
+        unless File.exist?(ao_file)
+          Download.file(files['AO']['4k']['jpg']['url'], ao_file)
+        end
+        material.ao_texture = ao_file # AO = Ambient Occlusion
+      end
+
+      material
     end
 
   end
