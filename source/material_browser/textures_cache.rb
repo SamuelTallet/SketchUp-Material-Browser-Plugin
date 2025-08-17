@@ -54,6 +54,8 @@ module MaterialBrowser
 
       one_month_ago = Time.now.to_i - 2_592_000 # seconds
 
+      # FIXME: Use File.birthtime instead of .ctime files.
+
       # Glob pattern to find all files that store creation time.
       ctime_glob_pattern = File.join(path, '*.ctime')
 

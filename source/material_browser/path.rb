@@ -26,8 +26,8 @@ require 'sketchup'
 # Material Browser plugin namespace.
 module MaterialBrowser
 
-  # Filesystem (FS) utilities.
-  module FS
+  # Path utilities.
+  module Path
 
     # Converts a path to a file URI.
     #
@@ -35,15 +35,15 @@ module MaterialBrowser
     # @raise [ArgumentError]
     #
     # @return [String] URI.
-    def self.path2uri(path)
+    def self.to_uri(path)
       raise ArgumentError, 'Path must be a String.' unless path.is_a?(String)
 
-      # Fix path only on Windows.
+      # Fixes path only on Windows.
       path.gsub!('\\', '/') if Sketchup.platform == :platform_win
 
       uri = ERB::Util.url_encode(path)
 
-      # Fix URI only on Windows.
+      # Fixes URI only on Windows.
       uri.gsub!('%3A', ':') if Sketchup.platform == :platform_win
 
       uri.gsub!('%2F', '/')

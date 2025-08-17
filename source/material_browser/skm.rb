@@ -25,7 +25,7 @@ require 'fileutils'
 require 'sketchup'
 require 'material_browser/settings'
 require 'material_browser/unzip'
-require 'material_browser/fs'
+require 'material_browser/path'
 require 'material_browser/words'
 require 'material_browser/materials_types'
 
@@ -194,7 +194,7 @@ module MaterialBrowser
           @@files.push({
             path: skm_file_path,
             display_name: skm_display_name,
-            thumbnail_uri: FS.path2uri(thumbnail_path),
+            thumbnail_uri: Path.to_uri(thumbnail_path),
             type: MaterialsTypes.get.from_words(Words.clean(skm_display_name))
           })
         end

@@ -27,7 +27,7 @@ require 'backports/2.3.0/hash/dig'
 require 'backports/2.3.0/array/dig'
 require 'material_browser/download'
 require 'material_browser/words'
-require 'material_browser/fs'
+require 'material_browser/path'
 require 'material_browser/materials_types'
 require 'material_browser/textures_cache'
 
@@ -139,7 +139,7 @@ module MaterialBrowser
           slug: texture_slug,
           name: texture_name,
           meters: texture_size_in_meters,
-          thumbnail_uri: FS.path2uri(File.join(THUMBS_DIR, "#{texture_slug}.webp")),
+          thumbnail_uri: Path.to_uri(File.join(THUMBS_DIR, "#{texture_slug}.webp")),
           type: MaterialsTypes.get.from_words(texture_name)
         }
       end
