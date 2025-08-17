@@ -14,6 +14,38 @@
 MaterialBrowser = {}
 
 /**
+ * Shows loading screen.
+ */
+MaterialBrowser.showLoadingScreen = () => {
+    document.querySelector('#materials').classList.add('hidden')
+    document.querySelector('.loading-screen').classList.add('displayed')
+}
+
+/**
+ * Hides loading screen.
+ */
+MaterialBrowser.hideLoadingScreen = () => {
+    document.querySelector('.loading-screen').classList.remove('displayed')
+    document.querySelector('#materials').classList.remove('hidden')
+}
+
+/**
+ * Shows settings overlay.
+ */
+MaterialBrowser.showSettingsOverlay = () => {
+    document.querySelector('#materials').classList.add('hidden')
+    document.querySelector('.overlay').classList.add('displayed')
+}
+
+/**
+ * Hides settings overlay.
+ */
+MaterialBrowser.hideSettingsOverlay = () => {
+    document.querySelector('.overlay').classList.remove('displayed')
+    document.querySelector('#materials').classList.remove('hidden')
+}
+
+/**
  * Adds event listeners.
  */
 MaterialBrowser.addEventListeners = () => {
@@ -67,10 +99,7 @@ MaterialBrowser.addEventListeners = () => {
     })
 
     document.querySelector('.eye.icon').addEventListener('click', _event => {
-        
-        document.querySelector('#materials').classList.add('hidden')
-        document.querySelector('.overlay').classList.add('displayed')
-
+        MaterialBrowser.showSettingsOverlay()
     })
 
     document.querySelector('.display-name').addEventListener('change', event => {
@@ -92,8 +121,7 @@ MaterialBrowser.addEventListeners = () => {
 
         }
 
-        document.querySelector('.overlay').classList.remove('displayed')
-        document.querySelector('#materials').classList.remove('hidden')
+        MaterialBrowser.hideSettingsOverlay()
 
         sketchup.setDisplayName(displayName)
 
@@ -120,8 +148,7 @@ MaterialBrowser.addEventListeners = () => {
 
         }
 
-        document.querySelector('.overlay').classList.remove('displayed')
-        document.querySelector('#materials').classList.remove('hidden')
+        MaterialBrowser.hideSettingsOverlay()
 
         sketchup.setDisplaySource(displaySource)
 
@@ -131,18 +158,13 @@ MaterialBrowser.addEventListeners = () => {
 
     document.querySelector('.display-only-model').addEventListener('change', event => {
 
-        document.querySelector('.overlay').classList.remove('displayed')
-        document.querySelector('#materials').classList.remove('hidden')
-
+        MaterialBrowser.hideSettingsOverlay()
         sketchup.setDisplayOnlyModel(event.currentTarget.checked)
 
     })
 
     document.querySelector('.close-overlay').addEventListener('click', _event => {
-
-        document.querySelector('.overlay').classList.remove('displayed')
-        document.querySelector('#materials').classList.remove('hidden')
-        
+        MaterialBrowser.hideSettingsOverlay()
     })
 
     document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
@@ -205,9 +227,14 @@ MaterialBrowser.addEventListeners = () => {
     document.querySelectorAll('.ph-texture.thumbnail').forEach(phTextureThumbnail => {
         
         phTextureThumbnail.addEventListener('click', event => {
+            MaterialBrowser.showLoadingScreen()
             sketchup.selectPolyHavenTexture(event.currentTarget.dataset.slug)
         })
 
+    })
+
+    document.querySelector('.loading-screen').addEventListener('click', _event => {
+        MaterialBrowser.hideLoadingScreen()
     })
 
     document.querySelectorAll('.material .source-logo').forEach(materialSourceLogo => {

@@ -19,7 +19,7 @@
 
 <body>
 
-    <div class="overlay">
+    <div id="settings" class="overlay">
 
         <input
             type="checkbox"
@@ -46,6 +46,17 @@
         
         <button class="close-overlay"><%= TRANSLATE['OK'] %></button>
 
+    </div>
+
+    <%
+    mbr_logo_with_text_uri = Path.to_uri(
+        File.join(HTMLDialogs::DIR, 'images', 'mbr-logo-w-text.svg')
+    )
+    %>
+
+    <div class="loading-screen">
+      <img class="bg" src="<%= mbr_logo_with_text_uri %>">
+      <div class="text"><%= TRANSLATE['Loading...'] %></div>
     </div>
 
     <div id="materials">
