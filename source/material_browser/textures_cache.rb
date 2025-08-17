@@ -20,8 +20,8 @@
 raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
-require 'sketchup'
 require 'fileutils'
+require 'sketchup'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -51,31 +51,24 @@ module MaterialBrowser
     # Note: I think a month is on average "enough" time to work on same model.
     # Even if a same texture can be used on different models...
     def self.delete_old
+      return unless Dir.exist?(path)
 
       one_month_ago = Time.now.to_i - 2_592_000 # seconds
 
-      # FIXME: Use File.birthtime instead of .ctime files.
-
-      # Glob pattern to find all files that store creation time.
-      ctime_glob_pattern = File.join(path, '*.ctime')
+      # Glob pattern to find all cached textures files.
+      textures_glob_pattern = File.join(path, '*.{jpg,png}')
 
       # Fixes glob pattern only on Windows:
-      ctime_glob_pattern.gsub!('\\', '/')\
+      textures_glob_pattern.gsub!('\\', '/')\
         if Sketchup.platform == :platform_win
 
-      Dir.glob(ctime_glob_pattern).each do |texture_ctime_file|
+      Dir.glob(textures_glob_pattern).each do |texture_file|
 
-        texture_ctime = File.read(texture_ctime_file).to_i
-
-        if texture_ctime < one_month_ago
-          File.delete(texture_ctime_file)
-
-          texture_file = texture_ctime_file.sub('.ctime', '')
-          File.delete(texture_file) if File.exist?(texture_file)
+        if File.birthtime(texture_file).to_i < one_month_ago
+          FileUtils.remove_file(texture_file)
         end
 
       end
-
     end
 
   end

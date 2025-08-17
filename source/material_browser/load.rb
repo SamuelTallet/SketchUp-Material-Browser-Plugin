@@ -24,9 +24,8 @@ require 'sketchup'
 require 'material_browser/settings'
 require 'material_browser/app_observer'
 require 'material_browser/materials_observer'
-require 'material_browser/cache'
-require 'material_browser/textures_cache'
 require 'material_browser/model'
+require 'material_browser/cache'
 require 'material_browser/menu'
 
 # Material Browser plugin namespace.
@@ -47,11 +46,6 @@ module MaterialBrowser
   # Maybe user migrated from a Material Browser version prior to 1.1?
   # Removes materials thumbs legacy directory.
   Cache.remove_materials_thumbnails_dir
-
-  # Downloaded textures can consume disk space.
-  # And maybe user doesn't use Material Browser anymore?
-  # Thus better remove these old files here rather in "lazy_load.rb".
-  TexturesCache.delete_old if rand(30).zero? # But not too often...
 
   # Plugs Material Browser menu into SketchUp UI.
   Menu.new(

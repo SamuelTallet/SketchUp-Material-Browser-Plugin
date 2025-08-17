@@ -202,6 +202,11 @@ module MaterialBrowser
     #
     # @return [Sketchup::Material]
     def self.add_material(texture_slug, metadata)
+      # A note about textures:
+      # - Downloaded textures can consume disk space. I think 4K JPEG is a right compromise
+      # between quality and file size. I don't know if I should let user choose resolution?
+      # - Textures files are embedded in SKP files.
+      # So it's nice and safe to delete old ones. See: `MaterialBrowser::AppObserver#onQuit`
       TexturesCache.create_dir
 
       diffuse_file = File.join(TexturesCache.path, "ph_#{texture_slug}_diff_4k.jpg")

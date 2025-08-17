@@ -26,6 +26,7 @@ require 'material_browser/user_interface'
 require 'material_browser/model'
 require 'material_browser/settings'
 require 'material_browser/textures_cache'
+require 'material_browser/skm'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -56,17 +57,22 @@ module MaterialBrowser
 
     # When SketchUp closes:
     def onQuit()
+      Settings.current.write
 
       Model.remove_materials_thumbnails_dir
 
-      Settings.current.write
-
+      # From time to time...
+      if rand(30).zero?
+        TexturesCache.delete_old
+      end
     end
 
     # When SketchUp user turns off an extension:
     def onUnloadExtension(extension_name)
-      # @todo Ask user if he wants to drop SKM thumbs?
-      TexturesCache.remove_dir if extension_name == NAME
+      if extension_name == NAME
+        SKM.remove_thumbnails_dir
+        TexturesCache.remove_dir
+      end
     end
 
   end
