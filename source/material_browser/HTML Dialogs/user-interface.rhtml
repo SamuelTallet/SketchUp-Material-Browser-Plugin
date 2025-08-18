@@ -93,15 +93,23 @@
 
                 <div class="zoom">
 
-                    <img class="in icon" src="<%= zoom_in_icon_uri %>">
-    
+                    <img
+                        class="in icon"
+                        src="<%= zoom_in_icon_uri %>"
+                        title="<%= TRANSLATE['Enlarge thumbnails'] %>"
+                    />
+
                     <input type="range" class="slider"
                         value="<%= Settings.current.zoom_value %>"
                         min="64" max="256" step="8"
                     />
                     
-                    <img class="out icon" src="<%= zoom_out_icon_uri %>">
-                    
+                    <img
+                        class="out icon"
+                        src="<%= zoom_out_icon_uri %>"
+                        title="<%= TRANSLATE['Reduce thumbnails'] %>"
+                    />
+
                 </div>
 
                 <img

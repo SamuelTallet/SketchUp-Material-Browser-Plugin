@@ -7,5 +7,5 @@ indent_style = space
 indent_size = 2
 
 # Except for:
-[*.{js,css}]
+[*.{rhtml,css,js}]
 indent_size = 4
