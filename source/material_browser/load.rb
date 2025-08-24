@@ -26,6 +26,7 @@ require 'material_browser/app_observer'
 require 'material_browser/materials_observer'
 require 'material_browser/model'
 require 'material_browser/cache'
+require 'material_browser/toolbar'
 require 'material_browser/menu'
 
 # Material Browser plugin namespace.
@@ -47,7 +48,9 @@ module MaterialBrowser
   # Removes materials thumbs legacy directory.
   Cache.remove_materials_thumbnails_dir
 
-  # Plugs Material Browser menu into SketchUp UI.
+  # Adds plugin toolbar and menu to SketchUp.
+  Toolbar.new.prepare.show
+
   Menu.new(
     UI.menu('Plugins') # parent_menu
   )
