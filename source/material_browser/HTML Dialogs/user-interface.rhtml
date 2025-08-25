@@ -19,7 +19,7 @@
 
 <body>
 
-    <div id="settings" class="overlay">
+    <div id="settings">
 
         <input
             type="checkbox"
@@ -44,7 +44,7 @@
         />
         <%= TRANSLATE['Display only model materials'] %>
         
-        <button class="close-overlay clickable"><%= TRANSLATE['OK'] %></button>
+        <button class="close clickable"><%= TRANSLATE['OK'] %></button>
 
     </div>
 
@@ -54,7 +54,7 @@
     )
     %>
 
-    <div class="loading-screen">
+    <div id="loading">
       <img class="bg" src="<%= mbr_logo_with_text_uri %>">
       <div class="text"><%= TRANSLATE['Texture loading...'] %></div>
     </div>
@@ -87,7 +87,7 @@
         )
         %>
 
-        <div class="toolbar">
+        <div id="toolbar">
 
             <div class="vertical">
 

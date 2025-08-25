@@ -18,14 +18,14 @@ MaterialBrowser = {}
  */
 MaterialBrowser.showLoadingScreen = () => {
     document.querySelector('#materials').classList.add('hidden')
-    document.querySelector('.loading-screen').classList.add('displayed')
+    document.querySelector('#loading').classList.add('displayed')
 }
 
 /**
  * Hides loading screen.
  */
 MaterialBrowser.hideLoadingScreen = () => {
-    document.querySelector('.loading-screen').classList.remove('displayed')
+    document.querySelector('#loading').classList.remove('displayed')
     document.querySelector('#materials').classList.remove('hidden')
 }
 
@@ -34,14 +34,14 @@ MaterialBrowser.hideLoadingScreen = () => {
  */
 MaterialBrowser.showSettingsOverlay = () => {
     document.querySelector('#materials').classList.add('hidden')
-    document.querySelector('.overlay').classList.add('displayed')
+    document.querySelector('#settings').classList.add('displayed')
 }
 
 /**
  * Hides settings overlay.
  */
 MaterialBrowser.hideSettingsOverlay = () => {
-    document.querySelector('.overlay').classList.remove('displayed')
+    document.querySelector('#settings').classList.remove('displayed')
     document.querySelector('#materials').classList.remove('hidden')
 }
 
@@ -163,7 +163,7 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
-    document.querySelector('.close-overlay').addEventListener('click', _event => {
+    document.querySelector('#settings .close').addEventListener('click', _event => {
         MaterialBrowser.hideSettingsOverlay()
     })
 
@@ -233,7 +233,7 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
-    document.querySelector('.loading-screen').addEventListener('click', _event => {
+    document.querySelector('#loading').addEventListener('click', _event => {
         MaterialBrowser.hideLoadingScreen()
     })
 

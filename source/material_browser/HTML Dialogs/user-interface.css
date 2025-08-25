@@ -59,7 +59,7 @@ select {
     
 }
 
-.overlay {
+#settings {
 
     display: none;
 
@@ -74,11 +74,11 @@ select {
 
 }
 
-.overlay.displayed {
+#settings.displayed {
     display: table; /* Fix blurry text bug */
 }
 
-.loading-screen {
+#loading {
 
     display: none;
 
@@ -94,11 +94,11 @@ select {
 
 }
 
-.loading-screen.displayed {
+#loading.displayed {
     display: block;
 }
 
-.loading-screen .bg {
+#loading .bg {
 
     width: 100%;
     height: 100%;
@@ -109,7 +109,7 @@ select {
 
 }
 
-.loading-screen .text {
+#loading .text {
 
     position: absolute;
     left: 0;
@@ -120,7 +120,7 @@ select {
 
 }
 
-.toolbar {
+#toolbar {
 
     position: fixed;
     top: 0;
@@ -134,7 +134,7 @@ select {
 
 }
 
-.toolbar .icon {
+#toolbar .icon {
 
     display: block;
 
@@ -145,11 +145,11 @@ select {
 
 }
 
-.toolbar .icon:hover {
+#toolbar .icon:hover {
     transform: scale(1.1);
 }
 
-.toolbar .vertical {
+#toolbar .vertical {
 
     position: absolute;
     top: 0;
@@ -162,15 +162,15 @@ select {
 
 }
 
-.toolbar .zoom {
+#toolbar .zoom {
     overflow: hidden;
 }
 
-.toolbar .zoom .icon {
+#toolbar .zoom .icon {
     margin-top: 0;
 }
 
-.toolbar .zoom .slider {
+#toolbar .zoom .slider {
 
     position: relative;
     left: -55px;
@@ -178,20 +178,23 @@ select {
 
     height: 120px;
 
-    -webkit-appearance: slider-vertical;
-    cursor: -webkit-grab;
-    
+    -webkit-appearance: slider-vertical; /* For Chrome 52 (SketchUp 2017) */
+    appearance: slider-vertical;
+
+    cursor: -webkit-grab; /* For Chrome 52 (SketchUp 2017) */
+    cursor: grab;
+
 }
 
-.toolbar .skm-folder.icon {
+#toolbar .skm-folder.icon {
     margin-left: 1px;
 }
 
-.toolbar .search {
+#toolbar .search {
     margin-left: 16px;
 }
 
-.toolbar .filter-by-type {
+#toolbar .filter-by-type {
     margin-left: 2px;
 }
 
