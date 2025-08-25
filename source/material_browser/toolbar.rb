@@ -59,7 +59,7 @@ module MaterialBrowser
       command.tooltip = TRANSLATE['Open Material Browser...']
       command.status_bar_text = TRANSLATE[
         'BTW, thanks to Poly Haven for providing free textures'
-      ] + ' ❤︎'
+      ] + ' <3'
 
       command
     end
