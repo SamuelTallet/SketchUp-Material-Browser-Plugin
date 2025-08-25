@@ -8,6 +8,10 @@
  * Licence: GNU General Public License 3.0
  */
 
+.clickable {
+    cursor: pointer;
+}
+
 *:focus {
     outline: none;
 }
@@ -40,8 +44,6 @@ button {
     
     background-color: rgb(0, 95, 158);
     color: white;
-
-    cursor: pointer;
 
 }
 
@@ -141,8 +143,6 @@ select {
 
     margin-top: 5px;
 
-    cursor: pointer;
-
 }
 
 .toolbar .icon:hover {
@@ -211,8 +211,6 @@ select {
     margin-right: 6px;
 
     overflow: hidden;
-
-    cursor: pointer;
 
 }
 

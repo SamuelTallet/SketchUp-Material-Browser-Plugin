@@ -23,14 +23,14 @@
 
         <input
             type="checkbox"
-            class="display-name"
+            class="display-name clickable"
             <%= Settings.current.display_name? ? 'checked' : '' %>
         />
         <%= TRANSLATE['Display materials name'] %>
 
         <input
             type="checkbox"
-            class="display-source"
+            class="display-source clickable"
             <%= Settings.current.display_source? ? 'checked' : '' %>
         />
         <%= TRANSLATE['Display materials source'] %>
@@ -39,12 +39,12 @@
 
         <input
             type="checkbox"
-            class="display-only-model"
+            class="display-only-model clickable"
             <%= Settings.current.display_only_model? ? 'checked' : '' %>
         />
         <%= TRANSLATE['Display only model materials'] %>
         
-        <button class="close-overlay"><%= TRANSLATE['OK'] %></button>
+        <button class="close-overlay clickable"><%= TRANSLATE['OK'] %></button>
 
     </div>
 
@@ -94,9 +94,9 @@
                 <div class="zoom">
 
                     <img
-                        class="in icon"
+                        class="in icon clickable"
                         src="<%= zoom_in_icon_uri %>"
-                        title="<%= TRANSLATE['Enlarge textures thumbnails'] %>"
+                        title="<%= TRANSLATE['Enlarge materials thumbs'] %>"
                     />
 
                     <input type="range" class="slider"
@@ -105,21 +105,21 @@
                     />
                     
                     <img
-                        class="out icon"
+                        class="out icon clickable"
                         src="<%= zoom_out_icon_uri %>"
-                        title="<%= TRANSLATE['Reduce textures thumbnails'] %>"
+                        title="<%= TRANSLATE['Reduce materials thumbs'] %>"
                     />
 
                 </div>
 
                 <img
-                    class="eye icon"
+                    class="eye icon clickable"
                     src="<%= eye_icon_uri %>"
                     title="<%= TRANSLATE['Choose items to display'] %>"
                 />
 
                 <img
-                    class="skm-folder icon"
+                    class="skm-folder icon clickable"
                     src="<%= skm_folder_icon_uri %>"
                     title="<%= TRANSLATE['Use a custom SKM folder'] %>"
                 />
@@ -136,7 +136,7 @@
                 />
 
                 <% option_value_to_select = Settings.current.type_filter_value %>
-                <select class="filter-by-type">
+                <select class="filter-by-type clickable">
         
                     <option value="all"
                         <%= option_value_to_select == 'all' ? 'selected' : '' %>
@@ -260,7 +260,7 @@
             >
 
                 <img
-                    class="model-material thumbnail"
+                    class="model-material thumbnail clickable"
                     src="<%= model_material[:thumbnail_uri] %>"
                     width="96"
                     height="96"
@@ -288,10 +288,11 @@
                 <img
                     class="source-logo"
                     src="<%= sketchup_logo_uri %>"
+                    title="<%= TRANSLATE['Source: SKM collections'] %>"
                 />
 
                 <img
-                    class="skm-file thumbnail"
+                    class="skm-file thumbnail clickable"
                     src="<%= skm_file[:thumbnail_uri] %>"
                     width="96"
                     height="96"
@@ -319,14 +320,14 @@
             >
 
                 <img
-                    class="source-logo"
+                    class="source-logo clickable"
                     src="<%= ph_logo_uri %>"
                     title="<%= TRANSLATE['See on Poly Haven'] %>"
                     data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
                 />
 
                 <img
-                    class="ph-texture thumbnail"
+                    class="ph-texture thumbnail clickable"
                     src="<%= ph_texture[:thumbnail_uri] %>"
                     width="96"
                     height="96"

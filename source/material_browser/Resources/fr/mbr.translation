@@ -19,8 +19,8 @@
 "Display materials source"="Afficher la source des matériaux";
 "Display only model materials"="Afficher uniquement les matériaux du modèle";
 "OK"="OK";
-"Enlarge textures thumbnails"="Agrandir les vignettes des textures";
-"Reduce textures thumbnails"="Réduire les vignettes des textures";
+"Enlarge materials thumbs"="Agrandir les vignettes des matériaux";
+"Reduce materials thumbs"="Réduire les vignettes des matériaux";
 "Choose items to display"="Choisir les éléments à afficher";
 "Use a custom SKM folder"="Utiliser un dossier SKM personnalisé";
 "Search by name"="Rechercher par nom";
@@ -46,4 +46,5 @@
 "Water"="Eau";
 "Wood"="Bois";
 "in model"="dans le modèle";
+"Source: SKM collections"="Source : collections SKM";
 "See on Poly Haven"="Voir sur Poly Haven";
