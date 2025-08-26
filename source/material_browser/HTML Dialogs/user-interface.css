@@ -68,6 +68,7 @@ select {
     top: 50%;
     transform: translate(-50%, -50%);
 
+    font-size: 15px;
     text-align: center;
     
     z-index: 2;
@@ -98,7 +99,7 @@ select {
     display: block;
 }
 
-#loading .bg {
+#loading .logo {
 
     width: 100%;
     height: 100%;
@@ -109,7 +110,7 @@ select {
 
 }
 
-#loading .text {
+#loading .status {
 
     position: absolute;
     left: 0;
