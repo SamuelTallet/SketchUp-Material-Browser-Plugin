@@ -14,17 +14,51 @@
 MaterialBrowser = {}
 
 /**
+ * Loading screen animation timer ID.
+ * @type {number|null}
+ */
+MaterialBrowser.loadAnimationTimer = null
+
+/**
+ * Starts loading screen' animation.
+ */
+MaterialBrowser.startLoadingAnimation = () => {
+    /** @type {NodeListOf<SVGGElement>} */
+    const cards = document.querySelectorAll('#loading .card')
+
+    MaterialBrowser.loadAnimationTimer = setInterval(() => {
+        cards.forEach((card, index) => {
+            card.style.opacity = 0
+            setTimeout(() => {
+                card.style.opacity = 1
+            }, (index + 1) * 150) // Cards anims are staggered.
+        })
+    }, 3000) // Whole anim repeats every 3s until stopped.
+}
+
+/**
+ * Stops loading screen' animation.
+ */
+MaterialBrowser.stopLoadingAnimation = () => {
+    if ( MaterialBrowser.loadAnimationTimer === null ) return
+
+    clearInterval(MaterialBrowser.loadAnimationTimer)
+}
+
+/**
  * Shows loading screen.
  */
 MaterialBrowser.showLoadingScreen = () => {
     document.querySelector('#materials').classList.add('hidden')
     document.querySelector('#loading').classList.add('displayed')
+    MaterialBrowser.startLoadingAnimation()
 }
 
 /**
  * Hides loading screen.
  */
 MaterialBrowser.hideLoadingScreen = () => {
+    MaterialBrowser.stopLoadingAnimation()
     document.querySelector('#loading').classList.remove('displayed')
     document.querySelector('#materials').classList.remove('hidden')
 }
