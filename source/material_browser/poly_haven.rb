@@ -71,7 +71,7 @@ module MaterialBrowser
 
       request.start do |_request, response|
         unless response.status_code == 200 # OK
-          raise "Material Browser: Can't fetch Poly Haven textures index: #{response.body}"
+          raise "Can't fetch Poly Haven textures index: #{response.body}"
         end
 
         # @type [Hash<String, Hash>]
@@ -154,7 +154,7 @@ module MaterialBrowser
     def self.texture_metadata(texture_slug)
       metadata = @@textures.find { |texture| texture[:slug] == texture_slug }
 
-      raise "Material Browser: No Poly Haven texture metadata found for #{texture_slug}." \
+      raise "No Poly Haven texture metadata was found for #{texture_slug}." \
         unless metadata.is_a?(Hash)
 
       metadata
@@ -214,7 +214,7 @@ module MaterialBrowser
 
       unless File.exist?(diffuse_file)
         unless files.dig('Diffuse', '4k', 'jpg', 'url')
-          raise "Material Browser: Poly Haven #{texture_slug} diffuse texture is missing."
+          raise "#{metadata[:name]} texture file is not in Poly Haven API response."
         end
         Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
       end

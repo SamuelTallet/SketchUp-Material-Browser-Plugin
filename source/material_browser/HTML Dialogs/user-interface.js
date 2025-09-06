@@ -261,12 +261,12 @@ MaterialBrowser.addEventListeners = () => {
     document.querySelectorAll('.ph-texture.thumbnail').forEach(phTextureThumbnail => {
         
         phTextureThumbnail.addEventListener('click', event => {
-            MaterialBrowser.showLoadingScreen()
             sketchup.selectPolyHavenTexture(event.currentTarget.dataset.slug)
         })
 
     })
 
+    // In case backend crashes, we provide user a way to hide loading screen manually.
     document.querySelector('#loading').addEventListener('click', _event => {
         MaterialBrowser.hideLoadingScreen()
     })

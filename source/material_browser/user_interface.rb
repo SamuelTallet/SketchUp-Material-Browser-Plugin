@@ -28,6 +28,7 @@ require 'material_browser/path'
 require 'material_browser/model'
 require 'material_browser/skm'
 require 'material_browser/poly_haven'
+require 'material_browser/errors'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
@@ -138,6 +139,16 @@ module MaterialBrowser
       @html_dialog.set_html(self.class.html)
     end
 
+    # Shows loading screen within HTML dialog.
+    private def show_loading_screen
+      @html_dialog.execute_script('MaterialBrowser.showLoadingScreen()')
+    end
+
+    # Hides loading screen within HTML dialog.
+    private def hide_loading_screen
+      @html_dialog.execute_script('MaterialBrowser.hideLoadingScreen()')
+    end
+
     # Configures HTML dialog.
     private def configure_html_dialog
 
@@ -184,7 +195,14 @@ module MaterialBrowser
       end
 
       @html_dialog.add_action_callback('selectPolyHavenTexture') do |_ctx, ph_texture_slug|
-        PolyHaven.select_texture(ph_texture_slug)
+        begin
+          show_loading_screen
+          PolyHaven.select_texture(ph_texture_slug)
+        rescue => error
+          Errors.display("Can't select texture", cause: error)
+        ensure
+          hide_loading_screen
+        end
       end
 
       @html_dialog.add_action_callback('openURL') do |_ctx, url|
