@@ -194,6 +194,10 @@ xmlns="http://www.w3.org/2000/svg">
             File.join(HTMLDialogs::DIR, 'images', 'skm-folder-icon.svg')
         )
 
+        heart_icon_uri = Path.to_uri(
+            File.join(HTMLDialogs::DIR, 'images', 'heart-icon.svg')
+        )
+
         sketchup_logo_uri = Path.to_uri(
             File.join(HTMLDialogs::DIR, 'images', 'sketchup-logo.svg')
         )
@@ -238,6 +242,12 @@ xmlns="http://www.w3.org/2000/svg">
                     class="skm-folder icon clickable"
                     src="<%= skm_folder_icon_uri %>"
                     title="<%= TRANSLATE['Use a custom SKM folder'] %>"
+                />
+
+                <img
+                    class="heart icon clickable"
+                    src="<%= heart_icon_uri %>"
+                    title="<%= TRANSLATE['Encourage plugin author'] %>"
                 />
 
             </div>

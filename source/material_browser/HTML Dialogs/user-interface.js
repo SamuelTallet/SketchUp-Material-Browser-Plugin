@@ -14,6 +14,16 @@
 MaterialBrowser = {}
 
 /**
+ * Donation URL.
+ */
+MaterialBrowser.DONATE_URL = 'https://raw.githubusercontent.com/SamuelTallet/SketchUp-Material-Browser-Plugin/main/config/donate.url'
+
+/**
+ * Donation URL fallback.
+ */
+MaterialBrowser.DONATE_URL_FALLBACK = 'https://www.paypal.me/SamuelTallet'
+
+/**
  * Loading screen animation timer ID.
  * @type {number|null}
  */
@@ -203,6 +213,18 @@ MaterialBrowser.addEventListeners = () => {
 
     document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
         sketchup.setCustomSKMPath()
+    })
+
+    document.querySelector('.heart.icon').addEventListener('click', _event => {
+        fetch(MaterialBrowser.DONATE_URL)
+            .then(response => response.text())
+            .then(url => {
+                sketchup.openURL(url)
+            })
+            .catch(error => {
+                console.error("Can't fetch URL to donate:", error)
+                sketchup.openURL(MaterialBrowser.DONATE_URL_FALLBACK)
+            })
     })
 
     document.querySelector('.filter-by-type').addEventListener('change', event => {
