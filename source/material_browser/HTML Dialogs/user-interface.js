@@ -313,6 +313,13 @@ document.addEventListener('DOMContentLoaded', _event => {
         valueNames: ['name'] // by name.
     })
 
+    // Enable only tooltip on icons with title attribute.
+    // FIXME: On thumbnail' titles, it slowdowns UI a lot.
+    new Drooltip({
+        element: '.icon[title]',
+        position: 'right'
+    })
+
     MaterialBrowser.addEventListeners()
 
 })

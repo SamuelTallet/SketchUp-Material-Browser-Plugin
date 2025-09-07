@@ -30,7 +30,7 @@ Thanks
 
 [Poly Haven](https://polyhaven.com) for providing high-quality PBR textures through their API, for free.
 
-On code side, this plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [Ruby backports](https://github.com/marcandre/backports), and [List.js](https://github.com/javve/list.js).
+On code side, this plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [Ruby backports](https://github.com/marcandre/backports), [List.js](https://github.com/javve/list.js), and [Drooltip.js](https://github.com/prevwong/drooltip.js).
 
 Heart icon was made by [Feather Icons](https://www.iconfinder.com), and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
