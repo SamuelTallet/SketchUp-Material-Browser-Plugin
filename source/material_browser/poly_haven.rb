@@ -213,10 +213,14 @@ module MaterialBrowser
       files = texture_files(texture_slug)
 
       unless File.exist?(diffuse_file)
-        unless files.dig('Diffuse', '4k', 'jpg', 'url')
+        if files.dig('Diffuse', '4k', 'jpg', 'url')
+          Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
+        elsif files.dig('coll1', '4k', 'jpg', 'url')
+          # Sometime, texture variants are provided?
+          Download.file(files['coll1']['4k']['jpg']['url'], diffuse_file)
+        else
           raise "#{metadata[:name]} texture file is not in Poly Haven API response."
         end
-        Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
       end
 
       material = Sketchup.active_model.materials.add(metadata[:name])
