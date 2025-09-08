@@ -8,6 +8,17 @@
  * Licence: GNU General Public License 3.0
  */
 
+:root {
+    /* Palette */
+    --brown: #D77F41;
+    --orange: #F4B24A;
+    --dark-green: #6AB886;
+    --light-blue: #45B0D8;
+    --dark-blue: #3884C3;
+    --purple: #6F4994;
+    --light-green: #9BCB63;
+}
+
 .clickable {
     cursor: pointer;
 }
@@ -21,10 +32,8 @@
 }
 
 body {
-
     font-family: Arial, sans-serif;
-    font-size: 13px;
-
+    font-size: 15px;
 }
 
 input[type="checkbox"] {
@@ -42,8 +51,9 @@ button {
 
     padding: 5px;
     
-    background-color: rgb(0, 95, 158);
-    color: white;
+    background-color: var(--dark-green);
+    color: black;
+    font-size: 15px;
 
 }
 
@@ -154,10 +164,60 @@ select {
     transform: scale(1.1);
 }
 
-/* Fix icon tooltip position */
+/* Toolbar icon tooltip */
 [data-identifiers^=".icon[title]"] {
     margin-left: 10px;
     margin-top: 5px;
+}
+
+[data-identifiers^=".icon[title]"] {
+    border-radius: 5px;
+}
+
+[data-identifiers=".icon[title]_0"],
+[data-identifiers=".icon[title]_0"] .bg {
+    color: var(--brown) !important;
+    background: var(--brown) !important;
+}
+
+[data-identifiers=".icon[title]_1"],
+[data-identifiers=".icon[title]_1"] .bg {
+    color: var(--orange) !important;
+    background: var(--orange) !important;
+}
+
+[data-identifiers=".icon[title]_2"],
+[data-identifiers=".icon[title]_2"] .bg {
+    color: var(--dark-green) !important;
+    background: var(--dark-green) !important;
+}
+
+[data-identifiers=".icon[title]_3"],
+[data-identifiers=".icon[title]_3"] .bg {
+    color: var(--light-blue) !important;
+    background: var(--light-blue) !important;
+}
+
+[data-identifiers=".icon[title]_4"],
+[data-identifiers=".icon[title]_4"] .bg {
+    color: var(--dark-blue) !important;
+    background: var(--dark-blue) !important;
+}
+
+[data-identifiers=".icon[title]_5"],
+[data-identifiers=".icon[title]_5"] .bg {
+    color: var(--purple) !important;
+    background: var(--purple) !important;
+}
+
+[data-identifiers^=".icon[title]"] .content {
+    color: black !important;
+    font-size: 15px;
+}
+
+[data-identifiers=".icon[title]_0"] .content,
+[data-identifiers=".icon[title]_4"] .content {
+    color: white !important;
 }
 
 #toolbar .vertical {

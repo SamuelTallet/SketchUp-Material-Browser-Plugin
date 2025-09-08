@@ -318,8 +318,6 @@ document.addEventListener('DOMContentLoaded', _event => {
     new Drooltip({
         element: '.icon[title]',
         position: 'right',
-        background: '#0075ff', // Aligned with Chromium' slider default thumb color.
-        animation: 'bounce',
     })
 
     MaterialBrowser.addEventListeners()
