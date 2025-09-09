@@ -1,1 +1,2 @@
-- Heart icon made by Feather Icons from [Iconfinder](https://www.iconfinder.com), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Heart icon is part of [Feather icons](https://www.iconfinder.com/iconsets/feather-5) from Iconfinder, and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Help icon was made by [graficon](https://www.iconfinder.com/graficon) from Iconfinder, and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
