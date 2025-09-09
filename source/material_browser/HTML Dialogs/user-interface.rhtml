@@ -196,6 +196,10 @@ xmlns="http://www.w3.org/2000/svg">
             File.join(HTMLDialogs::DIR, 'images', 'skm-folder-icon.svg')
         )
 
+        help_icon_uri = Path.to_uri(
+            File.join(HTMLDialogs::DIR, 'images', 'help-icon.svg')
+        )
+
         heart_icon_uri = Path.to_uri(
             File.join(HTMLDialogs::DIR, 'images', 'heart-icon.svg')
         )
@@ -244,6 +248,12 @@ xmlns="http://www.w3.org/2000/svg">
                     class="skm-folder icon clickable"
                     src="<%= skm_folder_icon_uri %>"
                     title="<%= TRANSLATE['Use a custom SKM folder'] %>"
+                />
+
+                <img
+                    class="help icon clickable"
+                    src="<%= help_icon_uri %>"
+                    title="<%= TRANSLATE['Access plugin help/FAQ'] %>"
                 />
 
                 <img

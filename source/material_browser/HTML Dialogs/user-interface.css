@@ -156,7 +156,7 @@ select {
     width: 24px;
     height: 24px;
 
-    margin-top: 5px;
+    margin-top: 6px;
 
 }
 
@@ -216,7 +216,8 @@ select {
 }
 
 [data-identifiers=".icon[title]_0"] .content,
-[data-identifiers=".icon[title]_4"] .content {
+[data-identifiers=".icon[title]_4"] .content,
+[data-identifiers=".icon[title]_5"] .content {
     color: white !important;
 }
 
@@ -255,10 +256,6 @@ select {
     cursor: -webkit-grab; /* For Chrome 52 (SketchUp 2017) */
     cursor: grab;
 
-}
-
-#toolbar .skm-folder.icon {
-    margin-left: 1px;
 }
 
 #toolbar .search {

@@ -14,6 +14,11 @@
 MaterialBrowser = {}
 
 /**
+ * Help/FAQ URL.
+ */
+MaterialBrowser.HELP_URL = 'https://github.com/SamuelTallet/SketchUp-Material-Browser-Plugin?#helpfaq'
+
+/**
  * Donation URL.
  */
 MaterialBrowser.DONATE_URL = 'https://raw.githubusercontent.com/SamuelTallet/SketchUp-Material-Browser-Plugin/main/config/donate.url'
@@ -213,6 +218,10 @@ MaterialBrowser.addEventListeners = () => {
 
     document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
         sketchup.setCustomSKMPath()
+    })
+
+    document.querySelector('.help.icon').addEventListener('click', _event => {
+        sketchup.openURL(MaterialBrowser.HELP_URL)
     })
 
     document.querySelector('.heart.icon').addEventListener('click', _event => {
