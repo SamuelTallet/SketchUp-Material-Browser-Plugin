@@ -179,40 +179,6 @@ xmlns="http://www.w3.org/2000/svg">
 
     <div id="materials">
 
-        <%
-        zoom_in_icon_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'zoom-in-icon.svg')
-        )
-
-        zoom_out_icon_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'zoom-out-icon.svg')
-        )
-
-        eye_icon_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'eye-icon.svg')
-        )
-
-        skm_folder_icon_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'skm-folder-icon.svg')
-        )
-
-        help_icon_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'help-icon.svg')
-        )
-
-        heart_icon_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'heart-icon.svg')
-        )
-
-        sketchup_logo_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'sketchup-logo.svg')
-        )
-
-        ph_logo_uri = Path.to_uri(
-            File.join(HTMLDialogs::DIR, 'images', 'poly-haven-logo.svg')
-        )
-        %>
-
         <div id="toolbar">
 
             <div class="vertical">
@@ -221,7 +187,7 @@ xmlns="http://www.w3.org/2000/svg">
 
                     <img
                         class="in icon clickable"
-                        src="<%= zoom_in_icon_uri %>"
+                        src="<%= img_uri('zoom-in-icon.svg') %>"
                         title="<%= TRANSLATE['Enlarge materials thumbs'] %>"
                     />
 
@@ -232,7 +198,7 @@ xmlns="http://www.w3.org/2000/svg">
                     
                     <img
                         class="out icon clickable"
-                        src="<%= zoom_out_icon_uri %>"
+                        src="<%= img_uri('zoom-out-icon.svg') %>"
                         title="<%= TRANSLATE['Reduce materials thumbs'] %>"
                     />
 
@@ -240,25 +206,25 @@ xmlns="http://www.w3.org/2000/svg">
 
                 <img
                     class="eye icon clickable"
-                    src="<%= eye_icon_uri %>"
+                    src="<%= img_uri('eye-icon.svg') %>"
                     title="<%= TRANSLATE['Choose items to display'] %>"
                 />
 
                 <img
                     class="skm-folder icon clickable"
-                    src="<%= skm_folder_icon_uri %>"
+                    src="<%= img_uri('skm-folder-icon.svg') %>"
                     title="<%= TRANSLATE['Use a custom SKM folder'] %>"
                 />
 
                 <img
                     class="help icon clickable"
-                    src="<%= help_icon_uri %>"
+                    src="<%= img_uri('help-icon.svg') %>"
                     title="<%= TRANSLATE['Access plugin help/FAQ'] %>"
                 />
 
                 <img
                     class="heart icon clickable"
-                    src="<%= heart_icon_uri %>"
+                    src="<%= img_uri('heart-icon.svg') %>"
                     title="<%= TRANSLATE['Encourage plugin author'] %>"
                 />
 
@@ -425,7 +391,7 @@ xmlns="http://www.w3.org/2000/svg">
 
                 <img
                     class="source-logo"
-                    src="<%= sketchup_logo_uri %>"
+                    src="<%= img_uri('sketchup-logo.svg') %>"
                     title="<%= TRANSLATE['Source: SKM collections'] %>"
                 />
 
@@ -459,7 +425,7 @@ xmlns="http://www.w3.org/2000/svg">
 
                 <img
                     class="source-logo clickable"
-                    src="<%= ph_logo_uri %>"
+                    src="<%= img_uri('poly-haven-logo.svg') %>"
                     title="<%= TRANSLATE['See on Poly Haven'] %>"
                     data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
                 />

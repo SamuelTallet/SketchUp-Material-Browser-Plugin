@@ -22,12 +22,19 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'fileutils'
 require 'erb'
+require 'material_browser/path'
 
 # Material Browser plugin namespace.
 module MaterialBrowser
 
   # Helps construct HTML dialogs.
   module HTMLDialogs
+
+    # Absolute path to "HTML Dialogs" directory.
+    DIR = File.join(__dir__, 'HTML Dialogs')
+
+    # Absolute path to "HTML Dialogs/images" directory.
+    IMAGES_DIR = File.join(DIR, 'images')
 
     # Merges RHTML, JS and CSS.
     #
@@ -36,23 +43,36 @@ module MaterialBrowser
     #
     # @return [String] HTML document that incorporates scripts and styles.
     def self.merge(args)
-
-      raise ArgumentError, 'Document must be a String.'\
-       unless args[:document].is_a?(String)
+      raise ArgumentError, 'Document must be a String.' \
+        unless args[:document].is_a?(String)
 
       scripts = asset_contents_by_uri(args[:scripts], 'script')
       styles = asset_contents_by_uri(args[:styles], 'style')
       # Note: From now, these variables are available in RHTML document.
 
       ERB.new(File.read(File.join(DIR, args[:document]))).result(binding)
-
     end
 
-    # Absolute path to "HTML Dialogs" directory.
-    DIR = File.join(__dir__, 'HTML Dialogs')
+    # Converts an image's filename to a file URI.
+    # This filename is relative to `IMAGES_DIR`.
+    #
+    # @param [String] filename Image's filename.
+    # @raise [ArgumentError]
+    #
+    # @return [String] An absolute image file URI.
+    def self.img_uri(filename)
+      raise ArgumentError, 'Filename must be a String.' \
+        unless filename.is_a?(String)
+
+      file_path = File.join(IMAGES_DIR, filename)
+      raise "#{filename} was not found in #{IMAGES_DIR}" \
+        unless File.exist?(file_path)
+
+      Path.to_uri(file_path)
+    end
 
     # Loads assets contents given their relative URI.
-    # See: `HTMLDialogs::DIR` to know which path they're relative to.
+    # See: `DIR` to know which path they're relative to.
     #
     # @private
     #
@@ -82,7 +102,6 @@ module MaterialBrowser
       end
 
       asset_contents
-
     end
 
     private_class_method :asset_contents_by_uri
