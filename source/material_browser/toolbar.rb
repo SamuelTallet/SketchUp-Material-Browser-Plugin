@@ -57,9 +57,7 @@ module MaterialBrowser
       command.small_icon = icon_file('omb')
       command.large_icon = icon_file('omb')
       command.tooltip = TRANSLATE['Open Material Browser...']
-      command.status_bar_text = TRANSLATE[
-        'BTW, thanks to Poly Haven for providing free textures'
-      ] + ' <3'
+      command.status_bar_text = BRIEF
 
       command
     end

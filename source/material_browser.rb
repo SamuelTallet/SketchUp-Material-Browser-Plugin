@@ -38,26 +38,22 @@ module MaterialBrowser
   # See: "material_browser/Resources/#{Sketchup.get_locale}/mbr.translation"
   TRANSLATE = LanguageHandler.new('mbr.translation')
 
-  # Plugin name.
+  # Plugin name, possibly translated in current locale.
   NAME = TRANSLATE['Material Browser']
 
-  # Plugin, registered.
+  # Plugin brief, possibly translated in current locale.
+  BRIEF = TRANSLATE[
+    'Search for materials by name and filter them by type, with extra extra large thumbnails.'
+  ]
+
+  # Plugin as `SketchupExtension` instance.
   extension = SketchupExtension.new(NAME, 'material_browser/load.rb')
 
   extension.version     = VERSION
   extension.creator     = 'Samuel Tallet'
   extension.copyright   = "© 2025 #{extension.creator}"
+  extension.description = BRIEF
 
-  extension_features = [
-    TRANSLATE[
-      'Search for SketchUp materials by name from three sources: active model, SKM collections and Poly Haven.'
-    ],
-    TRANSLATE['Filter materials by type (Brick, Wood, etc).'],
-    TRANSLATE['Select material of your choice in one click.']
-  ]
-
-  extension.description = extension_features.join(' ')
-
-  Sketchup.register_extension(extension, load_at_start = true)
+  Sketchup.register_extension(extension, load_on_start = true)
   
 end
