@@ -1,8 +1,10 @@
 {
   "asphalt": "asphalt",
+  "bitumen": "asphalt",
 
   "brick": "brick",
   "bricks": "brick",
+  "klinkers": "brick",
 
   "ceramic": "ceramic",
   "ceramics": "ceramic",
@@ -14,16 +16,22 @@
   "porcelains": "ceramic",
 
   "concrete": "concrete",
+  "cement": "concrete",
+  "preconcrete": "concrete",
 
   "earth": "earth",
   "earths": "earth",
-  "clay": "earth",
-  "clays": "earth",
   "ground": "earth",
   "grounds": "earth",
+  "soil": "earth",
+  "soils": "earth",
   "mud": "earth",
   "terrain": "earth",
   "terrains": "earth",
+  "rocky": "earth",
+  "sand": "earth",
+  "sands": "earth",
+  "beach": "earth",
 
   "glass": "glass",
   "mirror": "glass",
@@ -59,6 +67,9 @@
   "titaniums": "metallic",
   "zinc": "metallic",
   "zincs": "metallic",
+  "rust": "metallic",
+  "rusty": "metallic",
+  "rusted": "metallic",
 
   "organic": "organic",
   "organics": "organic",
@@ -70,6 +81,8 @@
   "eyelashes": "organic",
   "skin": "organic",
   "skins": "organic",
+  "coral": "organic",
+  "corals": "organic",
 
   "paper": "paper",
   "papers": "paper",
@@ -84,6 +97,7 @@
 
   "plaster": "plaster",
   "plasters": "plaster",
+  "plastered": "plaster",
 
   "plastic": "plastic",
   "plastics": "plastic",
@@ -104,8 +118,6 @@
   "chalks": "stone",
   "sandstone": "stone",
   "sandstones": "stone",
-  "sand": "stone",
-  "sands": "stone",
   "caliche": "stone",
   "caliches": "stone",
   "marble": "stone",
@@ -127,11 +139,13 @@
   "gem": "stone",
   "gemstones": "stone",
   "gems": "stone",
+  "quarry": "stone",
 
   "rubber": "rubber",
   "rubbers": "rubber",
   "tire": "rubber",
   "tires": "rubber",
+  "rubberized": "rubber",
 
   "textile": "textile",
   "textiles": "textile",
@@ -148,6 +162,7 @@
   "dresses": "textile",
   "t-shirt": "textile",
   "t-shirts": "textile",
+  "jogging": "textile",
   "curtain": "textile",
   "curtains": "textile",
   "tablecloth": "textile",
@@ -160,11 +175,21 @@
   "silks": "textile",
   "hemp": "textile",
   "linen": "textile",
+  "jersey": "textile",
+  "terlenka": "textile",
+  "crepe": "textile",
+  "poplin": "textile",
+  "velour": "textile",
+  "hessian": "textile",
+  "corduroy": "textile",
+  "fleece": "textile",
+  "teddy": "textile",
 
   "tile": "tile",
   "tiles": "tile",
   "tiling": "tile",
   "tilings": "tile",
+  "tiled": "tile",
 
   "vegetation": "vegetation",
   "plant": "vegetation",
@@ -192,11 +217,13 @@
   "foliages": "vegetation",
   "petal": "vegetation",
   "petals": "vegetation",
-  "moss": "vegetation",
-  "mosses": "vegetation",
-  "mossy": "vegetation",
   "bamboo": "vegetation",
   "bamboos": "vegetation",
+  "reed": "vegetation",
+  "reeds": "vegetation",
+  "riet": "vegetation",
+  "thatch": "vegetation",
+  "roots": "vegetation",
 
   "water": "water",
   "waters": "water",
@@ -248,5 +275,7 @@
   "teaks": "wood",
   "ebony": "wood",
   "plywood": "wood",
-  "plywoods": "wood"
+  "plywoods": "wood",
+  "rosewood": "wood",
+  "sycamore": "wood"
 }

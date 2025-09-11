@@ -42,7 +42,7 @@
 "Tile"="Tuile/Carreau";
 "Unknown"="Inconnu";
 "Vegetation"="Végétation";
-"Water"="Eau";
+"Water/Snow"="Eau/Neige";
 "Wood"="Bois";
 "in model"="dans le modèle";
 "Source: SKM collections"="Source : collections SKM";

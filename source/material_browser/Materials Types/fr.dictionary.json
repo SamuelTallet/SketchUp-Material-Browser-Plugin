@@ -1,5 +1,6 @@
 {
   "asphalte": "asphalt",
+  "bitume": "asphalt",
 
   "brique": "brick",
   "briques": "brick",
@@ -21,14 +22,24 @@
 
   "béton": "concrete",
   "beton": "concrete",
+  "ciment": "concrete",
+  "prébéton": "concrete",
+  "prebeton": "concrete",
 
   "terre": "earth",
   "terres": "earth",
-  "argile": "earth",
-  "argiles": "earth",
   "sol": "earth",
   "sols": "earth",
   "boue": "earth",
+  "roche": "earth",
+  "rocher": "earth",
+  "roches": "earth",
+  "rochers": "earth",
+  "rocheux": "earth",
+  "rocailleux": "earth",
+  "sable": "earth",
+  "sables": "earth",
+  "plage": "earth",
 
   "verre": "glass",
   "miroir": "glass",
@@ -64,6 +75,8 @@
   "etains": "metallic",
   "titane": "metallic",
   "titanes": "metallic",
+  "rouille": "metallic",
+  "rouillé": "metallic",
 
   "organique": "organic",
   "organiques": "organic",
@@ -75,6 +88,8 @@
   "cils": "organic",
   "peau": "organic",
   "peaux": "organic",
+  "corail": "organic",
+  "coraux": "organic",
 
   "papier": "paper",
   "papiers": "paper",
@@ -87,16 +102,14 @@
   "platre": "plaster",
   "plâtres": "plaster",
   "platres": "plaster",
+  "plâtré": "plaster",
+  "plâtrés": "plaster",
 
   "plastique": "plastic",
   "plastiques": "plastic",
   
   "pierre": "stone",
   "pierres": "stone",
-  "roche": "stone",
-  "rocher": "stone",
-  "roches": "stone",
-  "rochers": "stone",
   "granit": "stone",
   "granits": "stone",
   "basalte": "stone",
@@ -104,8 +117,6 @@
   "calcaire": "stone",
   "calcaires": "stone",
   "craie": "stone",
-  "sable": "stone",
-  "sables": "stone",
   "marbre": "stone",
   "marbres": "stone",
   "ardoise": "stone",
@@ -119,11 +130,15 @@
   "paves": "stone",
   "gemme": "stone",
   "gemmes": "stone",
+  "carrière": "stone",
+  "carriere": "stone",
 
   "caoutchouc": "rubber",
   "caoutchoucs": "rubber",
   "pneu": "rubber",
   "pneus": "rubber",
+  "caoutchouté": "rubber",
+  "caoutchoute": "rubber",
 
   "tissu": "textile",
   "vêtement": "textile",
@@ -147,6 +162,10 @@
   "soies": "textile",
   "chanvre": "textile",
   "lin": "textile",
+  "crêpe": "textile",
+  "popeline": "textile",
+  "jute": "textile",
+  "toison": "textile",
 
   "tuile": "tile",
   "carreau": "tile",
@@ -154,6 +173,8 @@
   "carreaux": "tile",
   "carrelage": "tile",
   "carrelages": "tile",
+  "carrelé": "tile",
+  "carrele": "tile",
 
   "végétation": "vegetation",
   "plante": "vegetation",
@@ -185,12 +206,12 @@
   "petale": "vegetation",
   "pétales": "vegetation",
   "petales": "vegetation",
-  "mousse": "vegetation",
-  "mousses": "vegetation",
-  "moussue": "vegetation",
-  "moussu": "vegetation",
   "bambou": "vegetation",
   "bambous": "vegetation",
+  "roseau": "vegetation",
+  "roseaux": "vegetation",
+  "chaume": "vegetation",
+  "racines": "vegetation",
 
   "eau": "water",
   "eaux": "water",
@@ -258,5 +279,7 @@
   "contreplaqué": "wood",
   "contreplaque": "wood",
   "contreplaqués": "wood",
-  "contreplaques": "wood"
+  "contreplaques": "wood",
+  "palissandre": "wood",
+  "sycomore": "wood"
 }
