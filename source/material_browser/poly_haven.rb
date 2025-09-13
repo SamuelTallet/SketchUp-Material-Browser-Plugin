@@ -215,8 +215,11 @@ module MaterialBrowser
       unless File.exist?(diffuse_file)
         if files.dig('Diffuse', '4k', 'jpg', 'url')
           Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
+        elsif files.dig('col_01', '4k', 'jpg', 'url')
+          Download.file(files['col_01']['4k']['jpg']['url'], diffuse_file)
+          # @todo Handle all color variants?
+          # Issue: Poly Haven API doesn't provide thumbnails for all color variants.
         elsif files.dig('coll1', '4k', 'jpg', 'url')
-          # Sometime, texture variants are provided?
           Download.file(files['coll1']['4k']['jpg']['url'], diffuse_file)
         else
           raise "#{metadata[:name]} texture file is not in Poly Haven API response."
