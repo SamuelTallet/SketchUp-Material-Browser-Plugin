@@ -25,7 +25,6 @@
 "Search by name"="Rechercher par nom";
 "Filter by type..."="Filtrer par type...";
 "Asphalt"="Asphalte";
-"Brick"="Brique";
 "Ceramic"="Céramique";
 "Concrete"="Béton";
 "Earth"="Terre";
@@ -39,7 +38,6 @@
 "Rubber"="Caoutchouc";
 "Stone"="Pierre";
 "Textile"="Textile";
-"Tile"="Tuile/Carreau";
 "Unknown"="Inconnu";
 "Vegetation"="Végétation";
 "Water/Snow"="Eau/Neige";

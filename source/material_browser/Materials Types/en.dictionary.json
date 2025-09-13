@@ -2,12 +2,11 @@
   "asphalt": "asphalt",
   "bitumen": "asphalt",
 
-  "brick": "brick",
-  "bricks": "brick",
-  "klinkers": "brick",
-
   "ceramic": "ceramic",
   "ceramics": "ceramic",
+  "brick": "ceramic",
+  "bricks": "ceramic",
+  "klinkers": "ceramic",
   "pottery": "ceramic",
   "potteries": "ceramic",
   "earthenware": "ceramic",
@@ -184,12 +183,6 @@
   "corduroy": "textile",
   "fleece": "textile",
   "teddy": "textile",
-
-  "tile": "tile",
-  "tiles": "tile",
-  "tiling": "tile",
-  "tilings": "tile",
-  "tiled": "tile",
 
   "vegetation": "vegetation",
   "plant": "vegetation",

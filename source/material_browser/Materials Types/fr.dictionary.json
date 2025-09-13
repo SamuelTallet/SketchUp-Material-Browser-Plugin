@@ -2,13 +2,12 @@
   "asphalte": "asphalt",
   "bitume": "asphalt",
 
-  "brique": "brick",
-  "briques": "brick",
-
   "céramique": "ceramic",
   "ceramique": "ceramic",
   "céramiques": "ceramic",
   "ceramiques": "ceramic",
+  "brique": "ceramic",
+  "briques": "ceramic",
   "poterie": "ceramic",
   "poteries": "ceramic",
   "faïence": "ceramic",
@@ -166,15 +165,6 @@
   "popeline": "textile",
   "jute": "textile",
   "toison": "textile",
-
-  "tuile": "tile",
-  "carreau": "tile",
-  "tuiles": "tile",
-  "carreaux": "tile",
-  "carrelage": "tile",
-  "carrelages": "tile",
-  "carrelé": "tile",
-  "carrele": "tile",
 
   "végétation": "vegetation",
   "plante": "vegetation",

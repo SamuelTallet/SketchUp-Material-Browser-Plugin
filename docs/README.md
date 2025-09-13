@@ -1,6 +1,6 @@
 # Material browser free plugin for SketchUp
 
-Search for SketchUp materials by name from three sources: active model, SKM collections and Poly Haven. Filter materials by type (Brick, Wood, etc). Select material of your choice in one click.
+Search for SketchUp materials by name from three sources: active model, SKM collections and Poly Haven. Filter materials by type (Ceramic, Wood, etc). Select material of your choice in one click.
 
 Screenshots
 -----------

@@ -118,7 +118,7 @@ module MaterialBrowser
     #   - `:name` (String) - Texture name, derived from its slug.
     #   - `:meters` (Float) - Texture size, in meters.
     #   - `:thumbnail_uri` (String) - Texture thumbnail file URI.
-    #   - `:type` (String) - Material type. e.g. "brick"
+    #   - `:type` (String) - Material type. e.g. "ceramic"
     def self.textures
       @@textures
     end
