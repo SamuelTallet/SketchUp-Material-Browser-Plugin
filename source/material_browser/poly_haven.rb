@@ -91,7 +91,7 @@ module MaterialBrowser
           thumb_url = metadata['thumbnail_url']
 
           # Currently, Poly Haven's CDN forces WebP format for thumbnails.
-          # @todo Detect used image format and don't always expect WebP?
+          # @todo Detect (maybe via HTTP headers) used image format and don't always expect ".webp"?
           thumb_file = File.join(THUMBS_DIR, "#{slug}.webp")
 
           next if File.exist?(thumb_file) # We assume existing thumbnail is valid.
@@ -215,10 +215,12 @@ module MaterialBrowser
       unless File.exist?(diffuse_file)
         if files.dig('Diffuse', '4k', 'jpg', 'url')
           Download.file(files['Diffuse']['4k']['jpg']['url'], diffuse_file)
+          # A MD5 hash is provided by Poly Haven API for every texture file.
+          # @todo Check MD5 hash of downloaded file?
         elsif files.dig('col_01', '4k', 'jpg', 'url')
           Download.file(files['col_01']['4k']['jpg']['url'], diffuse_file)
-          # @todo Handle all color variants?
-          # Issue: Poly Haven API doesn't provide thumbnails for all color variants.
+          # @todo Support all colors?
+          # Issue: Poly Haven API only provides thumbnail for first color variant.
         elsif files.dig('coll1', '4k', 'jpg', 'url')
           Download.file(files['coll1']['4k']['jpg']['url'], diffuse_file)
         else
