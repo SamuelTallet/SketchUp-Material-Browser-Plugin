@@ -33,6 +33,9 @@ module MaterialBrowser
     # Absolute path to JSON file storing settings.
     JSON_FILE = File.join(__dir__, 'settings.json')
 
+    # Default zoom value.
+    DEFAULT_ZOOM_VALUE = 160
+
     # Maximum zoom value.
     MAX_ZOOM_VALUE = 256
 
@@ -47,7 +50,7 @@ module MaterialBrowser
     # Makes a `Settings` object.
     private def initialize
       @settings = {
-        'zoom_value' => 96,
+        'zoom_value' => DEFAULT_ZOOM_VALUE,
         'display_name' => false,
         'display_source' => false,
         'display_only_model' => false,
