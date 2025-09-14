@@ -45,7 +45,6 @@ input[type="checkbox"] {
 }
 
 button {
-
     border-color: transparent;
     border-radius: 5px;
 
@@ -53,8 +52,6 @@ button {
     
     background-color: var(--dark-green);
     color: black;
-    font-size: 15px;
-
 }
 
 input[type="text"],
@@ -70,8 +67,9 @@ select {
 }
 
 #settings {
-
     display: none;
+
+    min-width: 525px;
 
     position: fixed;
     left: 50%;
@@ -82,11 +80,19 @@ select {
     text-align: center;
     
     z-index: 2;
-
 }
 
 #settings.displayed {
     display: table; /* Fix blurry text bug */
+}
+
+#settings .elements {
+    display: flex;
+    gap: 10px;
+}
+
+#settings .close:hover {
+    transform: scale(1.1);
 }
 
 #loading {

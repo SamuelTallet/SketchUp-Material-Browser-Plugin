@@ -23,30 +23,36 @@
 
     <div id="settings">
 
-        <input
-            type="checkbox"
-            class="display-name clickable"
-            <%= Settings.current.display_name? ? 'checked' : '' %>
-        />
-        <%= TRANSLATE['Display materials name'] %>
-
-        <input
-            type="checkbox"
-            class="display-source clickable"
-            <%= Settings.current.display_source? ? 'checked' : '' %>
-        />
-        <%= TRANSLATE['Display materials source'] %>
-
-        <br />
-
-        <input
-            type="checkbox"
-            class="display-only-model clickable"
-            <%= Settings.current.display_only_model? ? 'checked' : '' %>
-        />
-        <%= TRANSLATE['Display only model materials'] %>
-        
-        <button class="close clickable"><%= TRANSLATE['OK'] %></button>
+        <div class="elements">
+            <div class="field">
+                <input
+                    type="checkbox"
+                    class="display-name clickable"
+                    <%= Settings.current.display_name? ? 'checked' : '' %>
+                />
+                <%= TRANSLATE['Display the name of the materials'] %>
+            </div>
+    
+            <div class="field">
+                <input
+                    type="checkbox"
+                    class="display-source clickable"
+                    <%= Settings.current.display_source? ? 'checked' : '' %>
+                />
+                <%= TRANSLATE['Display the source of the materials'] %>
+            </div>
+    
+            <div class="field">
+                <input
+                    type="checkbox"
+                    class="display-only-model clickable"
+                    <%= Settings.current.display_only_model? ? 'checked' : '' %>
+                />
+                <%= TRANSLATE['Display only In Model materials'] %>
+            </div>        
+            
+            <button class="close clickable"><%= TRANSLATE['OK'] %></button>
+        </div>
 
     </div>
 

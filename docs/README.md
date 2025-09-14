@@ -23,7 +23,7 @@ Help/FAQ
 
 ### Materials list is too long. What can I do?
 
-In Material Browser, click on eye icon then check "Display only model materials".
+In Material Browser, click on eye icon then check "Display only In Model materials".
 
 Thanks
 ------
