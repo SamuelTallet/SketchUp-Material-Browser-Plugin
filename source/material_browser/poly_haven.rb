@@ -222,6 +222,8 @@ module MaterialBrowser
           Download.file(files['col_01']['4k']['jpg']['url'], diffuse_file)
           # @todo Support all colors?
           # Issue: Poly Haven API only provides thumbnail for first color variant.
+        elsif files.dig('col_1', '4k', 'jpg', 'url')
+          Download.file(files['col_1']['4k']['jpg']['url'], diffuse_file)
         elsif files.dig('coll1', '4k', 'jpg', 'url')
           Download.file(files['coll1']['4k']['jpg']['url'], diffuse_file)
         else
