@@ -87,10 +87,13 @@ module MaterialBrowser
           materials_thumbnails_path, material_thumbnail_basename
         )
 
-        material_thumbnail_size = 256
-
         # Assumes a color by default.
+        # For a color, thumbnail size doesn't matter ; it'll be stretched anyway.
+        # See: `addEventListeners()` in *user-interface.js*.
+        material_thumbnail_size = 16
+
         unless material.texture.nil?
+          material_thumbnail_size = 256
 
           material_texture_size = [
             material.texture.image_height, material.texture.image_width
@@ -100,7 +103,6 @@ module MaterialBrowser
           if material_texture_size <= 256
             material_thumbnail_size = material_texture_size - 1
           end
-
         end
 
         # Note this method overwrites files having same name.
