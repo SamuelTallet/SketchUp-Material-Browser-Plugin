@@ -30,8 +30,11 @@ module MaterialBrowser
   # User-defined settings.
   class Settings
 
-    # Absolute path to "./settings.json".
+    # Absolute path to JSON file storing settings.
     JSON_FILE = File.join(__dir__, 'settings.json')
+
+    # Maximum zoom value.
+    MAX_ZOOM_VALUE = 256
 
     # Singleton instance.
     @instance = nil
@@ -70,11 +73,11 @@ module MaterialBrowser
     # @raise [ArgumentError]
     def zoom_value=(zoom_value)
 
-      raise ArgumentError, 'Zoom value must be an Integer.'\
-        unless zoom_value.is_a?(Integer)
+      raise ArgumentError, 'Zoom value must be a strictly positive Integer.'\
+        unless zoom_value.is_a?(Integer) and zoom_value > 0
 
-      raise ArgumentError, 'Zoom value must be strictly positive.'\
-        unless zoom_value > 0
+      raise ArgumentError, "Zoom value must not exceed #{MAX_ZOOM_VALUE}."\
+        unless zoom_value <= MAX_ZOOM_VALUE
 
       @settings['zoom_value'] = zoom_value
     end

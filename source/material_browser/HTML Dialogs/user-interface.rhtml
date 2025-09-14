@@ -193,7 +193,7 @@ xmlns="http://www.w3.org/2000/svg">
 
                     <input type="range" class="slider"
                         value="<%= Settings.current.zoom_value %>"
-                        min="64" max="256" step="8"
+                        min="64" max="<%= Settings::MAX_ZOOM_VALUE %>" step="8"
                     />
                     
                     <img

@@ -22,6 +22,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'fileutils'
 require 'sketchup'
+require 'material_browser/settings'
 require 'material_browser/path'
 require 'material_browser/words'
 require 'material_browser/materials_types'
@@ -87,20 +88,22 @@ module MaterialBrowser
           materials_thumbnails_path, material_thumbnail_basename
         )
 
-        # Assumes a color by default.
-        # For a color, thumbnail size doesn't matter ; it'll be stretched anyway.
+        # Material thumbnail size, assuming a color by default.
+        # For a color, thumbnail size doesn't matter...
+        # All thumbnails are stretched to current zoom value at UI load.
         # See: `addEventListeners()` in *user-interface.js*.
         material_thumbnail_size = 16
 
         unless material.texture.nil?
-          material_thumbnail_size = 256
+          # No reason to generate a thumbnail larger than max zoom value.
+          material_thumbnail_size = Settings::MAX_ZOOM_VALUE
 
+          # Material thumbnail size can't exceed texture size.
           material_texture_size = [
             material.texture.image_height, material.texture.image_width
           ].min
   
-          # Material thumbnail size can't exceed texture size.
-          if material_texture_size <= 256
+          if material_texture_size <= Settings::MAX_ZOOM_VALUE
             material_thumbnail_size = material_texture_size - 1
           end
         end

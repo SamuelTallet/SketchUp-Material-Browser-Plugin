@@ -88,6 +88,7 @@ module MaterialBrowser
 
           # @type [String]
           # Example: https://cdn.polyhaven.com/asset_img/thumbs/mud_forest.png?width=256&height=256
+          # Currently, Poly Haven's thumbnail is 256px by default, matching plugin UI max zoom value.
           thumb_url = metadata['thumbnail_url']
 
           # Currently, Poly Haven's CDN forces WebP format for thumbnails.
