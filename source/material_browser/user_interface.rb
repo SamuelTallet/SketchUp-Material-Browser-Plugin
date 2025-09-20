@@ -93,6 +93,7 @@ module MaterialBrowser
       if @@is_open
         raise 'HTML Dialog instance is missing.' if @@html_dialog.nil?
 
+        # @todo Reload only affected items.
         @@html_dialog.set_html(html)
 
         return true
@@ -176,21 +177,20 @@ module MaterialBrowser
       end
 
       @html_dialog.add_action_callback('setDisplayOnlyModel') do |_ctx, display_only_model|
-
         Settings.current.display_only_model = display_only_model
 
         self.class.reload
-
       end
 
       @html_dialog.add_action_callback('setCustomSKMPath') do |_ctx|
+        dir_selected = UI.select_directory
 
-        Settings.current.custom_skm_path = UI.select_directory.to_s
+        if dir_selected.is_a?(String)
+          Settings.current.custom_skm_path = dir_selected
+          SKM.extract_thumbnails
 
-        SKM.extract_thumbnails
-
-        self.class.reload
-
+          self.class.reload
+        end
       end
 
       @html_dialog.add_action_callback('setTypeFilterValue') do |_ctx, type_filter_value|
