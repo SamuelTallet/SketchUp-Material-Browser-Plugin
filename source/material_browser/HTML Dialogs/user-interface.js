@@ -95,10 +95,9 @@ MaterialBrowser.hideSettingsOverlay = () => {
 }
 
 /**
- * Adds event listeners.
+ * Adds zoom slider change event listener.
  */
-MaterialBrowser.addEventListeners = () => {
-
+MaterialBrowser.listenZoomChange = () => {
     document.querySelector('.zoom .slider').addEventListener('change', event => {
 
         let materialThumbnails = document.querySelectorAll('.material .thumbnail')
@@ -113,8 +112,14 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
+    // Required to initialize UI.
     document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
+}
 
+/**
+ * Adds zoom in button click event listener.
+ */
+MaterialBrowser.listenZoomInClick = () => {
     document.querySelector('.zoom .in.icon').addEventListener('click', _event => {
 
         let zoomSlider = document.querySelector('.zoom .slider')
@@ -130,7 +135,12 @@ MaterialBrowser.addEventListeners = () => {
         zoomSlider.dispatchEvent(new Event('change'))
 
     })
+}
 
+/**
+ * Adds zoom out button click event listener.
+ */
+MaterialBrowser.listenZoomOutClick = () => {
     document.querySelector('.zoom .out.icon').addEventListener('click', event => {
 
         let zoomSlider = document.querySelector('.zoom .slider')
@@ -146,11 +156,21 @@ MaterialBrowser.addEventListeners = () => {
         zoomSlider.dispatchEvent(new Event('change'))
 
     })
+}
 
+/**
+ * Adds eye icon click event listener (shows settings overlay).
+ */
+MaterialBrowser.listenEyeClick = () => {
     document.querySelector('.eye.icon').addEventListener('click', _event => {
         MaterialBrowser.showSettingsOverlay()
     })
+}
 
+/**
+ * Adds display name checkbox change event listener.
+ */
+MaterialBrowser.listenDisplayNameChange = () => {
     document.querySelector('.display-name').addEventListener('change', event => {
 
         let displayName = event.currentTarget.checked
@@ -176,8 +196,14 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
+    // Required to initialize UI.
     document.querySelector('.display-name').dispatchEvent(new Event('change'))
+}
 
+/**
+ * Adds display source checkbox change event listener.
+ */
+MaterialBrowser.listenDisplaySourceChange = () => {
     document.querySelector('.display-source').addEventListener('change', event => {
 
         let displaySource = event.currentTarget.checked
@@ -203,27 +229,53 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
+    // Required to initialize UI.
     document.querySelector('.display-source').dispatchEvent(new Event('change'))
+}
 
+/**
+ * Adds display only model checkbox change event listener.
+ */
+MaterialBrowser.listenDisplayOnlyModelChange = () => {
     document.querySelector('.display-only-model').addEventListener('change', event => {
 
         MaterialBrowser.hideSettingsOverlay()
         sketchup.setDisplayOnlyModel(event.currentTarget.checked)
 
     })
+}
 
+/**
+ * Adds settings close button click event listener.
+ */
+MaterialBrowser.listenSettingsClose = () => {
     document.querySelector('#settings .close').addEventListener('click', _event => {
         MaterialBrowser.hideSettingsOverlay()
     })
+}
 
+/**
+ * Adds SKM folder icon click event listener.
+ */
+MaterialBrowser.listenSKMFolderClick = () => {
     document.querySelector('.skm-folder.icon').addEventListener('click', _event => {
         sketchup.setCustomSKMPath()
     })
+}
 
+/**
+ * Adds help icon click event listener.
+ */
+MaterialBrowser.listenHelpClick = () => {
     document.querySelector('.help.icon').addEventListener('click', _event => {
         sketchup.openURL(MaterialBrowser.HELP_URL)
     })
+}
 
+/**
+ * Adds heart icon click event listener (donation).
+ */
+MaterialBrowser.listenHeartClick = () => {
     document.querySelector('.heart.icon').addEventListener('click', _event => {
         fetch(MaterialBrowser.DONATE_URL)
             .then(response => response.text())
@@ -235,7 +287,12 @@ MaterialBrowser.addEventListeners = () => {
                 sketchup.openURL(MaterialBrowser.DONATE_URL_FALLBACK)
             })
     })
+}
 
+/**
+ * Adds filter by type dropdown change event listener.
+ */
+MaterialBrowser.listenFilterByTypeChange = () => {
     document.querySelector('.filter-by-type').addEventListener('change', event => {
 
         let typeFilterValue = event.currentTarget.value
@@ -271,8 +328,14 @@ MaterialBrowser.addEventListeners = () => {
 
     })
 
+    // Required to initialize UI.
     document.querySelector('.filter-by-type').dispatchEvent(new Event('change'))
+}
 
+/**
+ * Adds model material thumbnail click event listeners.
+ */
+MaterialBrowser.listenModelMaterialClicks = () => {
     document.querySelectorAll('.model-material.thumbnail').forEach(modelMaterialThumbnail => {
         
         modelMaterialThumbnail.addEventListener('click', event => {
@@ -280,7 +343,12 @@ MaterialBrowser.addEventListeners = () => {
         })
 
     })
+}
 
+/**
+ * Adds SKM file thumbnail click event listeners.
+ */
+MaterialBrowser.listenSKMFileClicks = () => {
     document.querySelectorAll('.skm-file.thumbnail').forEach(skmFileThumbnail => {
         
         skmFileThumbnail.addEventListener('click', event => {
@@ -288,7 +356,12 @@ MaterialBrowser.addEventListeners = () => {
         })
 
     })
+}
 
+/**
+ * Adds PolyHaven texture thumbnail click event listeners.
+ */
+MaterialBrowser.listenPolyHavenTextureClicks = () => {
     document.querySelectorAll('.ph-texture.thumbnail').forEach(phTextureThumbnail => {
         
         phTextureThumbnail.addEventListener('click', event => {
@@ -296,12 +369,23 @@ MaterialBrowser.addEventListeners = () => {
         })
 
     })
+}
 
-    // In case backend crashes, we provide user a way to hide loading screen manually.
+/**
+ * Adds loading screen click event listener.
+ *
+ * In case backend crashes, we provide user a way to hide loading screen.
+ */
+MaterialBrowser.listenLoadingScreenClick = () => {
     document.querySelector('#loading').addEventListener('click', _event => {
         MaterialBrowser.hideLoadingScreen()
     })
+}
 
+/**
+ * Adds source logo click event listeners.
+ */
+MaterialBrowser.listenSourceLogoClicks = () => {
     document.querySelectorAll('.material .source-logo').forEach(materialSourceLogo => {
 
         if ( materialSourceLogo.hasAttribute('data-source-url') ) {
@@ -311,6 +395,35 @@ MaterialBrowser.addEventListeners = () => {
         }
 
     })
+}
+
+/**
+ * Adds event listeners.
+ */
+MaterialBrowser.addEventListeners = () => {
+
+    MaterialBrowser.listenZoomChange()
+    MaterialBrowser.listenZoomInClick()
+    MaterialBrowser.listenZoomOutClick()
+
+    MaterialBrowser.listenEyeClick()
+    MaterialBrowser.listenDisplayNameChange()
+    MaterialBrowser.listenDisplaySourceChange()
+    MaterialBrowser.listenDisplayOnlyModelChange()
+    MaterialBrowser.listenSettingsClose()
+
+    MaterialBrowser.listenSKMFolderClick()
+    MaterialBrowser.listenHelpClick()
+    MaterialBrowser.listenHeartClick()
+
+    MaterialBrowser.listenFilterByTypeChange()
+
+    MaterialBrowser.listenModelMaterialClicks()
+    MaterialBrowser.listenSKMFileClicks()
+    MaterialBrowser.listenPolyHavenTextureClicks()
+    MaterialBrowser.listenLoadingScreenClick()
+
+    MaterialBrowser.listenSourceLogoClicks()
 
 }
 
