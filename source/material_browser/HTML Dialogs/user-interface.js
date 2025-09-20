@@ -159,7 +159,7 @@ MaterialBrowser.listenZoomOutClick = () => {
 }
 
 /**
- * Adds eye icon click event listener (shows settings overlay).
+ * Adds eye icon click event listener.
  */
 MaterialBrowser.listenEyeClick = () => {
     document.querySelector('.eye.icon').addEventListener('click', _event => {
@@ -273,7 +273,7 @@ MaterialBrowser.listenHelpClick = () => {
 }
 
 /**
- * Adds heart icon click event listener (donation).
+ * Adds heart icon click event listener.
  */
 MaterialBrowser.listenHeartClick = () => {
     document.querySelector('.heart.icon').addEventListener('click', _event => {
@@ -431,8 +431,16 @@ MaterialBrowser.addEventListeners = () => {
 document.addEventListener('DOMContentLoaded', _event => {
 
     // Make material list searchable
-    new List('materials', options = {
+    const list = new List('materials', options = {
         valueNames: ['name'] // by name.
+    })
+
+    MaterialBrowser.addEventListeners()
+
+    list.on('searchComplete', _event => {
+        // Fix "thumbnail size desync" issue when user:
+        // searches a material then changes thumbnail size then searches again.
+        document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
     })
 
     // Enable only tooltip on icons with title attribute.
@@ -441,7 +449,5 @@ document.addEventListener('DOMContentLoaded', _event => {
         element: '.icon[title]',
         position: 'right',
     })
-
-    MaterialBrowser.addEventListeners()
 
 })
