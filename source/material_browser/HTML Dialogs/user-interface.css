@@ -83,12 +83,15 @@ select {
 }
 
 #settings.displayed {
-    display: table; /* Fix blurry text bug */
+    display: block;
 }
 
 #settings .elements {
     display: flex;
-    gap: 10px;
+}
+
+#settings .field {
+    margin-right: 10px;
 }
 
 #settings .close:hover {
