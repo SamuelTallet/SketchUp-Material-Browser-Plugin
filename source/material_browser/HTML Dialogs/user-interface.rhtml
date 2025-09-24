@@ -11,10 +11,9 @@
 	<title><%= NAME %></title>
 
 	<%= scripts['libraries/list.js'] %>
-	<%= scripts['libraries/drooltip.js'] %>
 	<%= scripts['user-interface.js'] %>
 
-	<%= styles['libraries/drooltip.css'] %>
+	<%= styles['libraries/tip.css'] %>
 	<%= styles['user-interface.css'] %>
 
 </head>
@@ -191,48 +190,54 @@ xmlns="http://www.w3.org/2000/svg">
 
                 <div class="zoom">
 
-                    <img
-                        class="in icon clickable"
-                        src="<%= img_uri('zoom-in-icon.svg') %>"
-                        title="<%= TRANSLATE['Enlarge materials thumbs'] %>"
-                    />
+                    <div class="tip-right tip-bounce tip-brown" aria-label="<%= TRANSLATE['Enlarge materials thumbs'] %>">
+                        <img
+                            class="in icon clickable"
+                            src="<%= img_uri('zoom-in-icon.svg') %>"
+                        />
+                    </div>
 
                     <input type="range" class="slider"
                         value="<%= Settings.current.zoom_value %>"
                         min="64" max="<%= Settings::MAX_ZOOM_VALUE %>" step="8"
                     />
                     
-                    <img
-                        class="out icon clickable"
-                        src="<%= img_uri('zoom-out-icon.svg') %>"
-                        title="<%= TRANSLATE['Reduce materials thumbs'] %>"
-                    />
+                    <div class="tip-right tip-bounce tip-orange" aria-label="<%= TRANSLATE['Reduce materials thumbs'] %>">
+                        <img
+                            class="out icon clickable"
+                            src="<%= img_uri('zoom-out-icon.svg') %>"
+                        />
+                    </div>
 
                 </div>
 
-                <img
-                    class="eye icon clickable"
-                    src="<%= img_uri('eye-icon.svg') %>"
-                    title="<%= TRANSLATE['Choose items to display'] %>"
-                />
+                <div class="tip-right tip-bounce tip-dark-green" aria-label="<%= TRANSLATE['Choose items to display'] %>">
+                    <img
+                        class="eye icon clickable"
+                        src="<%= img_uri('eye-icon.svg') %>"
+                    />
+                </div>
 
-                <img
-                    class="skm-folder icon clickable"
-                    src="<%= img_uri('skm-folder-icon.svg') %>"
-                    title="<%= TRANSLATE['Use a custom SKM folder'] %>"
-                />
+                <div class="tip-right tip-bounce tip-light-blue" aria-label="<%= TRANSLATE['Use a custom SKM folder'] %>">
+                    <img
+                        class="skm-folder icon clickable"
+                        src="<%= img_uri('skm-folder-icon.svg') %>"
+                    />
+                </div>
 
-                <img
-                    class="help icon clickable"
-                    src="<%= img_uri('help-icon.svg') %>"
-                    title="<%= TRANSLATE['Access plugin help/FAQ'] %>"
-                />
+                <div class="tip-right tip-bounce tip-dark-blue" aria-label="<%= TRANSLATE['Access plugin help/FAQ'] %>">
+                    <img
+                        class="help icon clickable"
+                        src="<%= img_uri('help-icon.svg') %>"
+                    />
+                </div>
 
-                <img
-                    class="heart icon clickable"
-                    src="<%= img_uri('heart-icon.svg') %>"
-                    title="<%= TRANSLATE['Encourage plugin author'] %>"
-                />
+                <div class="tip-right tip-bounce tip-purple" aria-label="<%= TRANSLATE['Encourage plugin author'] %>">
+                    <img
+                        class="heart icon clickable"
+                        src="<%= img_uri('heart-icon.svg') %>"
+                    />
+                </div>
 
             </div>
 

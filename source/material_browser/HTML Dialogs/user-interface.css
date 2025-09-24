@@ -19,6 +19,37 @@
     --light-green: #9BCB63;
 }
 
+.tip-brown {
+    --tip-bg-color: var(--brown);
+}
+
+.tip-orange {
+    --tip-bg-color: var(--orange);
+    --tip-text-color: black;
+}
+
+.tip-dark-green {
+    --tip-bg-color: var(--dark-green);
+    --tip-text-color: black;
+}
+
+.tip-light-blue {
+    --tip-bg-color: var(--light-blue);
+    --tip-text-color: black;
+}
+
+.tip-dark-blue {
+    --tip-bg-color: var(--dark-blue);
+}
+
+.tip-purple {
+    --tip-bg-color: var(--purple);
+}
+
+.tip-light-green {
+    --tip-bg-color: var(--light-green);
+}
+
 .clickable {
     cursor: pointer;
 }
@@ -79,7 +110,7 @@ select {
     font-size: 15px;
     text-align: center;
     
-    z-index: 2;
+    z-index: 10;
 }
 
 #settings.displayed {
@@ -110,7 +141,7 @@ select {
     top: 50%;
     transform: translate(-50%, -50%);
 
-    z-index: 2;
+    z-index: 10;
 
 }
 
@@ -154,8 +185,7 @@ select {
 
     margin-top: 10px;
 
-    z-index: 1;
-
+    z-index: 5;
 }
 
 #toolbar .icon {
@@ -173,63 +203,6 @@ select {
     transform: scale(1.1);
 }
 
-/* Toolbar icon tooltip */
-[data-identifiers^=".icon[title]"] {
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
-[data-identifiers^=".icon[title]"] {
-    border-radius: 5px;
-}
-
-[data-identifiers=".icon[title]_0"],
-[data-identifiers=".icon[title]_0"] .bg {
-    color: var(--brown) !important;
-    background: var(--brown) !important;
-}
-
-[data-identifiers=".icon[title]_1"],
-[data-identifiers=".icon[title]_1"] .bg {
-    color: var(--orange) !important;
-    background: var(--orange) !important;
-}
-
-[data-identifiers=".icon[title]_2"],
-[data-identifiers=".icon[title]_2"] .bg {
-    color: var(--dark-green) !important;
-    background: var(--dark-green) !important;
-}
-
-[data-identifiers=".icon[title]_3"],
-[data-identifiers=".icon[title]_3"] .bg {
-    color: var(--light-blue) !important;
-    background: var(--light-blue) !important;
-}
-
-[data-identifiers=".icon[title]_4"],
-[data-identifiers=".icon[title]_4"] .bg {
-    color: var(--dark-blue) !important;
-    background: var(--dark-blue) !important;
-}
-
-[data-identifiers=".icon[title]_5"],
-[data-identifiers=".icon[title]_5"] .bg {
-    color: var(--purple) !important;
-    background: var(--purple) !important;
-}
-
-[data-identifiers^=".icon[title]"] .content {
-    color: black !important;
-    font-size: 15px;
-}
-
-[data-identifiers=".icon[title]_0"] .content,
-[data-identifiers=".icon[title]_4"] .content,
-[data-identifiers=".icon[title]_5"] .content {
-    color: white !important;
-}
-
 #toolbar .vertical {
 
     position: absolute;
@@ -243,28 +216,21 @@ select {
 
 }
 
-#toolbar .zoom {
-    overflow: hidden;
-}
-
 #toolbar .zoom .icon {
     margin-top: 0;
 }
 
 #toolbar .zoom .slider {
-
-    position: relative;
-    left: -55px;
-    top: 0;
-
     height: 120px;
+
+    max-width: 10px;
+    margin-left: -6px;
 
     -webkit-appearance: slider-vertical; /* For Chrome 52 (SketchUp 2017) */
     appearance: slider-vertical;
 
     cursor: -webkit-grab; /* For Chrome 52 (SketchUp 2017) */
     cursor: grab;
-
 }
 
 #toolbar .search {

@@ -73,11 +73,10 @@ module MaterialBrowser
         document: 'user-interface.rhtml',
         scripts: [
           'libraries/list.js',
-          'libraries/drooltip.js',
           'user-interface.js'
         ],
         styles: [
-          'libraries/drooltip.css',
+          'libraries/tip.css',
           'user-interface.css'
         ]
   

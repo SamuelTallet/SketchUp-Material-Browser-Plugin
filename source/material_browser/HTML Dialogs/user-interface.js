@@ -443,11 +443,4 @@ document.addEventListener('DOMContentLoaded', _event => {
         document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
     })
 
-    // Enable only tooltip on icons with title attribute.
-    // FIXME: On thumbnails titles, it slowdowns UI a lot.
-    new Drooltip({
-        element: '.icon[title]',
-        position: 'right',
-    })
-
 })

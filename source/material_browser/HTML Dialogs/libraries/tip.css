@@ -1,0 +1,215 @@
+/**
+ * Tip.css, a pure CSS tooltip library.
+ * Inspired by Drooltip.js and Hint.css
+ *
+ * Version: .9
+ *
+ * Copyright: (c) 2025 Samuel Tallet
+ *
+ * Licence: MIT
+ */
+
+/* Core */
+
+.tip,
+.tip-top,
+.tip-bottom,
+.tip-left,
+.tip-right {
+    position: relative;
+    max-width: fit-content;
+
+    --tip-distance: 3px;
+
+    --tip-bg-color: #2175ff;
+    --tip-text-color: white;
+
+    --tip-animation: none;
+}
+
+.tip::after,
+.tip-top::after,
+.tip-bottom::after,
+.tip-left::after,
+.tip-right::after {
+    position: absolute;
+
+    padding: 5px 20px;
+
+    display: none;
+    z-index: 999999;
+
+    border-radius: 3px;
+    box-shadow: 0 1px 42px -3px rgba(0, 0, 0, .3);
+
+    content: attr(aria-label);
+    white-space: nowrap;
+
+    background: var(--tip-bg-color);
+    color: var(--tip-text-color);
+}
+
+.tip::before,
+.tip-top::before,
+.tip-bottom::before,
+.tip-left::before,
+.tip-right::before {
+    position: absolute;
+
+    border: 6px solid transparent;
+    display: none;
+
+    content: '';
+
+    z-index: 1000000;
+}
+
+.tip::after,
+.tip-top::after,
+.tip-bottom::after,
+.tip::before,
+.tip-top::before,
+.tip-bottom::before {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tip-left::after,
+.tip-right::after,
+.tip-left::before,
+.tip-right::before {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tip::after,
+.tip-top::after {
+    bottom: 100%;
+    margin-bottom: calc(5px + var(--tip-distance));
+}
+
+.tip-bottom::after {
+    top: 100%;
+    margin-top: calc(5px + var(--tip-distance));
+}
+
+.tip-left::after {
+    right: 100%;
+    margin-right: calc(5px + var(--tip-distance));
+}
+
+.tip-right::after {
+    left: 100%;
+    margin-left: calc(5px + var(--tip-distance));
+}
+
+.tip::before,
+.tip-top::before {
+    bottom: calc(100% + var(--tip-distance) - 5px);
+    border-top-color: var(--tip-bg-color);
+}
+
+.tip-bottom::before {
+    top: calc(100% + var(--tip-distance) - 5px);
+    border-bottom-color: var(--tip-bg-color);
+}
+
+.tip-left::before {
+    right: calc(100% + var(--tip-distance) - 5px);
+    border-left-color: var(--tip-bg-color);
+}
+
+.tip-right::before {
+    left: calc(100% + var(--tip-distance) - 5px);
+    border-right-color: var(--tip-bg-color);
+}
+
+.tip:hover::after,
+.tip-top:hover::after,
+.tip-bottom:hover::after,
+.tip:hover::before,
+.tip-top:hover::before,
+.tip-bottom:hover::before {
+    display: block;
+    animation: var(--tip-animation);
+    --tip-translate: translateX(-50%);
+}
+
+.tip-left:hover::after,
+.tip-right:hover::after,
+.tip-left:hover::before,
+.tip-right:hover::before {
+    display: block;
+    animation: var(--tip-animation);
+    --tip-translate: translateY(-50%);
+}
+
+/* Anims */
+
+@keyframes tip-bounce {
+    0% {
+        transform: var(--tip-translate) scale(0);
+    }
+
+    50% {
+        transform: var(--tip-translate) scale(1.1);
+    }
+
+    100% {
+        transform: var(--tip-translate) scale(1);
+    }
+}
+
+.tip-bounce {
+    --tip-animation: tip-bounce .5s;
+}
+
+@keyframes tip-fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.tip-fade {
+    --tip-animation: tip-fade .7s;
+}
+
+@keyframes tip-floating {
+    0% {
+        transform: var(--tip-translate) translateY(0);
+    }
+
+    50% {
+        transform: var(--tip-translate) translateY(10px);
+    }
+
+    100% {
+        transform: var(--tip-translate) translateY(0);
+    }
+}
+
+.tip-floating {
+    --tip-animation: tip-floating 2.8s infinite;
+}
+
+@keyframes tip-sliding {
+    0% {
+        transform: var(--tip-translate) translateX(0);
+    }
+
+    50% {
+        transform: var(--tip-translate) translateX(10px);
+    }
+
+    100% {
+        transform: var(--tip-translate) translateX(0);
+    }
+}
+
+.tip-sliding {
+    --tip-animation: tip-sliding 2.8s infinite;
+}
