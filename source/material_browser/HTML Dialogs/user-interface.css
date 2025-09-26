@@ -17,6 +17,7 @@
     --dark-blue: #3884C3;
     --purple: #6F4994;
     --light-green: #9BCB63;
+    --dark-gray: #2D3843;
 }
 
 .tip-brown {
@@ -48,6 +49,15 @@
 
 .tip-light-green {
     --tip-bg-color: var(--light-green);
+    --tip-text-color: black;
+}
+
+.tip-dark-gray {
+    --tip-bg-color: var(--dark-gray);
+}
+
+.tip-black {
+    --tip-bg-color: black;
 }
 
 .clickable {
@@ -256,8 +266,6 @@ select {
 
     margin-right: 6px;
 
-    overflow: hidden;
-
 }
 
 .material .source-logo {
@@ -287,7 +295,7 @@ select {
 
     width: 100%;
 
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, .7);
     color: white;
 
     text-align: center;

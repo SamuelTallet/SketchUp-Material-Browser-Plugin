@@ -369,7 +369,6 @@ xmlns="http://www.w3.org/2000/svg">
                     src="<%= model_material[:thumbnail_uri] %>"
                     width="0"
                     height="0"
-                    title="<%= model_material[:display_name] %> <%= TRANSLATE['in model'] %>"
                     data-name="<%= model_material[:name] %>"
                 />
 
@@ -390,18 +389,18 @@ xmlns="http://www.w3.org/2000/svg">
                 data-type="<%= skm_file[:type] %>"
             >
 
-                <img
-                    class="source-logo"
-                    src="<%= img_uri('sketchup-logo.svg') %>"
-                    title="<%= TRANSLATE['Source: SKM collections'] %>"
-                />
+                <div class="tip tip-bounce tip-light-green" aria-label="SKM">
+                    <img
+                        class="source-logo"
+                        src="<%= img_uri('sketchup-logo.svg') %>"
+                    />
+                </div>
 
                 <img
                     class="skm-file thumbnail clickable"
                     src="<%= skm_file[:thumbnail_uri] %>"
                     width="0"
                     height="0"
-                    title="<%= skm_file[:display_name] %>"
                     data-path="<%= skm_file[:path] %>"
                 />
 
@@ -424,19 +423,19 @@ xmlns="http://www.w3.org/2000/svg">
                 data-type="<%= ph_texture[:type] %>"
             >
 
-                <img
-                    class="source-logo clickable"
-                    src="<%= img_uri('poly-haven-logo.svg') %>"
-                    title="<%= TRANSLATE['See on Poly Haven'] %>"
-                    data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
-                />
+                <div class="tip tip-bounce tip-light-green" aria-label="Poly Haven">
+                    <img
+                        class="source-logo clickable"
+                        src="<%= img_uri('poly-haven-logo.svg') %>"
+                        data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
+                    />
+                </div>
 
                 <img
                     class="ph-texture thumbnail clickable"
                     src="<%= ph_texture[:thumbnail_uri] %>"
                     width="0"
                     height="0"
-                    title="<%= ph_texture[:name] %>"
                     data-slug="<%= ph_texture[:slug] %>"
                 />
 

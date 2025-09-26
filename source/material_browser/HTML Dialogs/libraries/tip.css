@@ -23,6 +23,7 @@
 
     --tip-bg-color: #2175ff;
     --tip-text-color: white;
+    --tip-white-space: nowrap;
 
     --tip-animation: none;
 }
@@ -58,7 +59,7 @@
     box-shadow: 0 1px 42px -3px rgba(0, 0, 0, .3);
 
     content: attr(aria-label);
-    white-space: nowrap;
+    white-space: var(--tip-white-space);
 
     background: var(--tip-bg-color);
     color: var(--tip-text-color);
@@ -160,6 +161,17 @@
 .tip-right:hover::after {
     display: block;
     animation: var(--tip-animation);
+}
+
+/* Options */
+
+.tip-wrap {
+    --tip-white-space: wrap;
+}
+
+.tip-hidden:hover::before,
+.tip-hidden:hover::after {
+    display: none;
 }
 
 /* Anims */
