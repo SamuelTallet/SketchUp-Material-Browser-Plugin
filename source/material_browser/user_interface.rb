@@ -207,11 +207,17 @@ module MaterialBrowser
       @html_dialog.add_action_callback('selectPolyHavenTexture') do |_ctx, ph_texture_slug|
         begin
           show_loading_screen
+          # FIXME: Loading screen doesn't last on SketchUp 2017.
+          if Sketchup.version.to_i == 17
+            Sketchup.status_text = "#{NAME} - #{TRANSLATE['Texture loading...']}"
+          end
+
           PolyHaven.select_texture(ph_texture_slug)
         rescue => error
           Errors.display("Can't select texture", cause: error)
         ensure
           hide_loading_screen
+          Sketchup.status_text = nil if Sketchup.version.to_i == 17
         end
       end
 
