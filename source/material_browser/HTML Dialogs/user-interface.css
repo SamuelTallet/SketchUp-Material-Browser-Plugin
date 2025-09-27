@@ -268,6 +268,15 @@ select {
 
 }
 
+.material .tip {
+    --tip-distance: 2px;
+}
+
+.material .tip::before {
+    left: 21px;
+    right: auto;
+}
+
 .material .source-logo {
 
     display: none;
@@ -302,6 +311,7 @@ select {
 
 }
 
+.material:hover .name,
 .material .name.displayed {
     display: block;
 }

@@ -12,8 +12,8 @@
 "Search for materials by name and filter them by type, with extra extra large thumbnails."="Recherchez des matériaux par nom et filtrez-les par type, avec des vignettes supergéantes.";
 
 "Texture loading..."="Chargement de la texture...";
-"Display the name of the materials"="Afficher le nom des matériaux";
-"Display the source of the materials"="Afficher la source des matériaux";
+"Display the name of all materials"="Afficher le nom de tous les matériaux";
+"Display their source"="Afficher leur source";
 "Display only In Model materials"="Afficher uniquement les matériaux du modèle";
 "OK"="OK";
 "Enlarge materials thumbs"="Agrandir les vignettes des matériaux";
@@ -42,3 +42,4 @@
 "Vegetation"="Végétation";
 "Water/Snow"="Eau/Neige";
 "Wood"="Bois";
+"SKM folder"="Dossier SKM";

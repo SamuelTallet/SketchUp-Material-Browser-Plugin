@@ -29,7 +29,7 @@
                     class="display-name clickable"
                     <%= Settings.current.display_name? ? 'checked' : '' %>
                 />
-                <%= TRANSLATE['Display the name of the materials'] %>
+                <%= TRANSLATE['Display the name of all materials'] %>
             </div>
     
             <div class="field">
@@ -38,7 +38,7 @@
                     class="display-source clickable"
                     <%= Settings.current.display_source? ? 'checked' : '' %>
                 />
-                <%= TRANSLATE['Display the source of the materials'] %>
+                <%= TRANSLATE['Display their source'] %>
             </div>
     
             <div class="field">
@@ -389,7 +389,7 @@ xmlns="http://www.w3.org/2000/svg">
                 data-type="<%= skm_file[:type] %>"
             >
 
-                <div class="tip tip-bounce tip-light-green" aria-label="SKM">
+                <div class="tip tip-light-green" aria-label="<%= TRANSLATE['SKM folder'] %>">
                     <img
                         class="source-logo"
                         src="<%= img_uri('sketchup-logo.svg') %>"
@@ -423,7 +423,7 @@ xmlns="http://www.w3.org/2000/svg">
                 data-type="<%= ph_texture[:type] %>"
             >
 
-                <div class="tip tip-bounce tip-light-green" aria-label="Poly Haven">
+                <div class="tip tip-light-green" aria-label="Poly Haven">
                     <img
                         class="source-logo clickable"
                         src="<%= img_uri('poly-haven-logo.svg') %>"
