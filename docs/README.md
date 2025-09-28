@@ -5,9 +5,9 @@ Search for SketchUp materials by name from three sources: active model, SKM coll
 Screenshots
 -----------
 
-![SketchUp Material Browser Plugin Screen #1](https://github.com/SamuelTallet/SketchUp-Material-Browser-Plugin/raw/main/docs/screenshots/sketchup-material-browser-plugin-screenshot-one.jpg)
+![SketchUp 2017 - Material Browser Plugin - Plugin View](https://github.com/SamuelTallet/SketchUp-Material-Browser-Plugin/raw/main/docs/screenshots/sketchup_2017-material_browser_plugin-plugin_view.webp)
 
-![SketchUp Material Browser Plugin Screen #2](https://github.com/SamuelTallet/SketchUp-Material-Browser-Plugin/raw/main/docs/screenshots/sketchup-material-browser-plugin-screenshot-two.jpg)
+![SketchUp 2025 - Material Browser Plugin - SketchUp View](https://github.com/SamuelTallet/SketchUp-Material-Browser-Plugin/raw/main/docs/screenshots/sketchup_2025-material_browser_plugin-sketchup_view.webp)
 
 Installation
 ------------
