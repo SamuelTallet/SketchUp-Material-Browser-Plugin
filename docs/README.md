@@ -25,17 +25,17 @@ Help/FAQ
 
 ### Can I bring my own materials?
 
-Yes, this plugin does support custom materials as .skm files.
+Yes, this plugin does support custom materials as *.skm* files.
 
 1. Open a model containing some of your materials.
 2. Access SketchUp "Materials" tray.
 3. Right-click on one of your materials then select "Save as".
-4. Select a folder or subfolder to save this one as a .skm file.
+4. Select a folder or subfolder to save this one as a *.skm* file.
 5. Repeat previous steps with all your materials.  
-6. In Material Browser, click on "SKM folder" icon (at left).
-7. Select top-level folder containing your .skm files.
+6. In Material Browser, click on "SKM folder" icon at left.
+7. Select top-level folder containing your *.skm* files.
 
-Currently, only one custom SKM folder is supported.
+Currently, only one custom SKM folder at once is supported.
 
 ### Materials list is too long. What can I do?
 
