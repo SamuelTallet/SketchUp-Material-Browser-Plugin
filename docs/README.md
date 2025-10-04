@@ -1,6 +1,8 @@
 # Material browser free plugin for SketchUp
 
-Search for SketchUp materials by name from three sources: active model, SKM collections and Poly Haven. Filter materials by type (Ceramic, Wood, etc). Select material of your choice in one click.
+Search for SketchUp materials by name from three sources: active model, local collections, and Poly Haven. Filter materials by type (Ceramic, Wood, etc). Select material of your choice in one click. Increase thumbnail up to 256px.
+
+If you use SketchUp 2025 or newer, [Photoreal materials](https://help.sketchup.com/en/release-notes/sketchup-desktop-20250#photoreal) are supported, once you select a material from Poly Haven, Material Browser plugin will download and set all textures maps for you: AO, Diffuse, Metal, Normal GL, and Rough.
 
 Screenshots
 -----------
@@ -20,6 +22,20 @@ Now, you should have in SketchUp a "Material Browser" menu in "Extensions", and 
 
 Help/FAQ
 --------
+
+### Can I bring my own materials?
+
+Yes, this plugin does support custom materials as .skm files.
+
+1. Open a model containing some of your materials.
+2. Access SketchUp "Materials" tray.
+3. Right-click on one of your materials then select "Save as".
+4. Select a folder or subfolder to save this one as a .skm file.
+5. Repeat previous steps with all your materials.  
+6. In Material Browser, click on "SKM folder" icon (at left).
+7. Select top-level folder containing your .skm files.
+
+Currently, only one custom SKM folder is supported.
 
 ### Materials list is too long. What can I do?
 
