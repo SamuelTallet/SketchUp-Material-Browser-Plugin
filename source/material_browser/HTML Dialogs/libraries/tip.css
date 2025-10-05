@@ -50,8 +50,6 @@
 .tip-right::after {
     position: absolute;
 
-    padding: 5px 20px;
-
     display: none;
     z-index: 999999;
 
@@ -60,6 +58,9 @@
 
     content: attr(aria-label);
     white-space: var(--tip-white-space);
+
+    padding: 8px 12px;
+    line-height: 1.4;
 
     background: var(--tip-bg-color);
     color: var(--tip-text-color);
