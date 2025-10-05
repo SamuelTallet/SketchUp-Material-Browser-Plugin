@@ -29,7 +29,7 @@ Yes, this plugin does support custom materials as *.skm* files.
 
 1. Open a model containing some of your materials.
 2. Access SketchUp "Materials" tray.
-3. Right-click on one of your materials then select "Save as".
+3. Right-click on one of your materials then select "Save As".
 4. Select a folder or subfolder to save this one as a *.skm* file.
 5. Repeat previous steps with all your materials.  
 6. In Material Browser, click on "SKM folder" icon at left.
@@ -40,6 +40,12 @@ Currently, only one custom SKM folder at once is supported.
 ### Materials list is too long. What can I do?
 
 In Material Browser, click on eye icon then check "Display only In Model materials".
+
+### I picked a material from Poly Haven but I don't see reflections...
+
+1. Ensure you are using SketchUp 2025 or newer.
+2. In SketchUp "View > Face Style" menu, ensure "Photoreal Materials" is enabled.
+3. In SketchUp "Environments" tray, ensure an IBL (HDRI) is selected.
 
 Thanks
 ------
