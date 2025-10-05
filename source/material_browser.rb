@@ -29,7 +29,7 @@ $LOAD_PATH.push(File.join(__dir__, 'material_browser', 'Libraries'))
 module MaterialBrowser
 
   # Plugin version.
-  VERSION = '1.1.0-rc2'
+  VERSION = '1.1.0-rc3'
 
   # Plugin `User-Agent` HTTP header used to download textures, etc.
   USER_AGENT = 'SketchUp Material Browser Plugin/' + VERSION
@@ -51,7 +51,7 @@ module MaterialBrowser
 
   extension.version     = VERSION
   extension.creator     = 'Samuel Tallet'
-  extension.copyright   = "© 2025 #{extension.creator}"
+  extension.copyright   = "2025 #{extension.creator}"
   extension.description = BRIEF
 
   Sketchup.register_extension(extension, load_on_start = true)
