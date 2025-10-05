@@ -41,11 +41,11 @@ Currently, only one custom SKM folder at once is supported.
 
 In Material Browser, click on eye icon then check "Display only In Model materials".
 
-### I picked a material from Poly Haven but I don't see reflections...
+### I painted an object with a material from Poly Haven but I don't see reflections on it.
 
 1. Ensure you are using SketchUp 2025 or newer.
 2. In SketchUp "View > Face Style" menu, ensure "Photoreal Materials" is enabled.
-3. In SketchUp "Environments" tray, ensure an IBL (HDRI) is selected.
+3. In SketchUp "Environments" tray, ensure an environment is selected.
 
 Thanks
 ------
