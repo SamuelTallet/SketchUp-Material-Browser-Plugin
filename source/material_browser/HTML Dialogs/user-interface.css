@@ -237,7 +237,9 @@ select {
     margin-left: -6px;
 
     -webkit-appearance: slider-vertical; /* For Chrome 52 (SketchUp 2017) */
-    appearance: slider-vertical;
+    appearance: auto;
+    writing-mode: vertical-lr;
+    direction: rtl;
 
     cursor: -webkit-grab; /* For Chrome 52 (SketchUp 2017) */
     cursor: grab;
