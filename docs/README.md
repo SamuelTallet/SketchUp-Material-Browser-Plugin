@@ -2,7 +2,7 @@
 
 Search for SketchUp materials by name from three sources: active model, local collections, and Poly Haven. Filter materials by type (Ceramic, Wood, etc). Select material of your choice in one click. Increase thumbnail up to 256px.
 
-If you use SketchUp 2025 or newer, [Photoreal materials](https://help.sketchup.com/en/release-notes/sketchup-desktop-20250#photoreal) are supported, once you select a material from Poly Haven, Material Browser plugin will download and set all textures maps for you: AO, Diffuse, Metal, Normal, and Rough.
+If you use SketchUp 2025 or newer, [Photoreal materials](https://help.sketchup.com/en/release-notes/sketchup-desktop-20250#photoreal) are supported. Once you select a material from Poly Haven, Material Browser plugin downloads and sets all textures maps for you: AO, Diffuse, Metal, Normal, and Rough.
 
 Screenshots
 -----------
