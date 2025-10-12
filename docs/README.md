@@ -2,7 +2,7 @@
 
 Search for SketchUp materials by name from three sources: active model, local collections, and Poly Haven. Filter materials by type (Ceramic, Wood, etc). Select material of your choice in one click. Increase thumbnail up to 256px.
 
-If you use SketchUp 2025 or newer, [Photoreal materials](https://help.sketchup.com/en/release-notes/sketchup-desktop-20250#photoreal) are supported, once you select a material from Poly Haven, Material Browser plugin will download and set all textures maps for you: AO, Diffuse, Metal, Normal GL, and Rough.
+If you use SketchUp 2025 or newer, [Photoreal materials](https://help.sketchup.com/en/release-notes/sketchup-desktop-20250#photoreal) are supported, once you select a material from Poly Haven, Material Browser plugin will download and set all textures maps for you: AO, Diffuse, Metal, Normal, and Rough.
 
 Screenshots
 -----------
@@ -52,11 +52,11 @@ Thanks
 
 [Poly Haven](https://polyhaven.com) for providing high-quality PBR textures through their API, for free.
 
-On code side, this plugin relies on [Rubyzip](https://github.com/rubyzip/rubyzip), [Ruby backports](https://github.com/marcandre/backports), and [List.js](https://github.com/javve/list.js).
+This plugin relies on following libraries: [Rubyzip](https://github.com/rubyzip/rubyzip), [Ruby backports](https://github.com/marcandre/backports), and [List.js](https://github.com/javve/list.js).
 
-Heart icon is part of [Feather icons](https://www.iconfinder.com/iconsets/feather-5) from Iconfinder, and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Heart icon is part of [Feather icons](https://www.iconfinder.com/iconsets/feather-5), and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-Help icon was made by [graficon](https://www.iconfinder.com/graficon) from Iconfinder, and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Help icon was made by [graficon](https://www.iconfinder.com/graficon), and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 
 Copyright
