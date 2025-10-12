@@ -20,7 +20,11 @@
 raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
-require 'zip'
+# Requires Rubyzip gem if not already loaded.
+unless defined?(Zip)
+  $LOAD_PATH.push(File.join(__dir__, 'Rubyzip'))
+  require 'zip'
+end
 
 # Material Browser plugin namespace.
 module MaterialBrowser

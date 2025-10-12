@@ -23,8 +23,6 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 require 'sketchup'
 require 'extensions'
 
-$LOAD_PATH.push(File.join(__dir__, 'material_browser', 'Libraries'))
-
 # Material Browser plugin namespace.
 module MaterialBrowser
 
