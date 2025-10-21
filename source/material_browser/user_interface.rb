@@ -186,7 +186,7 @@ module MaterialBrowser
 
         if dir_selected.is_a?(String)
           Settings.current.custom_skm_path = dir_selected
-          SKM.extract_thumbnails
+          SKM.extract_thumbnails(:custom)
 
           self.class.reload
         end

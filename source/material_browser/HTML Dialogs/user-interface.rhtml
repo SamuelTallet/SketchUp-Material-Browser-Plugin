@@ -382,19 +382,71 @@ xmlns="http://www.w3.org/2000/svg">
             <%
             unless Settings.current.display_only_model?
 
-                SKM.files.each do |skm_file|
+                SKM.files[:custom].each do |skm_file|
             %>
             <li
                 class="material"
                 data-type="<%= skm_file[:type] %>"
             >
 
-                <div class="tip tip-light-green" aria-label="<%= TRANSLATE['SKM folder'] %>">
-                    <img
-                        class="source-logo"
-                        src="<%= img_uri('sketchup-logo.svg') %>"
-                    />
-                </div>
+                <img
+                    class="skm-file thumbnail clickable"
+                    src="<%= skm_file[:thumbnail_uri] %>"
+                    width="0"
+                    height="0"
+                    data-path="<%= skm_file[:path] %>"
+                />
+
+                <span class="name"><%= CGI.escapeHTML(skm_file[:display_name]) %></span>
+
+            </li>
+            <%
+                end
+
+            end
+            %>
+
+            <%
+            unless Settings.current.display_only_model?
+
+                SKM.files[:profile].each do |skm_file|
+            %>
+            <li
+                class="material"
+                data-type="<%= skm_file[:type] %>"
+            >
+
+                <img
+                    class="skm-file thumbnail clickable"
+                    src="<%= skm_file[:thumbnail_uri] %>"
+                    width="0"
+                    height="0"
+                    data-path="<%= skm_file[:path] %>"
+                />
+
+                <span class="name"><%= CGI.escapeHTML(skm_file[:display_name]) %></span>
+
+            </li>
+            <%
+                end
+
+            end
+            %>
+
+            <%
+            unless Settings.current.display_only_model?
+
+                SKM.files[:builtin].each do |skm_file|
+            %>
+            <li
+                class="material"
+                data-type="<%= skm_file[:type] %>"
+            >
+
+                <img
+                    class="source-logo"
+                    src="<%= img_uri('sketchup-logo.svg') %>"
+                />
 
                 <img
                     class="skm-file thumbnail clickable"
@@ -423,13 +475,11 @@ xmlns="http://www.w3.org/2000/svg">
                 data-type="<%= ph_texture[:type] %>"
             >
 
-                <div class="tip tip-light-green" aria-label="Poly Haven">
-                    <img
-                        class="source-logo clickable"
-                        src="<%= img_uri('poly-haven-logo.svg') %>"
-                        data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
-                    />
-                </div>
+                <img
+                    class="source-logo clickable"
+                    src="<%= img_uri('poly-haven-logo.svg') %>"
+                    data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
+                />
 
                 <img
                     class="ph-texture thumbnail clickable"

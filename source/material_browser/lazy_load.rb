@@ -39,9 +39,14 @@ module MaterialBrowser
       Model.export_materials_thumbnails
 
       # SKM files can be managed outside of SketchUp.
-      # So always scans SKM folders, this can avoid a restart.
-      # And sometimes (1 chance in 15), cleanups thumbnails directory.
-      SKM.extract_thumbnails(then_cleanup: rand(15).zero?)
+      # So always scans SKM folders, this can avoid a SketchUp restart.
+      # And sometimes, cleanups thumbnails directory.
+      SKM.extract_thumbnails(:builtin, then_cleanup: rand(30).zero?)
+      SKM.extract_thumbnails(:profile, then_cleanup: rand(15).zero?)
+
+      unless Settings.current.custom_skm_path.empty?
+        SKM.extract_thumbnails(:custom, then_cleanup: rand(15).zero?)
+      end
 
       # Loads Poly Haven textures (once per SketchUp session).
       PolyHaven.load_textures if PolyHaven.textures.empty?

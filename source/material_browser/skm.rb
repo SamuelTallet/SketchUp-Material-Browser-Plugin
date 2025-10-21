@@ -36,38 +36,43 @@ module MaterialBrowser
   module SKM
 
     # SKM files metadata.
-    @@files = []
+    @@files = {
+      :builtin => [],
+      :profile => [],
+      :custom => []
+    }
 
     # Metadata of SKM files.
     #
-    # @return [Array<Hash>]
-    #   Where each hash contains:
-    #   - `:path` (String) - Absolute path to source SKM file.
-    #   - `:display_name` (String) - Material display name.
-    #   - `:thumbnail_uri` (String) - SKM thumbnail file URI.
-    #   - `:type` (String) - Material type ("stone", "wood", etc).
+    # @return [Hash]
+    #   Where keys are `:builtin`, `:profile`, and `:custom`,
+    #   and where values are arrays of hashes, where each hash contains:
+    #     - `:path` (String) - Absolute path to SKM file.
+    #     - `:display_name` (String) - Material display name.
+    #     - `:thumbnail_uri` (String) - SKM thumbnail file URI.
+    #     - `:type` (String) - Material type. e.g. "ceramic"
     def self.files
       @@files
     end
 
-    # Absolute path to stock SKM directory.
-    # This is where materials shipped with SketchUp are.
+    # Absolute path to built-in SKM library directory.
+    # Materials shipped with SketchUp are stored here.
     #
     # @raise [RuntimeError]
     #
     # @return [String]
-    def self.stock_path
-      sketchup_year_version = Sketchup.version.to_i.to_s
+    def self.builtin_library_path
+      sketchup_year_version = "20#{Sketchup.version.to_i}"
 
       if Sketchup.platform == :platform_osx
         File.join(
-          '/', 'Applications', 'SketchUp ' + '20' + sketchup_year_version,
+          '/', 'Applications', 'SketchUp ' + sketchup_year_version,
           'SketchUp.app', 'Contents', 'Resources', 'Content', 'Materials'
         )
 
       elsif Sketchup.platform == :platform_win
         File.join(
-          ENV['PROGRAMDATA'], 'SketchUp', 'SketchUp ' + '20' + sketchup_year_version,
+          ENV['PROGRAMDATA'], 'SketchUp', 'SketchUp ' + sketchup_year_version,
           'SketchUp', 'Materials'
         )
         
@@ -76,24 +81,24 @@ module MaterialBrowser
       end
     end
 
-    # Absolute path to custom SKM directory.
-    # Not to be confused with custom SKM path set by user in Material Browser UI.
+    # Absolute path to user profile SKM library directory, configurable in SketchUp.
+    # Not to be confused with custom SKM library pointed by user in Material Browser.
     #
     # @raise [RuntimeError]
     #
     # @return [String]
-    def self.custom_path
-      sketchup_year_version = Sketchup.version.to_i.to_s
+    def self.profile_library_path
+      sketchup_year_version = "20#{Sketchup.version.to_i}"
 
       if Sketchup.platform == :platform_osx
         File.join(
           ENV['HOME'], 'Library', 'Application Support',
-          'SketchUp ' + '20' + sketchup_year_version, 'SketchUp', 'Materials'
+          'SketchUp ' + sketchup_year_version, 'SketchUp', 'Materials'
         )
 
       elsif Sketchup.platform == :platform_win
         File.join(
-          ENV['APPDATA'], 'SketchUp', 'SketchUp ' + '20' + sketchup_year_version,
+          ENV['APPDATA'], 'SketchUp', 'SketchUp ' + sketchup_year_version,
           'SketchUp', 'Materials'
         )
 
@@ -102,74 +107,106 @@ module MaterialBrowser
       end
     end
 
-    # Absolute path to SKM thumbnails directory.
+    # Absolute path to a given SKM library.
+    #
+    # @param [Symbol] library `:builtin`, `:profile`, or `:custom`
+    # @raise [ArgumentError]
+    #
+    # @raise [RuntimeError]
+    #   If library is `:custom` and its path is not defined.
     #
     # @return [String]
-    def self.thumbnails_path
-      # If several versions of SketchUp are installed:
-      # we don't want, for example, to remove SKM thumbs for all versions.
-      # It'd be a waste of time to regenerate them...
-      File.join(Sketchup.temp_dir, "SketchUp 20#{Sketchup.version.to_i} MBR Plugin SKM Thumbs")
+    def self.library_path(library)
+      raise ArgumentError, 'library must be a Symbol.' \
+        unless [:builtin, :profile, :custom].include?(library)
+
+      if :custom == library && Settings.current.custom_skm_path.empty?
+        raise 'Material Browser: No custom SKM path set.'
+      end
+
+      case library
+      when :builtin
+        builtin_library_path
+      when :profile
+        profile_library_path
+      when :custom
+        Settings.current.custom_skm_path
+      end
     end
 
-    # Removes SKM thumbnails directory.
-    def self.remove_thumbnails_dir
-      FileUtils.remove_dir(thumbnails_path) if Dir.exist?(thumbnails_path)
-    end
-
-    # Creates SKM thumbnails directory.
-    def self.create_thumbnails_dir
-      FileUtils.mkdir_p(thumbnails_path) unless Dir.exist?(thumbnails_path)
-    end
-
-    # Glob patterns to find SKM files.
+    # Absolute path to SKM thumbnails directory of a given library.
     #
-    # @return [Array<String>]
-    def self.glob_patterns
-      stock_skm_glob_pattern = File.join(stock_path, '**', '*.skm')
-      custom_skm_glob_pattern = File.join(custom_path, '**', '*.skm')
+    # @param [Symbol] library `:builtin`, `:profile`, or `:custom`
+    # @raise [ArgumentError]
+    #
+    # @return [String]
+    def self.thumbnails_path(library)
+      raise ArgumentError, 'library must be a Symbol.' \
+        unless [:builtin, :profile, :custom].include?(library)
 
-      skm_glob_patterns = [stock_skm_glob_pattern, custom_skm_glob_pattern]
+      sketchup_year_version = "20#{Sketchup.version.to_i}"
 
-      user_custom_skm_path = Settings.current.custom_skm_path
-
-      if Dir.exist?(user_custom_skm_path)
-        user_custom_skm_glob_pattern = File.join(user_custom_skm_path, '**', '*.skm')
-        skm_glob_patterns.push(user_custom_skm_glob_pattern)
+      case library
+      when :builtin
+        # Remark: We use here a different thumbnails directory for each SketchUp version
+        # to avoid losing, at cleanup time, thumbnails of other installed SketchUp versions.
+        # It would be a waste of time for Material Browser plugin to extract them again...
+        File.join(
+          Sketchup.temp_dir,
+          "SketchUp #{sketchup_year_version} MBR Plugin SKM Thumbs"
+        )
+      when :profile
+        # Same here.
+        File.join(
+          Sketchup.temp_dir,
+          "SketchUp #{sketchup_year_version} MBR Plugin P-SKM Thumbs"
+        )
+      when :custom
+        File.join(Sketchup.temp_dir, "SketchUp MBR Plugin C-SKM Thumbs")
       end
-
-      # Fixes SKM glob patterns only on Windows.
-      if Sketchup.platform == :platform_win
-        skm_glob_patterns.each do |skm_glob_pattern|
-          skm_glob_pattern.gsub!('\\', '/')
-        end
-      end
-
-      skm_glob_patterns
     end
 
-    # Extracts thumbnails from SKM files and loads their metadata.
-    # If `then_cleanup` param is `true`, it removes also outdated/unused thumbnails.
+    # Extracts thumbnails from SKM files stored in a given library and loads their metadata.
+    # If `then_cleanup` parameter is `true`, it removes also outdated/unused thumbnails.
     # After that, those metadata are accessible through `SKM.files`.
     #
+    # @param [Symbol] library `:builtin`, `:profile`, or `:custom`
     # @param [Boolean] then_cleanup
     # @raise [ArgumentError]
-    def self.extract_thumbnails(then_cleanup: false)
+    #
+    # @return [Boolean]
+    #   `true` if it was possible to extract thumbnails, `false` otherwise.
+    def self.extract_thumbnails(library, then_cleanup: false)
+      raise ArgumentError, 'library must be a Symbol.' \
+        unless [:builtin, :profile, :custom].include?(library)
+
       raise ArgumentError, 'then_cleanup must be a Boolean.' \
         unless [true, false].include?(then_cleanup)
 
-      @@files.clear
-      create_thumbnails_dir
+      lib_path = library_path(library)
+
+      unless Dir.exist?(lib_path)
+        warn "Material Browser: SKM library directory does not exist: #{lib_path}"
+        return false
+      end
+
+      skm_files_glob_pattern = File.join(lib_path, '**', '*.skm')
+      skm_files_glob_pattern.gsub!('\\', '/') if Sketchup.platform == :platform_win
 
       used_thumbnails = []
 
-      Dir.glob(glob_patterns).each do |skm_file_path|
+      thumbs_path = thumbnails_path(library)
+      FileUtils.mkdir_p(thumbs_path) unless Dir.exist?(thumbs_path)
+
+      @@files[library].clear
+
+      Dir.glob(skm_files_glob_pattern).each do |skm_file_path|
         thumbnail_basename = Zlib.crc32(skm_file_path).to_s
         thumbnail_basename += '@' + File.mtime(skm_file_path).to_i.to_s + '.png'
 
         used_thumbnails.push(thumbnail_basename) if then_cleanup
 
-        thumbnail_path = File.join(thumbnails_path, thumbnail_basename)
+        thumbnail_path = File.join(thumbs_path, thumbnail_basename)
         thumbnail_available = File.exist?(thumbnail_path)
 
         # To index SKM files faster:
@@ -184,14 +221,14 @@ module MaterialBrowser
           # SKM files are ZIP files.
 
           unless thumbnail_available
-            warn "Material Browser: Failed to extract thumbnail from #{skm_file_path}."
+            warn "Material Browser: Failed to extract thumbnail from: #{skm_file_path}"
           end
         end
 
         if thumbnail_available
           skm_display_name = File.basename(skm_file_path).sub('.skm', '').gsub('_', ' ')
 
-          @@files.push({
+          @@files[library].push({
             path: skm_file_path,
             display_name: skm_display_name,
             thumbnail_uri: Path.to_uri(thumbnail_path),
@@ -201,17 +238,17 @@ module MaterialBrowser
       end
 
       if then_cleanup
-        thumbnails_glob_pattern = File.join(thumbnails_path, '**', '*.png')
-        thumbnails_glob_pattern.gsub!('\\', '/') if Sketchup.platform == :platform_win
+        thumbs_glob_pattern = File.join(thumbs_path, '**', '*.png')
+        thumbs_glob_pattern.gsub!('\\', '/') if Sketchup.platform == :platform_win
 
-        Dir.glob(thumbnails_glob_pattern).each do |thumbnail_path|
+        Dir.glob(thumbs_glob_pattern).each do |thumbnail_path|
           unless used_thumbnails.include?(File.basename(thumbnail_path))
             FileUtils.remove_file(thumbnail_path) # Since it's outdated or no longer used.
           end
         end
       end
 
-      nil
+      true
     end
 
     # Selects a SKM file then activates paint tool.
