@@ -171,16 +171,6 @@ module MaterialBrowser
         Settings.current.display_name = display_name
       end
 
-      @html_dialog.add_action_callback('setDisplaySource') do |_ctx, display_source|
-        Settings.current.display_source = display_source
-      end
-
-      @html_dialog.add_action_callback('setDisplayOnlyModel') do |_ctx, display_only_model|
-        Settings.current.display_only_model = display_only_model
-
-        self.class.reload
-      end
-
       @html_dialog.add_action_callback('setCustomSKMPath') do |_ctx|
         dir_selected = UI.select_directory
 

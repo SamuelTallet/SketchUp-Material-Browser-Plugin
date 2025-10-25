@@ -29,28 +29,10 @@
                     class="display-name clickable"
                     <%= Settings.current.display_name? ? 'checked' : '' %>
                 />
-                <%= TRANSLATE['Display the name of all materials'] %>
+                <%= TRANSLATE['Always display material name'] %>
             </div>
-    
-            <div class="field">
-                <input
-                    type="checkbox"
-                    class="display-source clickable"
-                    <%= Settings.current.display_source? ? 'checked' : '' %>
-                />
-                <%= TRANSLATE['Display their source'] %>
-            </div>
-    
-            <div class="field">
-                <input
-                    type="checkbox"
-                    class="display-only-model clickable"
-                    <%= Settings.current.display_only_model? ? 'checked' : '' %>
-                />
-                <%= TRANSLATE['Display only In Model materials'] %>
-            </div>        
-            
-            <button class="close clickable"><%= TRANSLATE['OK'] %></button>
+
+            <button class="commit clickable"><%= TRANSLATE['OK'] %></button>
         </div>
 
     </div>
@@ -380,7 +362,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            unless Settings.current.display_only_model?
+            if true # FIXME
 
                 SKM.files[:custom].each do |skm_file|
             %>
@@ -407,7 +389,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            unless Settings.current.display_only_model?
+            if true # FIXME
 
                 SKM.files[:profile].each do |skm_file|
             %>
@@ -434,7 +416,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            unless Settings.current.display_only_model?
+            if true # FIXME
 
                 SKM.files[:builtin].each do |skm_file|
             %>
@@ -466,7 +448,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            unless Settings.current.display_only_model?
+            if true # FIXME
 
                 PolyHaven.textures.each do |ph_texture|
             %>
@@ -478,7 +460,7 @@ xmlns="http://www.w3.org/2000/svg">
                 <img
                     class="source-logo clickable"
                     src="<%= img_uri('poly-haven-logo.svg') %>"
-                    data-source-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
+                    data-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
                 />
 
                 <img

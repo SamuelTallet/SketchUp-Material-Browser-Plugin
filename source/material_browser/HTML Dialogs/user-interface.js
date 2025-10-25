@@ -79,41 +79,43 @@ MaterialBrowser.hideLoadingScreen = () => {
 }
 
 /**
- * Shows settings overlay.
+ * Shows display settings overlay.
  */
-MaterialBrowser.showSettingsOverlay = () => {
+MaterialBrowser.showDisplaySettings = () => {
     document.querySelector('#materials').classList.add('hidden')
     document.querySelector('#settings').classList.add('displayed')
 }
 
 /**
- * Hides settings overlay.
+ * Hides display settings overlay.
  */
-MaterialBrowser.hideSettingsOverlay = () => {
+MaterialBrowser.hideDisplaySettings = () => {
     document.querySelector('#settings').classList.remove('displayed')
     document.querySelector('#materials').classList.remove('hidden')
+}
+
+/**
+ * Applies "zoom value" setting.
+ */
+MaterialBrowser.applyZoomValue = () => {
+    const zoomValue = parseInt(document.querySelector('.zoom .slider').value)
+    const materialThumbnails = document.querySelectorAll('.material .thumbnail')
+
+    materialThumbnails.forEach(materialThumbnail => {
+        materialThumbnail.width = zoomValue
+        materialThumbnail.height = zoomValue
+    })
+
+    sketchup.setZoomValue(zoomValue)
 }
 
 /**
  * Adds zoom slider change event listener.
  */
 MaterialBrowser.listenZoomChange = () => {
-    document.querySelector('.zoom .slider').addEventListener('change', event => {
-
-        let materialThumbnails = document.querySelectorAll('.material .thumbnail')
-        let zoomValue = parseInt(event.currentTarget.value)
-
-        materialThumbnails.forEach(materialThumbnail => {
-            materialThumbnail.width = zoomValue
-            materialThumbnail.height = zoomValue
-        })
-
-        sketchup.setZoomValue(zoomValue)
-
+    document.querySelector('.zoom .slider').addEventListener('change', _event => {
+        MaterialBrowser.applyZoomValue()
     })
-
-    // Required to initialize UI.
-    document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
 }
 
 /**
@@ -132,7 +134,7 @@ MaterialBrowser.listenZoomInClick = () => {
         zoomValue += parseInt(zoomSlider.step)
         zoomSlider.value = zoomValue
 
-        zoomSlider.dispatchEvent(new Event('change'))
+        MaterialBrowser.applyZoomValue()
 
     })
 }
@@ -153,105 +155,50 @@ MaterialBrowser.listenZoomOutClick = () => {
         zoomValue -= parseInt(zoomSlider.step)
         zoomSlider.value = zoomValue
 
-        zoomSlider.dispatchEvent(new Event('change'))
+        MaterialBrowser.applyZoomValue()
 
     })
 }
 
 /**
- * Adds eye icon click event listener.
+ * Adds display settings open icon click event listener.
  */
-MaterialBrowser.listenEyeClick = () => {
+MaterialBrowser.listenDisplaySettingsOpen = () => {
     document.querySelector('.eye.icon').addEventListener('click', _event => {
-        MaterialBrowser.showSettingsOverlay()
+        MaterialBrowser.showDisplaySettings()
     })
 }
 
 /**
- * Adds display name checkbox change event listener.
+ * Adds display settings commit button click event listener.
  */
-MaterialBrowser.listenDisplayNameChange = () => {
-    document.querySelector('.display-name').addEventListener('change', event => {
-
-        let displayName = event.currentTarget.checked
-        let materialNames = document.querySelectorAll('.material .name')
-
-        if ( displayName ) {
-
-            materialNames.forEach(materialName => {
-                materialName.classList.add('displayed')
-            })
-
-        } else {
-
-            materialNames.forEach(materialName => {
-                materialName.classList.remove('displayed')
-            })
-
-        }
-
-        MaterialBrowser.hideSettingsOverlay()
-
-        sketchup.setDisplayName(displayName)
-
-    })
-
-    // Required to initialize UI.
-    document.querySelector('.display-name').dispatchEvent(new Event('change'))
-}
-
-/**
- * Adds display source checkbox change event listener.
- */
-MaterialBrowser.listenDisplaySourceChange = () => {
-    document.querySelector('.display-source').addEventListener('change', event => {
-
-        let displaySource = event.currentTarget.checked
-        let materialSourceLogos = document.querySelectorAll('.material .source-logo')
-
-        if ( displaySource ) {
-
-            materialSourceLogos.forEach(materialSourceLogo => {
-                materialSourceLogo.classList.add('displayed')
-            })
-
-        } else {
-
-            materialSourceLogos.forEach(materialSourceLogo => {
-                materialSourceLogo.classList.remove('displayed')
-            })
-
-        }
-
-        MaterialBrowser.hideSettingsOverlay()
-
-        sketchup.setDisplaySource(displaySource)
-
-    })
-
-    // Required to initialize UI.
-    document.querySelector('.display-source').dispatchEvent(new Event('change'))
-}
-
-/**
- * Adds display only model checkbox change event listener.
- */
-MaterialBrowser.listenDisplayOnlyModelChange = () => {
-    document.querySelector('.display-only-model').addEventListener('change', event => {
-
-        MaterialBrowser.hideSettingsOverlay()
-        sketchup.setDisplayOnlyModel(event.currentTarget.checked)
-
+MaterialBrowser.listenDisplaySettingsCommit = () => {
+    document.querySelector('#settings .commit').addEventListener('click', _event => {
+        MaterialBrowser.hideDisplaySettings()
+        MaterialBrowser.applyDisplaySettings()
     })
 }
 
 /**
- * Adds settings close button click event listener.
+ * Applies "display name" setting.
  */
-MaterialBrowser.listenSettingsClose = () => {
-    document.querySelector('#settings .close').addEventListener('click', _event => {
-        MaterialBrowser.hideSettingsOverlay()
+MaterialBrowser.applyDisplayName = () => {
+    const displayName = document.querySelector('.display-name').checked
+    const materialNames = document.querySelectorAll('.material .name')
+
+    materialNames.forEach(materialName => {
+        materialName.classList.toggle('displayed', displayName)
     })
+
+    sketchup.setDisplayName(displayName)
+}
+
+/**
+ * Applies display settings.
+ */
+MaterialBrowser.applyDisplaySettings = () => {
+    MaterialBrowser.applyDisplayName()
+    // TODO: Implement sources_to_display setting.
 }
 
 /**
@@ -290,46 +237,44 @@ MaterialBrowser.listenHeartClick = () => {
 }
 
 /**
+ * Applies "type filter value" setting.
+ */
+MaterialBrowser.applyTypeFilterValue = () => {
+    const typeFilterValue = document.querySelector('.filter-by-type').value
+
+    if ( typeFilterValue === 'all' ) {
+        const materials = document.querySelectorAll('.material')
+
+        materials.forEach(material => {
+            material.classList.remove('hidden')
+        })
+    } else {
+        const materialsToDisplay = document.querySelectorAll(
+            '.material[data-type="' + typeFilterValue + '"]'
+        )
+        const materialsToHide = document.querySelectorAll(
+            '.material:not([data-type="' + typeFilterValue + '"])'
+        )
+
+        materialsToDisplay.forEach(materialToDisplay => {
+            materialToDisplay.classList.remove('hidden')
+        })
+
+        materialsToHide.forEach(materialToHide => {
+            materialToHide.classList.add('hidden')
+        })
+    }
+
+    sketchup.setTypeFilterValue(typeFilterValue)
+}
+
+/**
  * Adds filter by type dropdown change event listener.
  */
 MaterialBrowser.listenFilterByTypeChange = () => {
-    document.querySelector('.filter-by-type').addEventListener('change', event => {
-
-        let typeFilterValue = event.currentTarget.value
-
-        if ( typeFilterValue === 'all' ) {
-
-            let materials = document.querySelectorAll('.material')
-
-            materials.forEach(material => {
-                material.classList.remove('hidden')
-            })
-
-        } else {
-
-            let materialsToDisplay = document.querySelectorAll(
-                '.material[data-type="' + typeFilterValue + '"]'
-            )
-            let materialsToHide = document.querySelectorAll(
-                '.material:not([data-type="' + typeFilterValue + '"])'
-            )
-    
-            materialsToDisplay.forEach(materialToDisplay => {
-                materialToDisplay.classList.remove('hidden')
-            })
-    
-            materialsToHide.forEach(materialToHide => {
-                materialToHide.classList.add('hidden')
-            })
-
-        }
-
-        sketchup.setTypeFilterValue(typeFilterValue)
-
+    document.querySelector('.filter-by-type').addEventListener('change', _event => {
+        MaterialBrowser.applyTypeFilterValue()
     })
-
-    // Required to initialize UI.
-    document.querySelector('.filter-by-type').dispatchEvent(new Event('change'))
 }
 
 /**
@@ -383,14 +328,24 @@ MaterialBrowser.listenLoadingScreenClick = () => {
 }
 
 /**
+ * Shows source logos.
+ */
+MaterialBrowser.showSourceLogos = () => {
+    const sourceLogos = document.querySelectorAll('.material .source-logo')
+    sourceLogos.forEach(sourceLogo => {
+        sourceLogo.classList.add('displayed')
+    })
+}
+
+/**
  * Adds source logo click event listeners.
  */
 MaterialBrowser.listenSourceLogoClicks = () => {
     document.querySelectorAll('.material .source-logo').forEach(materialSourceLogo => {
 
-        if ( materialSourceLogo.hasAttribute('data-source-url') ) {
+        if ( materialSourceLogo.hasAttribute('data-url') ) {
             materialSourceLogo.addEventListener('click', event => {
-                sketchup.openURL(event.currentTarget.dataset.sourceUrl)
+                sketchup.openURL(event.currentTarget.dataset.url)
             })
         }
 
@@ -406,11 +361,8 @@ MaterialBrowser.addEventListeners = () => {
     MaterialBrowser.listenZoomInClick()
     MaterialBrowser.listenZoomOutClick()
 
-    MaterialBrowser.listenEyeClick()
-    MaterialBrowser.listenDisplayNameChange()
-    MaterialBrowser.listenDisplaySourceChange()
-    MaterialBrowser.listenDisplayOnlyModelChange()
-    MaterialBrowser.listenSettingsClose()
+    MaterialBrowser.listenDisplaySettingsOpen()
+    MaterialBrowser.listenDisplaySettingsCommit()
 
     MaterialBrowser.listenSKMFolderClick()
     MaterialBrowser.listenHelpClick()
@@ -430,6 +382,12 @@ MaterialBrowser.addEventListeners = () => {
 // When document is ready:
 document.addEventListener('DOMContentLoaded', _event => {
 
+    // Restore last known UI state.
+    MaterialBrowser.applyZoomValue()
+    MaterialBrowser.applyTypeFilterValue()
+    MaterialBrowser.applyDisplayName()
+    MaterialBrowser.showSourceLogos()
+
     // Make material list searchable
     const list = new List('materials', options = {
         valueNames: ['name'] // by name.
@@ -440,7 +398,7 @@ document.addEventListener('DOMContentLoaded', _event => {
     list.on('searchComplete', _event => {
         // Fix "thumbnail size desync" issue when user:
         // searches a material then changes thumbnail size then searches again.
-        document.querySelector('.zoom .slider').dispatchEvent(new Event('change'))
+        MaterialBrowser.applyZoomValue()
     })
 
 })

@@ -12,9 +12,7 @@
 "Search for materials by name and filter them by type, with extra extra large thumbnails."="Recherchez des matériaux par nom et filtrez-les par type, avec des vignettes supergéantes.";
 
 "Texture loading..."="Chargement de la texture...";
-"Display the name of all materials"="Afficher le nom de tous les matériaux";
-"Display their source"="Afficher leur source";
-"Display only In Model materials"="Afficher uniquement les matériaux du modèle";
+"Always display material name"="Afficher constamment le nom du matériau";
 "OK"="OK";
 "Enlarge materials thumbs"="Agrandir les vignettes des matériaux";
 "Reduce materials thumbs"="Réduire les vignettes des matériaux";

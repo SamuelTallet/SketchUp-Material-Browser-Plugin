@@ -52,8 +52,6 @@ module MaterialBrowser
       @settings = {
         'zoom_value' => DEFAULT_ZOOM_VALUE,
         'display_name' => false,
-        'display_source' => false,
-        'display_only_model' => false,
         'custom_skm_path' => '',
         'type_filter_value' => 'all'
       }
@@ -109,44 +107,6 @@ module MaterialBrowser
     # @return [Boolean]
     def display_name?
       @settings['display_name']
-    end
-
-    # Sets "display source" setting.
-    #
-    # @param [Boolean] display_source
-    # @raise [ArgumentError]
-    def display_source=(display_source)
-
-      raise ArgumentError, 'Display source must be a Boolean.'\
-        unless [true, false].include?(display_source)
-
-      @settings['display_source'] = display_source
-    end
-
-    # Gets "display source" setting.
-    #
-    # @return [Boolean]
-    def display_source?
-      @settings['display_source']
-    end
-
-    # Sets "display only model" setting.
-    #
-    # @param [Boolean] display_only_model
-    # @raise [ArgumentError]
-    def display_only_model=(display_only_model)
-
-      raise ArgumentError, 'Display only model must be a Boolean.'\
-        unless [true, false].include?(display_only_model)
-
-      @settings['display_only_model'] = display_only_model
-    end
-
-    # Gets "display only model" setting.
-    #
-    # @return [Boolean]
-    def display_only_model?
-      @settings['display_only_model']
     end
 
     # Sets "custom SKM path" setting.
