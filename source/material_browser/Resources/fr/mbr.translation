@@ -11,9 +11,13 @@
 "Open Material Browser..."="Ouvrir le navigateur de matériaux...";
 "Search for materials by name and filter them by type, with extra extra large thumbnails."="Recherchez des matériaux par nom et filtrez-les par type, avec des vignettes supergéantes.";
 
-"Texture loading..."="Chargement de la texture...";
-"Always display material name"="Afficher constamment le nom du matériau";
-"OK"="OK";
+"Loading..."="Chargement...";
+"Materials names"="Noms des matériaux";
+"Custom materials (SKMs)"="Matériaux personnels (SKMs)";
+"SketchUp profile materials"="Matériaux du profil SketchUp";
+"SketchUp built-in materials"="Matériaux intégrés à SketchUp";
+"Poly Haven textures"="Textures Poly Haven";
+"Confirm this display"="Confirmer cet affichage";
 "Enlarge materials thumbs"="Agrandir les vignettes des matériaux";
 "Reduce materials thumbs"="Réduire les vignettes des matériaux";
 "Choose items to display"="Choisir les éléments à afficher";

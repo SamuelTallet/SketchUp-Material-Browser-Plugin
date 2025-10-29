@@ -51,7 +51,11 @@ module MaterialBrowser
     private def initialize
       @settings = {
         'zoom_value' => DEFAULT_ZOOM_VALUE,
-        'display_name' => false,
+        'always_display_name' => false,
+        'display_custom_skm' => false,
+        'display_profile_skm' => false,
+        'display_builtin_skm' => false,
+        'display_poly_haven' => true,
         'custom_skm_path' => '',
         'type_filter_value' => 'all'
       }
@@ -68,7 +72,7 @@ module MaterialBrowser
       end
     end
 
-    # Sets "zoom value" setting.
+    # Sets "Zoom value" setting.
     #
     # @param [Integer] zoom_value
     # @raise [ArgumentError]
@@ -83,33 +87,109 @@ module MaterialBrowser
       @settings['zoom_value'] = zoom_value
     end
 
-    # Gets "zoom value" setting.
+    # Gets "Zoom value" setting.
     #
     # @return [Integer]
     def zoom_value
       @settings['zoom_value']
     end
 
-    # Sets "display name" setting.
+    # Sets "Always display name" setting.
     #
-    # @param [Boolean] display_name
+    # @param [Boolean] always_display_name
     # @raise [ArgumentError]
-    def display_name=(display_name)
+    def always_display_name=(always_display_name)
 
-      raise ArgumentError, 'Display name must be a Boolean.'\
-        unless [true, false].include?(display_name)
+      raise ArgumentError, 'Always display name must be a Boolean.'\
+        unless [true, false].include?(always_display_name)
 
-      @settings['display_name'] = display_name
+      @settings['always_display_name'] = always_display_name
     end
 
-    # Gets "display name" setting.
+    # Gets "Always display name" setting.
     #
     # @return [Boolean]
-    def display_name?
-      @settings['display_name']
+    def always_display_name?
+      @settings['always_display_name']
     end
 
-    # Sets "custom SKM path" setting.
+    # Sets "Display custom SKM" setting.
+    #
+    # @param [Boolean] display_custom_skm
+    # @raise [ArgumentError]
+    def display_custom_skm=(display_custom_skm)
+
+      raise ArgumentError, 'Display custom SKM must be a Boolean.'\
+        unless [true, false].include?(display_custom_skm)
+
+      @settings['display_custom_skm'] = display_custom_skm
+    end
+
+    # Gets "Display custom SKM" setting.
+    #
+    # @return [Boolean]
+    def display_custom_skm?
+      @settings['display_custom_skm']
+    end
+
+    # Sets "Display profile SKM" setting.
+    #
+    # @param [Boolean] display_profile_skm
+    # @raise [ArgumentError]
+    def display_profile_skm=(display_profile_skm)
+
+      raise ArgumentError, 'Display profile SKM must be a Boolean.'\
+        unless [true, false].include?(display_profile_skm)
+
+      @settings['display_profile_skm'] = display_profile_skm
+    end
+
+    # Gets "Display profile SKM" setting.
+    #
+    # @return [Boolean]
+    def display_profile_skm?
+      @settings['display_profile_skm']
+    end
+
+    # Sets "Display built-in SKM" setting.
+    #
+    # @param [Boolean] display_builtin_skm
+    # @raise [ArgumentError]
+    def display_builtin_skm=(display_builtin_skm)
+
+      raise ArgumentError, 'Display built-in SKM must be a Boolean.'\
+        unless [true, false].include?(display_builtin_skm)
+
+      @settings['display_builtin_skm'] = display_builtin_skm
+    end
+
+    # Gets "Display built-in SKM" setting.
+    #
+    # @return [Boolean]
+    def display_builtin_skm?
+      @settings['display_builtin_skm']
+    end
+
+    # Sets "Display Poly Haven" setting.
+    #
+    # @param [Boolean] display_poly_haven
+    # @raise [ArgumentError]
+    def display_poly_haven=(display_poly_haven)
+
+      raise ArgumentError, 'Display Poly Haven must be a Boolean.'\
+        unless [true, false].include?(display_poly_haven)
+
+      @settings['display_poly_haven'] = display_poly_haven
+    end
+
+    # Gets "Display Poly Haven" setting.
+    #
+    # @return [Boolean]
+    def display_poly_haven?
+      @settings['display_poly_haven']
+    end
+
+    # Sets "Custom SKM path" setting.
     #
     # @param [String] custom_skm_path
     # @raise [ArgumentError]
@@ -121,14 +201,14 @@ module MaterialBrowser
       @settings['custom_skm_path'] = custom_skm_path
     end
 
-    # Gets "custom SKM path" setting.
+    # Gets "Custom SKM path" setting.
     #
     # @return [String]
     def custom_skm_path
       @settings['custom_skm_path']
     end
 
-    # Sets "type filter value" setting.
+    # Sets "Type filter value" setting.
     #
     # @param [String] type_filter_value
     # @raise [ArgumentError]
@@ -140,7 +220,7 @@ module MaterialBrowser
       @settings['type_filter_value'] = type_filter_value
     end
 
-    # Gets "type filter value" setting.
+    # Gets "Type filter value" setting.
     #
     # @return [String]
     def type_filter_value

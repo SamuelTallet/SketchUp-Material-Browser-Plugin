@@ -127,12 +127,12 @@ select {
     display: block;
 }
 
-#settings .elements {
-    display: flex;
+#settings .field {
+    margin: 15px;
 }
 
-#settings .field {
-    margin-right: 10px;
+#settings .commit {
+    margin-top: 25px;
 }
 
 #settings .commit:hover {

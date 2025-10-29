@@ -22,18 +22,57 @@
 
     <div id="settings">
 
-        <div class="elements">
-            <div class="field">
-                <input
-                    type="checkbox"
-                    class="display-name clickable"
-                    <%= Settings.current.display_name? ? 'checked' : '' %>
-                />
-                <%= TRANSLATE['Always display material name'] %>
-            </div>
-
-            <button class="commit clickable"><%= TRANSLATE['OK'] %></button>
+        <div class="field">
+            <input
+                type="checkbox"
+                class="clickable"
+                data-setting="always_display_name"
+                <%= Settings.current.always_display_name? ? 'checked' : '' %>
+            />
+            <%= TRANSLATE['Materials names'] %>
         </div>
+
+        <div class="field">
+            <input
+                type="checkbox"
+                class="clickable"
+                data-setting="display_custom_skm"
+                <%= Settings.current.display_custom_skm? ? 'checked' : '' %>
+            />
+            <%= TRANSLATE['Custom materials (SKMs)'] %>
+        </div>
+
+        <div class="field">
+            <input
+                type="checkbox"
+                class="clickable"
+                data-setting="display_profile_skm"
+                <%= Settings.current.display_profile_skm? ? 'checked' : '' %>
+            />
+            <%= TRANSLATE['SketchUp profile materials'] %>
+        </div>
+
+        <div class="field">
+            <input
+                type="checkbox"
+                class="clickable"
+                data-setting="display_builtin_skm"
+                <%= Settings.current.display_builtin_skm? ? 'checked' : '' %>
+            />
+            <%= TRANSLATE['SketchUp built-in materials'] %>
+        </div>
+
+        <div class="field">
+            <input
+                type="checkbox"
+                class="clickable"
+                data-setting="display_poly_haven"
+                <%= Settings.current.display_poly_haven? ? 'checked' : '' %>
+            />
+            <%= TRANSLATE['Poly Haven textures'] %>
+        </div>
+
+        <button class="commit clickable"><%= TRANSLATE['Confirm this display'] %></button>
 
     </div>
 
@@ -161,7 +200,7 @@ xmlns="http://www.w3.org/2000/svg">
                 </g>
             </g>
         </svg>
-        <div class="status"><%= TRANSLATE['Texture loading...'] %></div>
+        <div class="status"><%= TRANSLATE['Loading...'] %></div>
     </div>
 
     <div id="materials">
@@ -362,7 +401,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            if true # FIXME
+            if Settings.current.display_custom_skm?
 
                 SKM.files[:custom].each do |skm_file|
             %>
@@ -389,7 +428,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            if true # FIXME
+            if Settings.current.display_profile_skm?
 
                 SKM.files[:profile].each do |skm_file|
             %>
@@ -416,7 +455,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            if true # FIXME
+            if Settings.current.display_builtin_skm?
 
                 SKM.files[:builtin].each do |skm_file|
             %>
@@ -448,7 +487,7 @@ xmlns="http://www.w3.org/2000/svg">
             %>
 
             <%
-            if true # FIXME
+            if Settings.current.display_poly_haven?
 
                 PolyHaven.textures.each do |ph_texture|
             %>

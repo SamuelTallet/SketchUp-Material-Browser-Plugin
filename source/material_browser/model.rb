@@ -91,7 +91,7 @@ module MaterialBrowser
         # Material thumbnail size, assuming a color by default.
         # For a color, thumbnail size doesn't matter...
         # All thumbnails are stretched to current zoom value at UI load.
-        # See: `addEventListeners()` in *user-interface.js*.
+        # See: `applyZoomValue()` in *user-interface.js*.
         material_thumbnail_size = 16
 
         unless material.texture.nil?

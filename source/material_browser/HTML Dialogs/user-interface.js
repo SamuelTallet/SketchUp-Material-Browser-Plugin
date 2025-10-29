@@ -180,25 +180,37 @@ MaterialBrowser.listenDisplaySettingsCommit = () => {
 }
 
 /**
- * Applies "display name" setting.
+ * Applies "Always display name" setting.
  */
-MaterialBrowser.applyDisplayName = () => {
-    const displayName = document.querySelector('.display-name').checked
-    const materialNames = document.querySelectorAll('.material .name')
+MaterialBrowser.applyAlwaysDisplayName = () => {
+    const alwaysDisplayName = document.querySelector('[data-setting="always_display_name"]').checked
+    const materialsNames = document.querySelectorAll('.material .name')
 
-    materialNames.forEach(materialName => {
-        materialName.classList.toggle('displayed', displayName)
+    materialsNames.forEach(materialName => {
+        materialName.classList.toggle('displayed', alwaysDisplayName)
     })
 
-    sketchup.setDisplayName(displayName)
+    sketchup.setAlwaysDisplayName(alwaysDisplayName)
+}
+
+/**
+ * Applies "Display custom/profile/built-in SKM", and "Display Poly Haven" settings.
+ */
+MaterialBrowser.applyDisplaySources = () => {
+    const dcs = document.querySelector('[data-setting="display_custom_skm"]').checked
+    const dps = document.querySelector('[data-setting="display_profile_skm"]').checked
+    const dbs = document.querySelector('[data-setting="display_builtin_skm"]').checked
+    const dph = document.querySelector('[data-setting="display_poly_haven"]').checked
+
+    sketchup.setDisplaySources(dcs, dps, dbs, dph)
 }
 
 /**
  * Applies display settings.
  */
 MaterialBrowser.applyDisplaySettings = () => {
-    MaterialBrowser.applyDisplayName()
-    // TODO: Implement sources_to_display setting.
+    MaterialBrowser.applyAlwaysDisplayName()
+    MaterialBrowser.applyDisplaySources()
 }
 
 /**
@@ -385,7 +397,7 @@ document.addEventListener('DOMContentLoaded', _event => {
     // Restore last known UI state.
     MaterialBrowser.applyZoomValue()
     MaterialBrowser.applyTypeFilterValue()
-    MaterialBrowser.applyDisplayName()
+    MaterialBrowser.applyAlwaysDisplayName()
     MaterialBrowser.showSourceLogos()
 
     // Make material list searchable

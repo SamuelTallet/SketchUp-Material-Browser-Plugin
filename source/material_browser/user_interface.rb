@@ -167,8 +167,24 @@ module MaterialBrowser
         Settings.current.zoom_value = zoom_value
       end
 
-      @html_dialog.add_action_callback('setDisplayName') do |_ctx, display_name|
-        Settings.current.display_name = display_name
+      @html_dialog.add_action_callback('setAlwaysDisplayName') do |_ctx, display_name|
+        Settings.current.always_display_name = display_name
+      end
+
+      @html_dialog.add_action_callback('setDisplaySources') do |_ctx, dcs, dps, dbs, dph|
+        Settings.current.display_custom_skm = dcs
+        Settings.current.display_profile_skm = dps
+        Settings.current.display_builtin_skm = dbs
+        Settings.current.display_poly_haven = dph
+
+        show_loading_screen
+        SKM.extract_thumbnails(:custom) if dcs && !Settings.current.custom_skm_path.empty?
+        SKM.extract_thumbnails(:profile) if dps
+        SKM.extract_thumbnails(:builtin) if dbs
+
+        PolyHaven.load_textures if dph && PolyHaven.textures.empty?
+
+        self.class.reload
       end
 
       @html_dialog.add_action_callback('setCustomSKMPath') do |_ctx|
@@ -176,7 +192,11 @@ module MaterialBrowser
 
         if dir_selected.is_a?(String)
           Settings.current.custom_skm_path = dir_selected
+
+          show_loading_screen
           SKM.extract_thumbnails(:custom)
+
+          # @todo Force display_custom_skm to be true for consistency?
 
           self.class.reload
         end
@@ -199,7 +219,7 @@ module MaterialBrowser
           show_loading_screen
           # FIXME: Loading screen doesn't last on SketchUp 2017.
           if Sketchup.version.to_i == 17
-            Sketchup.status_text = "#{NAME} - #{TRANSLATE['Texture loading...']}"
+            Sketchup.status_text = "#{NAME} - #{TRANSLATE['Loading...']}"
           end
 
           PolyHaven.select_texture(ph_texture_slug)

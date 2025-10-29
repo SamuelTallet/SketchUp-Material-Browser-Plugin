@@ -22,6 +22,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
 
 require 'sketchup'
 require 'material_browser/model'
+require 'material_browser/settings'
 require 'material_browser/skm'
 require 'material_browser/poly_haven'
 
@@ -39,17 +40,26 @@ module MaterialBrowser
       Model.export_materials_thumbnails
 
       # SKM files can be managed outside of SketchUp.
-      # So always scans SKM folders, this can avoid a SketchUp restart.
+      # So let's scan again SKM folders according to display settings.
       # And sometimes, cleanups thumbnails directory.
-      SKM.extract_thumbnails(:builtin, then_cleanup: rand(30).zero?)
-      SKM.extract_thumbnails(:profile, then_cleanup: rand(15).zero?)
 
-      unless Settings.current.custom_skm_path.empty?
+      if Settings.current.display_custom_skm? && !Settings.current.custom_skm_path.empty?
         SKM.extract_thumbnails(:custom, then_cleanup: rand(15).zero?)
       end
 
-      # Loads Poly Haven textures (once per SketchUp session).
-      PolyHaven.load_textures if PolyHaven.textures.empty?
+      if Settings.current.display_profile_skm?
+        SKM.extract_thumbnails(:profile, then_cleanup: rand(15).zero?)
+      end
+
+      if Settings.current.display_builtin_skm?
+        SKM.extract_thumbnails(:builtin, then_cleanup: rand(30).zero?)
+      end
+
+      # Loads Poly Haven textures, also according to display settings.
+      # But once per SketchUp session since textures list is static.
+      if Settings.current.display_poly_haven? && PolyHaven.textures.empty?
+        PolyHaven.load_textures
+      end
 
       Sketchup.status_text = nil
     end
