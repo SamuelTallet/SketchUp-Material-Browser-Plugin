@@ -196,7 +196,8 @@ module MaterialBrowser
           show_loading_screen
           SKM.extract_thumbnails(:custom)
 
-          # @todo Force display_custom_skm to be true for consistency?
+          # We force display of custom SKMs to prevent user from losing sight of them.
+          Settings.current.display_custom_skm = true
 
           self.class.reload
         end
