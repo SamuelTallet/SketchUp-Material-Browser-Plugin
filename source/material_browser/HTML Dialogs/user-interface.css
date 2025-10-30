@@ -226,6 +226,12 @@ select {
 
 }
 
+@media (max-width: 400px) {
+    #toolbar .vertical {
+        top: 30px;
+    }
+}
+
 #toolbar .zoom .icon {
     margin-top: 0;
 }

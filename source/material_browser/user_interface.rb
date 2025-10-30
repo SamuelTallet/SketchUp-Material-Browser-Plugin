@@ -128,19 +128,10 @@ module MaterialBrowser
         dialog_title:    NAME,
         preferences_key: 'MBR',
         scrollable:      true,
-
-        # Unless user resized HTML dialog,
-        # this displays a 4x3 grid of thumbnails,
-        # assuming 160 as current zoom value.
-        # See: `Settings::DEFAULT_ZOOM_VALUE`.
         width:           675,
         height:          500,
-
-        # When user reduces dialog at minimum,
-        # this displays a 3x3 grid of thumbnails,
-        # assuming 160 as current zoom value.
-        min_width:       525,
-        min_height:      500
+        min_width:       350,
+        min_height:      390
       )
 
     end
