@@ -11,7 +11,8 @@
 "Open Material Browser..."="Ouvrir le navigateur de matériaux...";
 "Search for materials by name and filter them by type, with extra extra large thumbnails."="Recherchez des matériaux par nom et filtrez-les par type, avec des vignettes supergéantes.";
 
-"Loading..."="Chargement...";
+"Extracting thumbnails..."="Extraction des vignettes...";
+"Loading texture..."="Chargement de la texture...";
 "Materials names"="Noms des matériaux";
 "Custom materials (SKMs)"="Matériaux personnels (SKMs)";
 "SketchUp profile materials"="Matériaux du profil SketchUp";

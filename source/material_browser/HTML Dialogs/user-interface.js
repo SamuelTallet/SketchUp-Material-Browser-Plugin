@@ -62,9 +62,12 @@ MaterialBrowser.stopLoadingAnimation = () => {
 
 /**
  * Shows loading screen.
+ *
+ * @param {string} text Text to display in loading screen.
  */
-MaterialBrowser.showLoadingScreen = () => {
+MaterialBrowser.showLoadingScreen = (text) => {
     document.querySelector('#materials').classList.add('hidden')
+    document.querySelector('#loading .text').textContent = text
     document.querySelector('#loading').classList.add('displayed')
     MaterialBrowser.startLoadingAnimation()
 }
@@ -75,6 +78,7 @@ MaterialBrowser.showLoadingScreen = () => {
 MaterialBrowser.hideLoadingScreen = () => {
     MaterialBrowser.stopLoadingAnimation()
     document.querySelector('#loading').classList.remove('displayed')
+    document.querySelector('#loading .text').textContent = ''
     document.querySelector('#materials').classList.remove('hidden')
 }
 

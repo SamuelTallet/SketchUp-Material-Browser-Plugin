@@ -142,8 +142,10 @@ module MaterialBrowser
     end
 
     # Shows loading screen within HTML dialog.
-    private def show_loading_screen
-      @html_dialog.execute_script('MaterialBrowser.showLoadingScreen()')
+    # 
+    # @param [String] text Text to display in loading screen.
+    private def show_loading_screen(text)
+      @html_dialog.execute_script("MaterialBrowser.showLoadingScreen(#{JSON.generate(text)})")
     end
 
     # Hides loading screen within HTML dialog.
@@ -168,7 +170,7 @@ module MaterialBrowser
         Settings.current.display_builtin_skm = dbs
         Settings.current.display_poly_haven = dph
 
-        show_loading_screen
+        show_loading_screen(TRANSLATE['Extracting thumbnails...'])
         SKM.extract_thumbnails(:custom) if dcs && !Settings.current.custom_skm_path.empty?
         SKM.extract_thumbnails(:profile) if dps
         SKM.extract_thumbnails(:builtin) if dbs
@@ -184,7 +186,7 @@ module MaterialBrowser
         if dir_selected.is_a?(String)
           Settings.current.custom_skm_path = dir_selected
 
-          show_loading_screen
+          show_loading_screen(TRANSLATE['Extracting thumbnails...'])
           SKM.extract_thumbnails(:custom)
 
           # We force display of custom SKMs to prevent user from losing sight of them.
@@ -208,10 +210,10 @@ module MaterialBrowser
 
       @html_dialog.add_action_callback('selectPolyHavenTexture') do |_ctx, ph_texture_slug|
         begin
-          show_loading_screen
+          show_loading_screen(TRANSLATE['Loading texture...'])
           # FIXME: Loading screen doesn't last on SketchUp 2017.
           if Sketchup.version.to_i == 17
-            Sketchup.status_text = "#{NAME} - #{TRANSLATE['Loading...']}"
+            Sketchup.status_text = "#{NAME} - #{TRANSLATE['Loading texture...']}"
           end
 
           PolyHaven.select_texture(ph_texture_slug)
