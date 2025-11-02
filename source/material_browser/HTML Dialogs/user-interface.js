@@ -35,6 +35,26 @@ MaterialBrowser.DONATE_URL_FALLBACK = 'https://www.paypal.me/SamuelTallet'
 MaterialBrowser.loadAnimationTimer = null
 
 /**
+ * Shows status bar.
+ *
+ * @param {string} text Text to display in status bar.
+ */
+MaterialBrowser.showStatusBar = (text) => {
+    const statusBar = document.querySelector('#status-bar')
+    statusBar.textContent = text
+    statusBar.classList.add('displayed')
+}
+
+/**
+ * Hides status bar.
+ */
+MaterialBrowser.hideStatusBar = () => {
+    const statusBar = document.querySelector('#status-bar')
+    statusBar.classList.remove('displayed')
+    statusBar.textContent = ''
+}
+
+/**
  * Starts loading screen' animation.
  */
 MaterialBrowser.startLoadingAnimation = () => {
@@ -369,6 +389,23 @@ MaterialBrowser.listenSourceLogoClicks = () => {
 }
 
 /**
+ * Adds hover event listeners for each element with `data-status` attribute.
+ */
+MaterialBrowser.listenElemsWithStatusHovers = () => {
+    document.querySelectorAll('[data-status]').forEach(element => {
+
+        element.addEventListener('mouseenter', event => {
+            MaterialBrowser.showStatusBar(event.currentTarget.dataset.status)
+        })
+
+        element.addEventListener('mouseleave', _event => {
+            MaterialBrowser.hideStatusBar()
+        })
+
+    })
+}
+
+/**
  * Adds event listeners.
  */
 MaterialBrowser.addEventListeners = () => {
@@ -392,6 +429,7 @@ MaterialBrowser.addEventListeners = () => {
     MaterialBrowser.listenLoadingScreenClick()
 
     MaterialBrowser.listenSourceLogoClicks()
+    MaterialBrowser.listenElemsWithStatusHovers()
 
 }
 

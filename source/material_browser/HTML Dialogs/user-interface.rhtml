@@ -391,6 +391,7 @@ xmlns="http://www.w3.org/2000/svg">
                     width="0"
                     height="0"
                     data-name="<%= model_material[:name] %>"
+                    data-status="<%= TRANSLATE['Select'] %> <%= model_material[:name] %>"
                 />
 
                 <span class="name"><%= CGI.escapeHTML(model_material[:display_name]) %></span>
@@ -416,6 +417,7 @@ xmlns="http://www.w3.org/2000/svg">
                     width="0"
                     height="0"
                     data-path="<%= skm_file[:path] %>"
+                    data-status="<%= TRANSLATE['Select'] %> <%= skm_file[:display_name] %>"
                 />
 
                 <span class="name"><%= CGI.escapeHTML(skm_file[:display_name]) %></span>
@@ -443,6 +445,7 @@ xmlns="http://www.w3.org/2000/svg">
                     width="0"
                     height="0"
                     data-path="<%= skm_file[:path] %>"
+                    data-status="<%= TRANSLATE['Select'] %> <%= skm_file[:display_name] %>"
                 />
 
                 <span class="name"><%= CGI.escapeHTML(skm_file[:display_name]) %></span>
@@ -475,6 +478,7 @@ xmlns="http://www.w3.org/2000/svg">
                     width="0"
                     height="0"
                     data-path="<%= skm_file[:path] %>"
+                    data-status="<%= TRANSLATE['Select'] %> <%= skm_file[:display_name] %>"
                 />
 
                 <span class="name"><%= CGI.escapeHTML(skm_file[:display_name]) %></span>
@@ -500,6 +504,7 @@ xmlns="http://www.w3.org/2000/svg">
                     class="source-logo clickable"
                     src="<%= img_uri('poly-haven-logo.svg') %>"
                     data-url="<%= PolyHaven::SITE_URL %>/a/<%= ph_texture[:slug] %>"
+                    data-status="<%= TRANSLATE['See it on Poly Haven'] %>"
                 />
 
                 <img
@@ -508,6 +513,7 @@ xmlns="http://www.w3.org/2000/svg">
                     width="0"
                     height="0"
                     data-slug="<%= ph_texture[:slug] %>"
+                    data-status="<%= TRANSLATE['Select'] %> <%= ph_texture[:name] %>"
                 />
 
                 <span class="name"><%= ph_texture[:name] %></span>
@@ -522,6 +528,8 @@ xmlns="http://www.w3.org/2000/svg">
         </ul>
 
     </div>
+
+    <div id="status-bar"></div>
 
 </body>
 
