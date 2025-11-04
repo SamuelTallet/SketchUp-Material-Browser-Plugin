@@ -260,11 +260,13 @@ select {
 }
 
 .list {
-
+    visibility: hidden; /* To prevent FOUC (Flash of Unstyled Content) */
     list-style: none;
-
     margin-top: 50px;
-    
+}
+
+.list.displayed {
+    visibility: visible;
 }
 
 .material {
@@ -274,6 +276,11 @@ select {
 
     margin-right: 6px;
 
+}
+
+.material .thumbnail {
+    width: var(--thumbnail-size);
+    height: var(--thumbnail-size);
 }
 
 .material .tip {
@@ -286,25 +293,17 @@ select {
 }
 
 .material .source-logo {
-
-    display: none;
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: calc(var(--thumbnail-size) * 0.04);
+    left: calc(var(--thumbnail-size) * 0.04);
 
-    width: 32px;
-    height: 32px;
+    width: calc(var(--thumbnail-size) * 0.14);
+    height: calc(var(--thumbnail-size) * 0.14);
 
     opacity: 0.8;
-
-}
-
-.material .source-logo.displayed {
-    display: block;
 }
 
 .material .name {
-
     display: none;
     position: absolute;
     bottom: 4px;
@@ -316,7 +315,7 @@ select {
     color: white;
 
     text-align: center;
-
+    font-size: calc(12px + var(--thumbnail-size) * 0.01);
 }
 
 .material .name.displayed {

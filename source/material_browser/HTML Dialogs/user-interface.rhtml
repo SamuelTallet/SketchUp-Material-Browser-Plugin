@@ -10,11 +10,18 @@
 
 	<title><%= NAME %></title>
 
+    <%= styles['libraries/tip.css'] %>
+
+	<style>
+		:root {
+			--thumbnail-size: <%= Settings.current.zoom_value %>px;
+		}
+	</style>
+
+	<%= styles['user-interface.css'] %>
+
 	<%= scripts['libraries/list.js'] %>
 	<%= scripts['user-interface.js'] %>
-
-	<%= styles['libraries/tip.css'] %>
-	<%= styles['user-interface.css'] %>
 
 </head>
 
@@ -388,8 +395,6 @@ xmlns="http://www.w3.org/2000/svg">
                 <img
                     class="model-material thumbnail clickable"
                     src="<%= model_material[:thumbnail_uri] %>"
-                    width="0"
-                    height="0"
                     data-name="<%= model_material[:name] %>"
                     data-status="<%= TRANSLATE['Select'] %> <%= model_material[:name] %>"
                 />
@@ -414,8 +419,6 @@ xmlns="http://www.w3.org/2000/svg">
                 <img
                     class="skm-file thumbnail clickable"
                     src="<%= skm_file[:thumbnail_uri] %>"
-                    width="0"
-                    height="0"
                     data-path="<%= skm_file[:path] %>"
                     data-status="<%= TRANSLATE['Select'] %> <%= skm_file[:display_name] %>"
                 />
@@ -442,8 +445,6 @@ xmlns="http://www.w3.org/2000/svg">
                 <img
                     class="skm-file thumbnail clickable"
                     src="<%= skm_file[:thumbnail_uri] %>"
-                    width="0"
-                    height="0"
                     data-path="<%= skm_file[:path] %>"
                     data-status="<%= TRANSLATE['Select'] %> <%= skm_file[:display_name] %>"
                 />
@@ -475,8 +476,6 @@ xmlns="http://www.w3.org/2000/svg">
                 <img
                     class="skm-file thumbnail clickable"
                     src="<%= skm_file[:thumbnail_uri] %>"
-                    width="0"
-                    height="0"
                     data-path="<%= skm_file[:path] %>"
                     data-status="<%= TRANSLATE['Select'] %> <%= skm_file[:display_name] %>"
                 />
@@ -510,8 +509,6 @@ xmlns="http://www.w3.org/2000/svg">
                 <img
                     class="ph-texture thumbnail clickable"
                     src="<%= ph_texture[:thumbnail_uri] %>"
-                    width="0"
-                    height="0"
                     data-slug="<%= ph_texture[:slug] %>"
                     data-status="<%= TRANSLATE['Select'] %> <%= ph_texture[:name] %>"
                 />

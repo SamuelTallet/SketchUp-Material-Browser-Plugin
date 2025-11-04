@@ -123,12 +123,9 @@ MaterialBrowser.hideDisplaySettings = () => {
  */
 MaterialBrowser.applyZoomValue = () => {
     const zoomValue = parseInt(document.querySelector('.zoom .slider').value)
-    const materialThumbnails = document.querySelectorAll('.material .thumbnail')
 
-    materialThumbnails.forEach(materialThumbnail => {
-        materialThumbnail.width = zoomValue
-        materialThumbnail.height = zoomValue
-    })
+    document.documentElement.style.setProperty('--thumbnail-size', zoomValue + 'px')
+    // Names and sources logos are scaled accordingly to thumbnail size, in CSS.
 
     sketchup.setZoomValue(zoomValue)
 }
@@ -364,16 +361,6 @@ MaterialBrowser.listenLoadingScreenClick = () => {
 }
 
 /**
- * Shows source logos.
- */
-MaterialBrowser.showSourceLogos = () => {
-    const sourceLogos = document.querySelectorAll('.material .source-logo')
-    sourceLogos.forEach(sourceLogo => {
-        sourceLogo.classList.add('displayed')
-    })
-}
-
-/**
  * Adds source logo click event listeners.
  */
 MaterialBrowser.listenSourceLogoClicks = () => {
@@ -437,10 +424,8 @@ MaterialBrowser.addEventListeners = () => {
 document.addEventListener('DOMContentLoaded', _event => {
 
     // Restore last known UI state.
-    MaterialBrowser.applyZoomValue()
     MaterialBrowser.applyTypeFilterValue()
     MaterialBrowser.applyAlwaysDisplayName()
-    MaterialBrowser.showSourceLogos()
 
     // Make material list searchable
     const list = new List('materials', options = {
@@ -454,5 +439,9 @@ document.addEventListener('DOMContentLoaded', _event => {
         // searches a material then changes thumbnail size then searches again.
         MaterialBrowser.applyZoomValue()
     })
+
+    // Show materials list now.
+    // Not before, to prevent FOUC.
+    document.querySelector('.list').classList.add('displayed')
 
 })
