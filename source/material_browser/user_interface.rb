@@ -160,8 +160,8 @@ module MaterialBrowser
         Settings.current.zoom_value = zoom_value
       end
 
-      @html_dialog.add_action_callback('setAlwaysDisplayName') do |_ctx, display_name|
-        Settings.current.always_display_name = display_name
+      @html_dialog.add_action_callback('setDisplayName') do |_ctx, display_name|
+        Settings.current.display_name = display_name
       end
 
       @html_dialog.add_action_callback('setDisplaySources') do |_ctx, dcs, dps, dbs, dph|

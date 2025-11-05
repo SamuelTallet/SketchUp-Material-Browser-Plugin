@@ -201,17 +201,13 @@ MaterialBrowser.listenDisplaySettingsCommit = () => {
 }
 
 /**
- * Applies "Always display name" setting.
+ * Applies "Display name" setting.
  */
-MaterialBrowser.applyAlwaysDisplayName = () => {
-    const alwaysDisplayName = document.querySelector('[data-setting="always_display_name"]').checked
-    const materialsNames = document.querySelectorAll('.material .name')
+MaterialBrowser.applyDisplayName = () => {
+    const displayName = document.querySelector('[data-setting="display_name"]').checked
+    document.documentElement.style.setProperty('--name-display', displayName ? 'block' : 'none')
 
-    materialsNames.forEach(materialName => {
-        materialName.classList.toggle('displayed', alwaysDisplayName)
-    })
-
-    sketchup.setAlwaysDisplayName(alwaysDisplayName)
+    sketchup.setDisplayName(displayName)
 }
 
 /**
@@ -230,7 +226,7 @@ MaterialBrowser.applyDisplaySources = () => {
  * Applies display settings.
  */
 MaterialBrowser.applyDisplaySettings = () => {
-    MaterialBrowser.applyAlwaysDisplayName()
+    MaterialBrowser.applyDisplayName()
     MaterialBrowser.applyDisplaySources()
 }
 
@@ -423,9 +419,8 @@ MaterialBrowser.addEventListeners = () => {
 // When document is ready:
 document.addEventListener('DOMContentLoaded', _event => {
 
-    // Restore last known UI state.
+    // Restore last used material type filter value.
     MaterialBrowser.applyTypeFilterValue()
-    MaterialBrowser.applyAlwaysDisplayName()
 
     // Make material list searchable
     const list = new List('materials', options = {

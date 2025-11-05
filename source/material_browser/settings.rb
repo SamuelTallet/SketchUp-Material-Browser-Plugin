@@ -51,7 +51,7 @@ module MaterialBrowser
     private def initialize
       @settings = {
         'zoom_value' => DEFAULT_ZOOM_VALUE,
-        'always_display_name' => false,
+        'display_name' => false,
         'display_custom_skm' => false,
         'display_profile_skm' => false,
         'display_builtin_skm' => false,
@@ -94,23 +94,23 @@ module MaterialBrowser
       @settings['zoom_value']
     end
 
-    # Sets "Always display name" setting.
+    # Sets "Display name" setting.
     #
-    # @param [Boolean] always_display_name
+    # @param [Boolean] display_name
     # @raise [ArgumentError]
-    def always_display_name=(always_display_name)
+    def display_name=(display_name)
 
-      raise ArgumentError, 'Always display name must be a Boolean.'\
-        unless [true, false].include?(always_display_name)
+      raise ArgumentError, 'Display name must be a Boolean.'\
+        unless [true, false].include?(display_name)
 
-      @settings['always_display_name'] = always_display_name
+      @settings['display_name'] = display_name
     end
 
-    # Gets "Always display name" setting.
+    # Gets "Display name" setting.
     #
     # @return [Boolean]
-    def always_display_name?
-      @settings['always_display_name']
+    def display_name?
+      @settings['display_name']
     end
 
     # Sets "Display custom SKM" setting.

@@ -304,7 +304,7 @@ select {
 }
 
 .material .name {
-    display: none;
+    display: var(--name-display);
     position: absolute;
     bottom: 4px;
     left: 0;
@@ -316,10 +316,6 @@ select {
 
     text-align: center;
     font-size: calc(12px + var(--thumbnail-size) * 0.01);
-}
-
-.material .name.displayed {
-    display: block;
 }
 
 #status-bar {
