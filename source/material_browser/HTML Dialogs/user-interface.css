@@ -259,13 +259,13 @@ select {
     margin-left: 2px;
 }
 
-.list {
+#materials .list {
     visibility: hidden; /* To prevent FOUC (Flash of Unstyled Content) */
     list-style: none;
     margin-top: 50px;
 }
 
-.list.displayed {
+#materials .list.displayed {
     visibility: visible;
 }
 
