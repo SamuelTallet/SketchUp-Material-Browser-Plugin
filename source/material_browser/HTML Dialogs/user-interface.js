@@ -84,7 +84,7 @@ MaterialBrowser.loadingScreen = null
 
 /**
  * Loading screen cards.
- * @type {?NodeList<SVGGElement>}
+ * @type {?NodeListOf<SVGGElement>}
  */
 MaterialBrowser.loadingCards = null
 
