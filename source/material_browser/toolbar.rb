@@ -37,6 +37,7 @@ module MaterialBrowser
       # Icon extension depending on platform.
       # PDF on macOS, SVG on Windows.
       @icon_extension = Sketchup.platform == :platform_osx ? 'pdf' : 'svg'
+      @toolbar.add_item(omb_command)
     end
 
     # Returns icon file for a command.
@@ -62,9 +63,10 @@ module MaterialBrowser
       command
     end
 
-    # Prepares and returns toolbar.
-    def prepare
-      @toolbar.add_item(omb_command)
+    # Shows or restores toolbar.
+    def show_or_restore
+      # See: https://forums.sketchup.com/t/toolbars-that-i-close-keep-reappearing/340979
+      @toolbar.get_last_state == TB_NEVER_SHOWN ? @toolbar.show : @toolbar.restore
     end
 
   end

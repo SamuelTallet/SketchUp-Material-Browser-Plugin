@@ -49,7 +49,7 @@ module MaterialBrowser
   Cache.remove_materials_thumbnails_dir
 
   # Adds plugin toolbar and menu to SketchUp.
-  Toolbar.new.prepare.show
+  Toolbar.new.show_or_restore
 
   Menu.new(
     UI.menu('Plugins') # parent_menu
