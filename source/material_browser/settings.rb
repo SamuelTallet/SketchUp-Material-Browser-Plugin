@@ -39,6 +39,13 @@ module MaterialBrowser
     # Maximum zoom value.
     MAX_ZOOM_VALUE = 256
 
+    # Valid values for material type filter.
+    TYPE_FILTER_VALUES = %w[
+      all
+      asphalt ceramic concrete earth glass leather metallic organic paper
+      plaster plastic rubber stone textile unknown vegetation water wood
+    ]
+
     # Singleton instance.
     @instance = nil
 
@@ -214,8 +221,8 @@ module MaterialBrowser
     # @raise [ArgumentError]
     def type_filter_value=(type_filter_value)
 
-      raise ArgumentError, 'Type filter value must be a String.'\
-        unless type_filter_value.is_a?(String)
+      raise ArgumentError, 'Type filter value is invalid.'\
+        unless TYPE_FILTER_VALUES.include?(type_filter_value)
 
       @settings['type_filter_value'] = type_filter_value
     end

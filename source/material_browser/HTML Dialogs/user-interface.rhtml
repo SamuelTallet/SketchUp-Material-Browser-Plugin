@@ -8,21 +8,48 @@
     <meta name="x-copyright" content="© 2025 Samuel Tallet">
     <meta name="x-license" content="GNU General Public License 3.0">
 
-	<title><%= NAME %></title>
+    <title><%= NAME %></title>
 
     <%= styles['libraries/tip.css'] %>
 
-	<style>
-		:root {
-			--thumbnail-size: <%= Settings.current.zoom_value %>px;
-			--name-display: <%= Settings.current.display_name? ? 'block' : 'none' %>;
-		}
-	</style>
+    <style>
+        :root {
+            --thumbnail-size: <%= Settings.current.zoom_value %>px;
+            --name-display: <%= Settings.current.display_name? ? 'block' : 'none' %>;
+        }
+    </style>
 
-	<%= styles['user-interface.css'] %>
+    <style>
+        <%
+        selected_filter = Settings.current.type_filter_value
+        materials_types = Settings::TYPE_FILTER_VALUES.reject { |filter| filter == 'all' }
+        %>
+        :root {
+            <%
+            materials_types.each do |material_type|
+                display = (selected_filter == 'all') || (selected_filter == material_type)
+            %>
+                --<%= material_type %>-display: <%= display ? 'inline-block' : 'none' %>;
+            <%
+            end
+            %>
+        }
+        <%
+        materials_types.each do |material_type|
+        %>
+            .material[data-type="<%= material_type %>"] {
+                display: var(--<%= material_type %>-display);
+            }
+        <%
+        end
+        %>
+    </style>
 
-	<%= scripts['libraries/list.js'] %>
-	<%= scripts['user-interface.js'] %>
+    <%= styles['user-interface.css'] %>
+
+    <%= scripts['libraries/list.js'] %>
+
+    <%= scripts['user-interface.js'] %>
 
 </head>
 
@@ -85,8 +112,7 @@
     </div>
 
     <div id="loading">
-        <svg class="logo" width="1366" height="1366" viewBox="0 0 1366 1366" fill="none"
-xmlns="http://www.w3.org/2000/svg">
+        <svg class="logo" width="1366" height="1366" viewBox="0 0 1366 1366" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g>
                 <rect width="1365.33" height="1365.33" fill="white" />
                 <g>
@@ -279,104 +305,21 @@ xmlns="http://www.w3.org/2000/svg">
                     autofocus
                 />
 
-                <% option_value_to_select = Settings.current.type_filter_value %>
+                <% selected_filter = Settings.current.type_filter_value %>
                 <select class="filter-by-type clickable">
-        
-                    <option value="all"
-                        <%= option_value_to_select == 'all' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Filter by type...'] %>
-                    </option>
-        
-                    <option value="asphalt"
-                        <%= option_value_to_select == 'asphalt' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Asphalt'] %>
-                    </option>
-        
-                    <option value="ceramic"
-                        <%= option_value_to_select == 'ceramic' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Ceramic'] %>
-                    </option>
-        
-                    <option value="concrete"
-                        <%= option_value_to_select == 'concrete' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Concrete'] %>
-                    </option>
-        
-                    <option value="earth"
-                        <%= option_value_to_select == 'earth' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Earth'] %>
-                    </option>
-        
-                    <option value="glass"
-                        <%= option_value_to_select == 'glass' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Glass'] %>
-                    </option>
-        
-                    <option value="leather"
-                        <%= option_value_to_select == 'leather' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Leather'] %>
-                    </option>
-        
-                    <option value="metallic"
-                        <%= option_value_to_select == 'metallic' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Metallic'] %>
-                    </option>
-        
-                    <option value="organic"
-                        <%= option_value_to_select == 'organic' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Organic'] %>
-                    </option>
-        
-                    <option value="paper"
-                        <%= option_value_to_select == 'paper' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Paper'] %>
-                    </option>
-        
-                    <option value="plaster"
-                        <%= option_value_to_select == 'plaster' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Plaster'] %>
-                    </option>
-        
-                    <option value="plastic"
-                        <%= option_value_to_select == 'plastic' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Plastic'] %>
-                    </option>
-                
-                    <option value="rubber"
-                        <%= option_value_to_select == 'rubber' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Rubber'] %>
-                    </option>
 
-                    <option value="stone"
-                        <%= option_value_to_select == 'stone' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Stone'] %>
-                    </option>
-        
-                    <option value="textile"
-                        <%= option_value_to_select == 'textile' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Textile'] %>
-                    </option>
-                
-                    <option value="unknown"
-                        <%= option_value_to_select == 'unknown' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Unknown'] %>
-                    </option>
-        
-                    <option value="vegetation"
-                        <%= option_value_to_select == 'vegetation' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Vegetation'] %>
-                    </option>
-        
-                    <option value="water"
-                        <%= option_value_to_select == 'water' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Water/Snow'] %>
-                    </option>
-        
-                    <option value="wood"
-                        <%= option_value_to_select == 'wood' ? 'selected' : '' %>
-                    ><%= TRANSLATE['Wood'] %>
-                    </option>
-        
+                    <% Settings::TYPE_FILTER_VALUES.each do |filter| %>
+                        <option value="<%= filter %>"
+                            <%= selected_filter == filter ? 'selected' : '' %>
+                        >
+                            <% if filter == 'all' %>
+                                <%= TRANSLATE['Filter by type...'] %>
+                            <% else %>
+                                <%= TRANSLATE[filter.capitalize] %>
+                            <% end %>
+                        </option>
+                    <% end %>
+
                 </select>
 
             </div>

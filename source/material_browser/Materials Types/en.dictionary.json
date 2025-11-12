@@ -101,6 +101,12 @@
   "plastic": "plastic",
   "plastics": "plastic",
 
+  "rubber": "rubber",
+  "rubbers": "rubber",
+  "tire": "rubber",
+  "tires": "rubber",
+  "rubberized": "rubber",
+
   "stone": "stone",
   "stones": "stone",
   "rock": "stone",
@@ -140,12 +146,6 @@
   "gemstones": "stone",
   "gems": "stone",
   "quarry": "stone",
-
-  "rubber": "rubber",
-  "rubbers": "rubber",
-  "tire": "rubber",
-  "tires": "rubber",
-  "rubberized": "rubber",
 
   "textile": "textile",
   "textiles": "textile",

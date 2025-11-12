@@ -106,6 +106,13 @@
 
   "plastique": "plastic",
   "plastiques": "plastic",
+
+  "caoutchouc": "rubber",
+  "caoutchoucs": "rubber",
+  "pneu": "rubber",
+  "pneus": "rubber",
+  "caoutchouté": "rubber",
+  "caoutchoute": "rubber",
   
   "pierre": "stone",
   "pierres": "stone",
@@ -131,13 +138,6 @@
   "gemmes": "stone",
   "carrière": "stone",
   "carriere": "stone",
-
-  "caoutchouc": "rubber",
-  "caoutchoucs": "rubber",
-  "pneu": "rubber",
-  "pneus": "rubber",
-  "caoutchouté": "rubber",
-  "caoutchoute": "rubber",
 
   "tissu": "textile",
   "vêtement": "textile",

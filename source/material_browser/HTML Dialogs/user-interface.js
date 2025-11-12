@@ -162,6 +162,12 @@ MaterialBrowser.materialsList = null
 MaterialBrowser.statusBar = null
 
 /**
+ * Materials types.
+ * @type {Array<string>}
+ */
+MaterialBrowser.materialsTypes = []
+
+/**
  * Selects static DOM elements to avoid repeated queries.
  */
 MaterialBrowser.selectElements = () => {
@@ -190,6 +196,15 @@ MaterialBrowser.selectElements = () => {
     MaterialBrowser.materialsList = document.querySelector('#materials .list')
 
     MaterialBrowser.statusBar = document.querySelector('#status-bar')
+}
+
+/**
+ * Sets materials types from filter dropdown options.
+ */
+MaterialBrowser.setMaterialsTypes = () => {
+    MaterialBrowser.materialsTypes = Array.from(MaterialBrowser.filterByType.options)
+        .map(option => option.value)
+        .filter(value => value !== 'all')
 }
 
 /**
@@ -416,32 +431,14 @@ MaterialBrowser.listenHeartClick = () => {
  * Applies "Type filter value" setting.
  */
 MaterialBrowser.applyTypeFilterValue = () => {
-    const typeFilterValue = MaterialBrowser.filterByType.value
+    const filter = MaterialBrowser.filterByType.value
 
-    if (typeFilterValue === 'all') {
-        const materials = document.querySelectorAll('.material')
+    MaterialBrowser.materialsTypes.forEach(type => {
+        const display = (filter === 'all' || type === filter) ? 'inline-block' : 'none'
+        document.documentElement.style.setProperty(`--${type}-display`, display)
+    })
 
-        materials.forEach(material => {
-            material.classList.remove('hidden')
-        })
-    } else {
-        const materialsToDisplay = document.querySelectorAll(
-            '.material[data-type="' + typeFilterValue + '"]'
-        )
-        const materialsToHide = document.querySelectorAll(
-            '.material:not([data-type="' + typeFilterValue + '"])'
-        )
-
-        materialsToDisplay.forEach(materialToDisplay => {
-            materialToDisplay.classList.remove('hidden')
-        })
-
-        materialsToHide.forEach(materialToHide => {
-            materialToHide.classList.add('hidden')
-        })
-    }
-
-    sketchup.setTypeFilterValue(typeFilterValue)
+    sketchup.setTypeFilterValue(filter)
 }
 
 /**
@@ -552,12 +549,11 @@ document.addEventListener('DOMContentLoaded', _event => {
 
     MaterialBrowser.selectElements()
 
-    // Restore last used material type filter value.
-    MaterialBrowser.applyTypeFilterValue()
-
     // Show materials list now.
     // Not before, to prevent FOUC.
     MaterialBrowser.materialsList.classList.add('displayed')
+
+    MaterialBrowser.setMaterialsTypes()
 
     // Make material list searchable
     const list = new List('materials', options = {
@@ -565,11 +561,5 @@ document.addEventListener('DOMContentLoaded', _event => {
     })
 
     MaterialBrowser.addEventListeners()
-
-    list.on('searchComplete', _event => {
-        // Fix "thumbnail size desync" issue when user:
-        // searches a material then changes thumbnail size then searches again.
-        MaterialBrowser.applyZoomValue()
-    })
 
 })
