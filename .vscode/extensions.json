@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "EditorConfig.EditorConfig",
-    "castwide.solargraph"
+    "castwide.solargraph",
+    "RyanBates.erb-syntax"
   ]
 }
