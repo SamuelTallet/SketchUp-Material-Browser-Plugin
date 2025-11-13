@@ -340,7 +340,7 @@
                     class="model-material thumbnail clickable"
                     src="<%= model_material[:thumbnail_uri] %>"
                     data-name="<%= model_material[:name] %>"
-                    data-status="<%= TRANSLATE['Select'] %> <%= model_material[:name] %>"
+                    data-status="<%= TRANSLATE['Select'] %> <%= model_material[:display_name] %>"
                 />
 
                 <span class="name"><%= CGI.escapeHTML(model_material[:display_name]) %></span>
