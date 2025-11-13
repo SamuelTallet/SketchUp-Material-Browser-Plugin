@@ -21,6 +21,7 @@ raise 'The MBR plugin requires at least Ruby 2.2.0 or SketchUp 2017.'\
   unless RUBY_VERSION.to_f >= 2.2 # SketchUp 2017 includes Ruby 2.2.4.
 
 require 'cgi'
+require 'json'
 require 'sketchup'
 require 'material_browser/html_dialogs'
 require 'material_browser/settings'
@@ -145,7 +146,7 @@ module MaterialBrowser
     # 
     # @param [String] text Text to display in loading screen.
     private def show_loading_screen(text)
-      @html_dialog.execute_script("MaterialBrowser.showLoadingScreen(#{JSON.generate(text)})")
+      @html_dialog.execute_script("MaterialBrowser.showLoadingScreen(#{text.to_json})")
     end
 
     # Hides loading screen within HTML dialog.
