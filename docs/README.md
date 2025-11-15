@@ -48,7 +48,7 @@ In Material Browser, click on eye icon then check only sources you want display.
 ### I checked "Custom materials (SKMs)" in Display settings but I dont see my materials.
 
 You also have to select a folder containing your SKM files.
-See "Can I bring my own materials?" question.
+See [Can I bring my own materials?](#can-i-bring-my-own-materials) question.
 
 ### I painted an object with a material from Poly Haven but I don't see reflections on it.
 
