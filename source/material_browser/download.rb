@@ -30,18 +30,19 @@ module MaterialBrowser
   # Download helper.
   module Download
 
-    # Tries to download a file from an URL, synchronously.
+    # Tries (3 times) to download a file from an URL, synchronously.
     #
     # @param [String] url
     # @param [String] output_path
     # @raise [ArgumentError]
     #
-    # @raise [RuntimeError] if download failed.
+    # @raise [RuntimeError] if download failed definitively.
     def self.file(url, output_path)
       raise ArgumentError, 'URL must be a String.'\
         unless url.is_a?(String)
       raise ArgumentError, 'Output path must be a String.'\
         unless output_path.is_a?(String)
+      retries = 0
 
       begin
         File.open(output_path, 'wb') do |output_file|
@@ -64,7 +65,15 @@ module MaterialBrowser
         end
       rescue => error
         FileUtils.remove_file(output_path) if File.exist?(output_path) # Cleanup
-        raise "Download failed with #{error.message} for #{url}"
+
+        if retries < 3
+          retries += 1
+          sleep(0.5)
+          warn "Retrying download (#{retries}/3) due to #{error.message}"
+          retry
+        end
+
+        raise "Download failed 3 times for #{url} due to #{error.message}"
       end
     end
 
