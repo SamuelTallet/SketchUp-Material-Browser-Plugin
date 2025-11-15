@@ -37,9 +37,18 @@ Yes, this plugin does support custom materials as *.skm* files.
 
 Currently, only one custom SKM folder at once is supported.
 
+### Is it possible to display name of all materials, simultaneously?
+
+Yes, in Material Browser, click on eye icon then check "Materials names".
+
 ### Materials list is too long. What can I do?
 
-In Material Browser, click on eye icon then check "Display only In Model materials".
+In Material Browser, click on eye icon then check only sources you want display.
+
+### I checked "Custom materials (SKMs)" in Display settings but I dont see my materials.
+
+You also have to select a folder containing your SKM files.
+See "Can I bring my own materials?" question.
 
 ### I painted an object with a material from Poly Haven but I don't see reflections on it.
 
