@@ -27,7 +27,7 @@ require 'extensions'
 module MaterialBrowser
 
   # Plugin version.
-  VERSION = '1.1.1-rc1'
+  VERSION = '1.1.1-rc2'
 
   # Plugin `User-Agent` HTTP header used to download textures, etc.
   USER_AGENT = 'SketchUp Material Browser Plugin/' + VERSION
