@@ -103,6 +103,8 @@
   "platres": "plaster",
   "plâtré": "plaster",
   "plâtrés": "plaster",
+  "stuc": "plaster",
+  "stucs": "plaster",
 
   "plastique": "plastic",
   "plastiques": "plastic",
@@ -271,5 +273,9 @@
   "contreplaqués": "wood",
   "contreplaques": "wood",
   "palissandre": "wood",
+  "okoumé": "wood",
+  "okoumés": "wood",
+  "sapelli": "wood",
+  "sapellis": "wood",
   "sycomore": "wood"
 }

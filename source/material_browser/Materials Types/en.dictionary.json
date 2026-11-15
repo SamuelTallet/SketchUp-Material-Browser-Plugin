@@ -97,6 +97,9 @@
   "plaster": "plaster",
   "plasters": "plaster",
   "plastered": "plaster",
+  "stucco": "plaster",
+  "stuccos": "plaster",
+  "plasterwall": "plaster",
 
   "plastic": "plastic",
   "plastics": "plastic",
@@ -237,6 +240,8 @@
   "woods": "wood",
   "plank": "wood",
   "planks": "wood",
+  "timber": "wood",
+  "timbers": "wood",
   "parquet": "wood",
   "parquets": "wood",
   "pine": "wood",
@@ -271,5 +276,7 @@
   "plywood": "wood",
   "plywoods": "wood",
   "rosewood": "wood",
+  "okoume": "wood",
+  "sapele": "wood",
   "sycamore": "wood"
 }
