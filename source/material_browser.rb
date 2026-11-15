@@ -1,5 +1,5 @@
 # Material Browser (MBR) extension for SketchUp 2017 or newer.
-# Copyright: © 2025 Samuel Tallet <samuel.tallet arobase gmail.com>
+# Copyright: © 2026 Samuel Tallet <samuel.tallet arobase gmail.com>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ require 'extensions'
 module MaterialBrowser
 
   # Plugin version.
-  VERSION = '1.1.1'
+  VERSION = '1.1.2'
 
   # Plugin `User-Agent` HTTP header used to download textures, etc.
   USER_AGENT = 'SketchUp Material Browser Plugin/' + VERSION
@@ -49,7 +49,7 @@ module MaterialBrowser
 
   extension.version     = VERSION
   extension.creator     = 'Samuel Tallet'
-  extension.copyright   = "2025 #{extension.creator}"
+  extension.copyright   = "2026 #{extension.creator}"
   extension.description = BRIEF
 
   Sketchup.register_extension(extension, load_on_start = true)
